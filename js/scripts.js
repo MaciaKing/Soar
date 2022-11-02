@@ -6,7 +6,7 @@
 // 
 // Scripts
 // 
-var divs = new Array("DASHBOARD", "INCIDENTS");
+var divs = new Array("DASHBOARD", "ALERTAS");
 window.addEventListener('DOMContentLoaded', event => {
 
     // Toggle the side navigation
@@ -43,11 +43,22 @@ function ocultarTodosDivsYMostrar1(divToShow) {
     }
 }
 
+//desplegar:
+//Función que permite desplegar una row debajo en una línea de una tabla.
+function m() {
+    console.log("DESPLEGAR");
+}
+
 
 //desplegar:
 //Función que permite desplegar una row debajo en una línea de una tabla.
-function desplegar(tabla_a_desplegar, estadoT) {
+//function desplegar(tabla_a_desplegar, estadoT) {
+function desplegar(tabla_a_desplegar/*, estadoT*/) {
+    console.log("DESPLEGAR");
     var tablA = document.getElementById(tabla_a_desplegar);
+    tablA.style.display = "none";
+
+    /*
     var estadOt = document.getElementById(estadoT);
 
     switch (tablA.style.display) {
@@ -60,4 +71,5 @@ function desplegar(tabla_a_desplegar, estadoT) {
             estadOt.innerHTML = "Mostrar coNteNido"
             break;
     }
+    */
 }
