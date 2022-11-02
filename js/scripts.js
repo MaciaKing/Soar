@@ -6,7 +6,9 @@
 // 
 // Scripts
 // 
-var divs = new Array("DASHBOARD", "ALERTAS");
+var divs = new Array("DASHBOARD", "ALERTAS"); //Variable donde guardamos los divs que ocultamos y mostramos.
+var selected_alerts = []; //Variable donde editamos las Alertas seleccionadas.
+
 window.addEventListener('DOMContentLoaded', event => {
 
     // Toggle the side navigation
@@ -24,6 +26,53 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+
+function showHideRow(row) {
+    $("#" + row).toggle();
+}
+
+
+//selectAlert:
+//param: - val. Indica si la alerta estaba seleccionada o no.
+//       - idAlert. Nombre identificatico de esta alerta.
+//Cada vez que el usuario clicke el boton de seleccionado, se guardará esta row.
+//Si esta ya estaba seleccionada, se deseleccionara y se guardaran los cambios en 
+//select_alerts.
+function selectAlert(val, idAlert) {
+    console.log("Valor", val.checked);
+    if (val.checked) {
+        //Añadimos la alerta
+        selected_alerts.push(idAlert);
+        console.log("ALERTAAA: "+ idAlert);
+        console.log("Selected Alerts: "+ selected_alerts);
+    } else {
+        //Quitamos la alerta
+        aux=[];
+        for(var i=0; i<selected_alerts.length ;i++){
+            if(selected_alerts[i].localeCompare(idAlert) != 0){
+                //selected_alerts[i].shift(aux)
+                //val.checked=false;
+                aux.push(selected_alerts[i]);
+            }
+            
+        }        
+        selected_alerts=aux;
+        console.log("Desceleccionar alerta: "+aux);
+        console.log("Selected Alerts: "+selected_alerts);
+    }
+}
+
+//selectAlert:
+//Deselecionamos todas las alertas.
+function cleanAll(){
+    console.log("Limpiamos todas las alertas");
+    for(var i=0; i<selected_alerts.length;i++){
+        document.getElementById(selected_alerts[i]).childNodes[1].children[0].children[0].checked=false; // Deseleccionamos del DOM las alertas.
+    }
+    selected_alerts=[]; // Borramos todas las alertas seleccionadas.
+    console.log(selected_alerts);
+}
 
 //ocultarTodosDivsYMostrar1: 
 //  param: divToShow    --> id= "divToShow"
