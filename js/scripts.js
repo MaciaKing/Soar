@@ -15,9 +15,9 @@ window.addEventListener('DOMContentLoaded', event => {
     const sidebarToggle = document.body.querySelector('#sidebarToggle');
     if (sidebarToggle) {
         // Uncomment Below to persist sidebar toggle between refreshes
-        // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-        //     document.body.classList.toggle('sb-sidenav-toggled');
-        // }
+         if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+             document.body.classList.toggle('sb-sidenav-toggled');
+         }
         sidebarToggle.addEventListener('click', event => {
             event.preventDefault();
             document.body.classList.toggle('sb-sidenav-toggled');
@@ -27,11 +27,51 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
+// Function to add event listener to all butons of alerts table
+function load() {
+    var a1 = document.getElementsByClassName('btn btn-primary');
+    for( var i=0;i<a1.length;i++){
+        console.log(" i --> ", i, a1[i]);
 
-function showHideRow(row) {
-    $("#" + row).toggle();
+    }
 }
 
+//Funciona
+function showHideRow(row) {
+    console.log("Desplegar")
+    var x=$("#" + row).toggle();
+    console.log("x --> ", x)
+    load();
+}
+
+
+/*
+function createEventListenersInATable(){
+    console.log("MACIAA");
+    table_alerts=document.getElementById("table_alerts");
+    console.log( typeof table_alerts);
+}*/
+
+/*
+// Function to change the content of t2
+function modifyText() {
+    const t2 = document.getElementById("t2");
+    const isNodeThree = t2.firstChild.nodeValue === "three";
+    t2.firstChild.nodeValue = isNodeThree ? "two" : "three";
+  }
+  
+// Add event listener to table
+const el = document.getElementById("table_alerts");
+el.addEventListener("click", modifyText, false);
+*/
+
+
+//selectAll:
+//Select all alerts that is show on the screen
+function selectAll(){
+    console.log("Select All");
+    
+}
 
 //selectAlert:
 //param: - val. Indica si la alerta estaba seleccionada o no.
@@ -92,33 +132,5 @@ function ocultarTodosDivsYMostrar1(divToShow) {
     }
 }
 
-//desplegar:
-//Función que permite desplegar una row debajo en una línea de una tabla.
-function m() {
-    console.log("DESPLEGAR");
-}
 
 
-//desplegar:
-//Función que permite desplegar una row debajo en una línea de una tabla.
-//function desplegar(tabla_a_desplegar, estadoT) {
-function desplegar(tabla_a_desplegar/*, estadoT*/) {
-    console.log("DESPLEGAR");
-    var tablA = document.getElementById(tabla_a_desplegar);
-    tablA.style.display = "none";
-
-    /*
-    var estadOt = document.getElementById(estadoT);
-
-    switch (tablA.style.display) {
-        case "none":
-            tablA.style.display = "block";
-            estadOt.innerHTML = "Ocultar coneNido"
-            break;
-        default:
-            tablA.style.display = "none";
-            estadOt.innerHTML = "Mostrar coNteNido"
-            break;
-    }
-    */
-}
