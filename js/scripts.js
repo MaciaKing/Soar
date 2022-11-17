@@ -1,10 +1,5 @@
-/*!
-    * Start Bootstrap - SB Admin v7.0.5 (https://startbootstrap.com/template/sb-admin)
-    * Copyright 2013-2022 Start Bootstrap
-    * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
-    */
 // 
-// Scripts
+// Scripts for Alerts
 // 
 var divs = new Array("DASHBOARD", "ALERTAS"); //Variable donde guardamos los divs que ocultamos y mostramos.
 var selected_alerts = []; //Variable donde editamos las Alertas seleccionadas.
@@ -27,50 +22,26 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
-// Function to add event listener to all butons of alerts table
-function load() {
-    var a1 = document.getElementsByClassName('btn btn-primary');
-    for( var i=0;i<a1.length;i++){
-        console.log(" i --> ", i, a1[i]);
 
-    }
-}
 
 //Funciona
 function showHideRow(row) {
     console.log("Desplegar")
     var x=$("#" + row).toggle();
     console.log("x --> ", x)
-    load();
 }
-
-
-/*
-function createEventListenersInATable(){
-    console.log("MACIAA");
-    table_alerts=document.getElementById("table_alerts");
-    console.log( typeof table_alerts);
-}*/
-
-/*
-// Function to change the content of t2
-function modifyText() {
-    const t2 = document.getElementById("t2");
-    const isNodeThree = t2.firstChild.nodeValue === "three";
-    t2.firstChild.nodeValue = isNodeThree ? "two" : "three";
-  }
-  
-// Add event listener to table
-const el = document.getElementById("table_alerts");
-el.addEventListener("click", modifyText, false);
-*/
 
 
 //selectAll:
 //Select all alerts that is show on the screen
 function selectAll(){
     console.log("Select All");
-    
+    alerts = document.getElementsByClassName("form-check-input");
+    for (var i = 0; i < alerts.length; i++) {
+        alerts[i].checked=true;
+        selected_alerts.push(alerts[i].parentElement.parentElement.parentElement.id);
+      }
+    console.log("Selected Alerts: "+selected_alerts);
 }
 
 //selectAlert:
@@ -107,9 +78,16 @@ function selectAlert(val, idAlert) {
 //Deselecionamos todas las alertas.
 function cleanAll(){
     console.log("Limpiamos todas las alertas");
+    /*
     for(var i=0; i<selected_alerts.length;i++){
         document.getElementById(selected_alerts[i]).childNodes[1].children[0].children[0].checked=false; // Deseleccionamos del DOM las alertas.
-    }
+    }*/
+    alerts = document.getElementsByClassName("form-check-input");
+    for (var i = 0; i < alerts.length; i++) {
+        alerts[i].checked=false;
+        selected_alerts.push();
+      }
+
     selected_alerts=[]; // Borramos todas las alertas seleccionadas.
     console.log(selected_alerts);
 }
