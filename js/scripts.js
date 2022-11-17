@@ -10,9 +10,9 @@ window.addEventListener('DOMContentLoaded', event => {
     const sidebarToggle = document.body.querySelector('#sidebarToggle');
     if (sidebarToggle) {
         // Uncomment Below to persist sidebar toggle between refreshes
-         if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-             document.body.classList.toggle('sb-sidenav-toggled');
-         }
+        if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+            document.body.classList.toggle('sb-sidenav-toggled');
+        }
         sidebarToggle.addEventListener('click', event => {
             event.preventDefault();
             document.body.classList.toggle('sb-sidenav-toggled');
@@ -23,24 +23,37 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 
-
 function showHideRow(row) {
-    console.log("Desplegar")
-    var x=$("#" + row).toggle();
-    console.log("x --> ", x)
+    var x = $("#" + row).toggle();
+}
+
+//Reset all alerts
+function endEdit() {
+    //Deseleccionamos de manera visual todas las alertas
+    alerts = document.getElementsByClassName("form-check-input");
+    for (var i = 0; i < alerts.length; i++) {
+        alerts[i].checked = false;
+    }
+    selected_alerts = []
+    console.log(selected_alerts)
+}
+
+function quickEdit(el) {
+    selected_alerts.push(el.parentElement.parentElement.parentElement.id)
+    console.log(selected_alerts)
 }
 
 
 //selectAll:
 //Select all alerts that is show on the screen
-function selectAll(){
-    console.log("Select All");
+function selectAll() {
+    //console.log("Select All");
     alerts = document.getElementsByClassName("form-check-input");
     for (var i = 0; i < alerts.length; i++) {
-        alerts[i].checked=true;
+        alerts[i].checked = true;
         selected_alerts.push(alerts[i].parentElement.parentElement.parentElement.id);
-      }
-    console.log("Selected Alerts: "+selected_alerts);
+    }
+    console.log(selected_alerts);
 }
 
 //selectAlert:
@@ -50,44 +63,37 @@ function selectAll(){
 //Si esta ya estaba seleccionada, se deseleccionara y se guardaran los cambios en 
 //select_alerts.
 function selectAlert(val, idAlert) {
-    console.log("Valor", val.checked);
+    //console.log("Valor", val.checked);
     if (val.checked) {
         //Añadimos la alerta
         selected_alerts.push(idAlert);
-        console.log("ALERTAAA: "+ idAlert);
-        console.log("Selected Alerts: "+ selected_alerts);
+        console.log(selected_alerts);
     } else {
         //Quitamos la alerta
-        aux=[];
-        for(var i=0; i<selected_alerts.length ;i++){
-            if(selected_alerts[i].localeCompare(idAlert) != 0){
+        aux = [];
+        for (var i = 0; i < selected_alerts.length; i++) {
+            if (selected_alerts[i].localeCompare(idAlert) != 0) {
                 //selected_alerts[i].shift(aux)
                 //val.checked=false;
                 aux.push(selected_alerts[i]);
             }
-            
-        }        
-        selected_alerts=aux;
-        console.log("Desceleccionar alerta: "+aux);
-        console.log("Selected Alerts: "+selected_alerts);
+
+        }
+        selected_alerts = aux;
+        console.log(selected_alerts);
     }
 }
 
 //selectAlert:
 //Deselecionamos todas las alertas.
-function cleanAll(){
-    console.log("Limpiamos todas las alertas");
-    /*
-    for(var i=0; i<selected_alerts.length;i++){
-        document.getElementById(selected_alerts[i]).childNodes[1].children[0].children[0].checked=false; // Deseleccionamos del DOM las alertas.
-    }*/
+function cleanAll() {
     alerts = document.getElementsByClassName("form-check-input");
     for (var i = 0; i < alerts.length; i++) {
-        alerts[i].checked=false;
+        alerts[i].checked = false;
         selected_alerts.push();
-      }
+    }
 
-    selected_alerts=[]; // Borramos todas las alertas seleccionadas.
+    selected_alerts = []; // Borramos todas las alertas seleccionadas.
     console.log(selected_alerts);
 }
 
@@ -109,16 +115,14 @@ function ocultarTodosDivsYMostrar1(divToShow) {
     }
 }
 
-function EditSelected(button){
-    console.log("MACIAAAAAAAAAAAAAAA");
-    console.log(button);
-    if(selected_alerts.length != 0){
+function EditSelected(button) {
+    //console.log(button);
+    if (selected_alerts.length != 0) {
         //Se pueden editar alertas
-        console.log("SE PUEDE EDITAR !");
         button.dataset.target = "#EditAlert";
-    }else{
+    } else {
         //No se puede editar ninguna alerta ya que no hay ninguna seleccionada
-        console.log("NO SE PUEDE EDITAR !");
+        console.log("Error no se puede editar, no hay alertas seleccionadas!");
         button.dataset.target = "#showError";
     }
 }
