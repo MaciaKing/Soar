@@ -43,6 +43,10 @@ function quickEdit(el) {
     console.log(selected_alerts)
 }
 
+function EditAll(){
+    selectAll();
+    EditSelected();
+}
 
 //selectAll:
 //Select all alerts that is show on the screen
