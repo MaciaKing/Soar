@@ -812,19 +812,21 @@
                                             <label> Acciones</label>
                                         </div>
                                         <div class="col">
-                                                <button type="button" class="btn btn-success" data-toggle="modal" style='width:120px'
-                                                    data-target="#exampleModal">Edit
+                                            <button type="button" class="btn btn-success" data-toggle="modal"
+                                                style='width:120px' onclick="EditSelected(this)"
+                                                >Edit
                                                 Selected</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-success" style='width:120px'>Edit
+                                                All</button>
                                         </div>
                                         <div class="col">
                                             <button type="button" class="btn btn-success" style='width:120px'
                                                 onclick="selectAll()">Select
                                                 All</button>
                                         </div>
-                                        <div class="col">
-                                            <button type="button" class="btn btn-success" style='width:120px'>Edit
-                                                All</button>
-                                        </div>
+
                                         <div class="col">
                                             <button type="button" class="btn btn-success" style='width:120px'
                                                 onclick="cleanAll()">Clean All</button>
@@ -984,8 +986,8 @@
                 <!-- FIN ALERTAS -->
 
                 <!-- GESTIONADOR ALERTAS  -->
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                <!-- Modal Se puede editar -->
+                <div class="modal fade" id="EditAlert" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -1005,6 +1007,29 @@
                         </div>
                     </div>
                 </div>
+                <!-- Fin Modal Se puede editar -->
+                <!-- Modal NO EDITABLE -->
+                <div class="modal fade" id="showError" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">ERROR</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fin Modal NO EDITABLE -->
                 <!-- FIN GESTIONADOR ALERTAS  -->
 
             </main>

@@ -24,7 +24,6 @@ window.addEventListener('DOMContentLoaded', event => {
 
 
 
-//Funciona
 function showHideRow(row) {
     console.log("Desplegar")
     var x=$("#" + row).toggle();
@@ -110,5 +109,17 @@ function ocultarTodosDivsYMostrar1(divToShow) {
     }
 }
 
-
+function EditSelected(button){
+    console.log("MACIAAAAAAAAAAAAAAA");
+    console.log(button);
+    if(selected_alerts.length != 0){
+        //Se pueden editar alertas
+        console.log("SE PUEDE EDITAR !");
+        button.dataset.target = "#EditAlert";
+    }else{
+        //No se puede editar ninguna alerta ya que no hay ninguna seleccionada
+        console.log("NO SE PUEDE EDITAR !");
+        button.dataset.target = "#showError";
+    }
+}
 
