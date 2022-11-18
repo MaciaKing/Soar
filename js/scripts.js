@@ -27,6 +27,7 @@ function showHideRow(row) {
     var x = $("#" + row).toggle();
 }
 
+
 function selectNewAlert(id_alert){
     var isSelected=false;
     //Comprovar que no haya estado seleccionada antes
@@ -53,7 +54,11 @@ function endEdit() {
 }
 
 function quickEdit(el) {
-    selected_alerts.push(el.parentElement.parentElement.parentElement.id);
+    //Desseleccionamos más alertas si habian alguna ya seleccionada
+    cleanAll();
+    //console.log(el.parentElement.);
+
+    selectNewAlert(el.parentElement.parentElement.parentElement.id);
     console.log(selected_alerts);
 }
 
@@ -70,7 +75,6 @@ function selectAll() {
     for (var i = 0; i < alerts.length; i++) {
         alerts[i].checked = true;
         selectNewAlert(alerts[i].parentElement.parentElement.parentElement.id)
-        //selected_alerts.push(alerts[i].parentElement.parentElement.parentElement.id);
     }
     console.log(selected_alerts);
 }
@@ -85,7 +89,6 @@ function selectAlert(val, idAlert) {
     //console.log("Valor", val.checked);
     if (val.checked) {
         //Añadimos la alerta
-        //selected_alerts.push(idAlert);
         selectNewAlert(idAlert)
         console.log(selected_alerts);
     } else {
@@ -93,8 +96,6 @@ function selectAlert(val, idAlert) {
         aux = [];
         for (var i = 0; i < selected_alerts.length; i++) {
             if (selected_alerts[i].localeCompare(idAlert) != 0) {
-                //selected_alerts[i].shift(aux)
-                //val.checked=false;
                 aux.push(selected_alerts[i]);
             }
 
@@ -110,7 +111,6 @@ function cleanAll() {
     alerts = document.getElementsByClassName("form-check-input");
     for (var i = 0; i < alerts.length; i++) {
         alerts[i].checked = false;
-        //selected_alerts.push();
     }
 
     selected_alerts = []; // Borramos todas las alertas seleccionadas.

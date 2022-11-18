@@ -812,13 +812,13 @@
                                             <label> Acciones</label>
                                         </div>
                                         <div class="col">
-                                            <button  type="button" class="btn btn-success" data-toggle="modal"
-                                                style='width:120px' onclick="EditSelected(this)"
-                                                >Edit
+                                            <button type="button" class="btn btn-success" data-toggle="modal"
+                                                style='width:120px' onclick="EditSelected(this)">Edit
                                                 Selected</button>
                                         </div>
                                         <div class="col">
-                                            <button type="button" class="btn btn-success" style='width:120px' data-toggle="modal" onclick="EditAll(this)">Edit
+                                            <button type="button" class="btn btn-success" style='width:120px'
+                                                data-toggle="modal" onclick="EditAll(this)">Edit
                                                 All</button>
                                         </div>
                                         <div class="col">
@@ -867,8 +867,8 @@
                                                 <button type="button" class="btn btn-primary"
                                                     onclick="showHideRow('hidden_row1')"><i class="far fa-eye"
                                                         width="10" height="10"></i></button>
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" onclick="quickEdit(this)"
-                                                    data-target="#EditAlert">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    onclick="quickEdit(this)" data-target="#EditAlert">
                                                     <i class="fas fa-edit" width="10" height="10"></i>
                                                 </button>
                                             </div>
@@ -891,7 +891,7 @@
                                                     onclick="showHideRow('hidden_row2')"><i class="far fa-eye"
                                                         width="10" height="10"></i></button>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#exampleModal">
+                                                    onclick="quickEdit(this)" data-target="#EditAlert">
                                                     <i class="fas fa-edit" width="10" height="10"></i>
                                                 </button>
                                             </div>
@@ -914,8 +914,9 @@
                                                     onclick="showHideRow('hidden_row3')"><i class="far fa-eye"
                                                         width="10" height="10"></i></button>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#exampleModal">
+                                                    onclick="quickEdit(this)" data-target="#EditAlert">
                                                     <i class="fas fa-edit" width="10" height="10"></i>
+                                                </button>
                                                 </button>
                                             </div>
                                         </td>
@@ -937,7 +938,7 @@
                                                     onclick="showHideRow('hidden_row4')"><i class="far fa-eye"
                                                         width="10" height="10"></i></button>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#exampleModal">
+                                                    onclick="quickEdit(this)" data-target="#EditAlert">
                                                     <i class="fas fa-edit" width="10" height="10"></i>
                                                 </button>
                                             </div>
@@ -960,7 +961,7 @@
                                                     onclick="showHideRow('hidden_row5')"><i class="far fa-eye"
                                                         width="10" height="10"></i></button>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#exampleModal">
+                                                    onclick="quickEdit(this)" data-target="#EditAlert">
                                                     <i class="fas fa-edit" width="10" height="10"></i>
                                                 </button>
                                             </div>
@@ -987,13 +988,14 @@
 
                 <!-- GESTIONADOR ALERTAS  -->
                 <!-- Modal Se puede editar -->
-                <div class="modal fade" id="EditAlert" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="EditAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                <button type="button" class="close" onclick="endEdit()" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" onclick="endEdit()" data-dismiss="modal"
+                                    aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -1001,16 +1003,17 @@
                                 ...
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="endEdit()">Close</button>
-                                <button type="button" class="btn btn-primary" onclick="endEdit()" >Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    onclick="endEdit()">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="endEdit()">Save changes</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Fin Modal Se puede editar -->
                 <!-- Modal NO EDITABLE -->
-                <div class="modal fade" id="showError" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="showError" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
