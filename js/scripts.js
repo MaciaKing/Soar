@@ -27,6 +27,20 @@ function showHideRow(row) {
     var x = $("#" + row).toggle();
 }
 
+function selectNewAlert(id_alert){
+    var isSelected=false;
+    //Comprovar que no haya estado seleccionada antes
+    for (var i = 0; i < selected_alerts.length && !isSelected; i++) {
+        if(selected_alerts[i]==id_alert){
+            isSelected=true;
+        }
+    }
+    //Si la alerta no estaba seleccionada, la seleccionamos
+    if(!isSelected){ 
+        selected_alerts.push(id_alert);
+    }
+}
+
 //Reset all alerts
 function endEdit() {
     //Deseleccionamos de manera visual todas las alertas
@@ -34,18 +48,18 @@ function endEdit() {
     for (var i = 0; i < alerts.length; i++) {
         alerts[i].checked = false;
     }
-    selected_alerts = []
-    console.log(selected_alerts)
+    selected_alerts = [];
+    console.log(selected_alerts);
 }
 
 function quickEdit(el) {
-    selected_alerts.push(el.parentElement.parentElement.parentElement.id)
-    console.log(selected_alerts)
+    selected_alerts.push(el.parentElement.parentElement.parentElement.id);
+    console.log(selected_alerts);
 }
 
-function EditAll(){
-    selectAll();
-    EditSelected();
+function EditAll(button){
+    selectAll(); //Select all alerts
+    EditSelected(button);  //Edit all alerts
 }
 
 //selectAll:
@@ -55,7 +69,8 @@ function selectAll() {
     alerts = document.getElementsByClassName("form-check-input");
     for (var i = 0; i < alerts.length; i++) {
         alerts[i].checked = true;
-        selected_alerts.push(alerts[i].parentElement.parentElement.parentElement.id);
+        selectNewAlert(alerts[i].parentElement.parentElement.parentElement.id)
+        //selected_alerts.push(alerts[i].parentElement.parentElement.parentElement.id);
     }
     console.log(selected_alerts);
 }
@@ -70,7 +85,8 @@ function selectAlert(val, idAlert) {
     //console.log("Valor", val.checked);
     if (val.checked) {
         //Añadimos la alerta
-        selected_alerts.push(idAlert);
+        //selected_alerts.push(idAlert);
+        selectNewAlert(idAlert)
         console.log(selected_alerts);
     } else {
         //Quitamos la alerta
@@ -94,7 +110,7 @@ function cleanAll() {
     alerts = document.getElementsByClassName("form-check-input");
     for (var i = 0; i < alerts.length; i++) {
         alerts[i].checked = false;
-        selected_alerts.push();
+        //selected_alerts.push();
     }
 
     selected_alerts = []; // Borramos todas las alertas seleccionadas.
@@ -123,6 +139,7 @@ function EditSelected(button) {
     //console.log(button);
     if (selected_alerts.length != 0) {
         //Se pueden editar alertas
+        console.log("TRUEEEE")
         button.dataset.target = "#EditAlert";
     } else {
         //No se puede editar ninguna alerta ya que no hay ninguna seleccionada
