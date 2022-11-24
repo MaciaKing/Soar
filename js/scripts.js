@@ -23,6 +23,26 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 
+function loadAlerts() {
+    jQuery.ajax({
+        //type: "POST",
+	type: 'POST',
+	//url: './php/connect.php',
+        url: './Back-End/reciver.php',
+	//dataType:'text',
+	data: {
+            dat: "data1macia"
+        },
+        success: function (data) {
+	   //m(JSON.parse(obj));
+	  console.log("Ha ido bien");
+          console.log("Recivido --> ",data);
+	}
+    });
+}
+
+
+
 function showHideRow(row) {
     var x = $("#" + row).toggle();
 }
@@ -126,7 +146,11 @@ function ocultarTodosDivsYMostrar1(divToShow) {
             //mostramos este divs
             console.log("Mostramos div: ", divToShow);
             document.getElementById(divToShow).style.display = "block";
-            console.log("Activado")
+           // console.log("Activado")
+	    if( divs[i] == "ALERTAS"){ //Cargamos todas las alertas
+	       console.log("ANTES DE CONNECTAR SERVIDOR: ");
+	       loadAlerts();     
+	    }
         } else {
             //ocultamos el divs
             console.log("Ocultamos div: " + divs[i]);

@@ -1,0 +1,141 @@
+import splunklib.client as client
+import splunklib.results as results
+import psycopg2
+import json
+ 
+
+alerts = {'_bkt': '', '_cd': '', '_indextime': '', '_kv': '', '_raw': '', '_serial': '', '_si': [''], '_sourcetype': '', '_time': '', 'action': '', 'host': '', 'index': '', 'linecount': '', 'source': '', 'sourcetype': '', 'splunk_server': '', 'status': ''}
+
+
+
+#Params for connect to Splunk Api
+HOST_API = '172.20.200.175'
+USARNAME_API = 'oasoc.api'
+PASSW_API = 'YItt@$cA6KSWc!'
+PORT_API= 8089
+
+#Params for connect Postgres database
+USER_DB="soar"
+PASSW_DB= "soar"
+HOST_DB="localhost"
+NAME_DB="soardatabase"
+
+
+#All querys to search into splunk
+querys = ["search index=alerts_omniaccess AND action=create"]
+#querys = ["search `all_alerts()` | fillnull value=\"unknown\" owner, status, status_description, impact, urgency, priority, group_id | search title=\"*\" owner=\"*\" alert=\"*\" category=\"*\" subcategory=\"*\" incident_id=\"*\" group_id=\"*\"  | eval dobulkedit=incident_id, doedit=\" \", doquickassign=\" \", doaction=\" \" | join incident_id [| search index=\"alerts_omniaccess\" sourcetype=alert_data_results | fields incident_id, fields{}.index, fields{}.action, fields{}.srcip, fields{}.dstip]"]
+#querys= ["search index=alerts_omniaccess sourcetype=\"alert_metadata\"| fields _time, incident_id, alert, app, category, subcategory, tags, earliest, latest, eventSearch, owner, priority, result_id, title, urgency, alert_time, display_fields| lookup incidents incident_id OUTPUT alert, title, owner, status, impact, urgency, external_reference_id, duplicate_count, alert_time as earliest_alert_time, group_id, category, subcategory, tags, display_fields| lookup incident_groups _key AS group_id OUTPUT group| lookup alert_priority impact, urgency OUTPUT priority| lookup incident_settings alert OUTPUTNEW category AS category_settings, subcategory as subcategory_setttings, tags as tags_settings, display_fields as display_fields_settings| lookup alert_status status OUTPUT status_description| dedup incident_id| eval first_seen=strftime(earliest_alert_time, \"%Y-%m-%d %H:%M:%S\"), title=if(isnull(title) OR title=\"\",alert,title), category=if(category=\"\" OR isnull(category),category_settings,category),subcategory=if(subcategory=\"\" OR isnull(subcategory),subcategory_settings,subcategory),tags=if(tags=\"\",tags_settings,tags),display_fields=if(display_fields=\"\",display_fields_settings,display_fields)| fillnull value=\"\" tags, category, subcategory| eval tags=if(tags==\"\",\"[Untagged]\",tags)| makemv delim=\" \" tags"]
+
+def madeCurl(query):
+    '''
+    Params: query
+
+    This method is for extract any query from splunk. The query is the param
+    search.
+    Return search like JSON
+    '''
+    #spl = 'search index=* | stats count by index'
+    #spl = 'search index=alerts_omniaccess earliest=-1h latest=now status=*'
+    spl = query
+    splunk_search_kwargs = {"exec_mode": "blocking",
+                        "earliest_time": "-1h",
+                        "latest_time": "now",
+                        "enable_lookups": "true"}
+   
+    splunk_object=client.connect(host=HOST_API, port=PORT_API,
+                   username=USARNAME_API, password=PASSW_API)
+
+
+    splunk_search_job = splunk_object.jobs.create(spl, **splunk_search_kwargs)
+    search_results_json = []
+    get_offset = 0
+    max_get = 1
+    result_count = int(splunk_search_job['resultCount'])
+    while (get_offset < result_count):
+        r = splunk_search_job.results(**{"count": max_get, "offset": get_offset, "output_mode": "json"})
+        obj = json.loads(r.read())
+        search_results_json.extend(obj['results'])
+        get_offset += max_get
+
+    
+    return search_results_json
+
+
+def getInserts(jsonToDatabase, add_insert):
+    '''
+    
+    '''
+    #Convert json to datbase Insert
+    #print("\n\n")
+    insert="INSERT INTO alert (" + ','.join(alerts)+") values ("
+    first_value_insert=True
+    for key in alerts.keys():
+        #alerts[key]=jsonToDatabase[key]
+        try:
+            if first_value_insert:
+                insert+="'"+str(jsonToDatabase[key])+"'"
+                first_value_insert=False
+            else:
+                if type(jsonToDatabase[key]) == list:
+                    insert+=", ARRAY "+str(jsonToDatabase[key])
+                else:
+                    insert+=", '"+str(jsonToDatabase[key])+"'"
+        except:
+            insert+= "' '" #This var is not found on javascript
+    insert+=")"
+    add_insert.append(insert)
+
+
+def joinAllInserts(all_inserts):
+    final_insert=""
+    first_value=True
+    for i in all_inserts:
+        aux=i.split("values (")
+        if first_value:
+            final_insert+=aux[0]+"values (" #This is INSERT INTO <table> values     
+            final_insert+=aux[1] 
+            first_value=False
+        else:
+            final_insert+=", " #For separate diferents inserts
+            #print("\n\n aux[1] --> "+aux[1])
+            final_insert+="("+aux[1]
+
+        #print("\n aux0="+aux[0]+"\n aux[1] "+aux[1])
+    #print(final_insert)       
+    return final_insert    
+
+
+def makeInsertDatabase(inserts):
+    print("hola")
+    conn = psycopg2.connect(
+        host=HOST_DB,
+        database=NAME_DB,
+        user=USER_DB,
+        password=PASSW_DB)
+
+    cur = conn.cursor()
+    for insert in inserts:
+        print(i)
+        cur.execute(insert)
+
+    cur = conn.cursor()
+    conn.commit()
+    cur.close()
+
+
+all_insert_alerts=[]
+all_insert_events=[]
+### MAIN ###
+if __name__ == "__main__":
+    #Made all querys to Splunk search
+    for i in querys:
+        print("QUERY: ", i)
+        results_query=madeCurl(i) #Array de JSON
+        for result in results_query:
+            #print("\n\n")
+            #print(result)
+            #print("\n")
+            getInserts(json.loads(json.dumps(result)), all_insert_alerts)
+        final_insert_alerts=joinAllInserts(all_insert_alerts)
+        makeInsertDatabase([final_insert_alerts])
+      
