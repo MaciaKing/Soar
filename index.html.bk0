@@ -850,7 +850,7 @@
                             </div>
 
                             <table id="table_alerts" class="table table-striped table-dark">
-                               <!-- <thead>
+                                <thead>
                                     <tr>
                                         <th scope="col">Actions</th>
                                         <th scope="col">First</th>
@@ -979,7 +979,7 @@
 
 
                                 </tbody>
-                            </table>-->
+                            </table>
 
 
                         </div>

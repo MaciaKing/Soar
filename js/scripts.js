@@ -22,12 +22,36 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
+
 function showAlerts(alerts_to_show){
+	console.log(document.getElementById("table_alerts"));
+	var div=document.getElementById("table_alerts");
+	//SELECT incident_id, fields__time, title, fields_urgency, fields_action, index  FROM event
+        //Cabecera de la taula
+	var content= '<thead><tr><th scope="col">Time</th><th scope="col">Title</th><th scope="col">Urgency</th><th scope="col">Action</th><th scope="col">Index</th></tr></thead>'; 
+	div.innerHTML = content;
 
-console.log("MACIAAAAAAAA !!!!!!!!!!!2222", alerts_to_show);
-console.log("MACIAAAAAAAA !!!!!!!!!!!2222 FIIIIIN")
-
+	//Afegim les alertes
+	console.log(typeof(alerts_to_show));
+	//console.log("ALERTS --> ", typeof(alerts), alerts);
+	
+	content+="<tbody>";
+	for (var i = 0; i < alerts_to_show.length; i++){
+ 		//document.write("<br><br>array index: " + i);
+  		console.log("i = ",i);
+		var obj = alerts_to_show[i];
+  		console.log(obj);
+		for (var key in obj){
+    			var value = obj[key];
+    			//document.write("<br> - " + key + ": " + value);
+  			console.log("valor --> ", value);
+		}
+	}
+	content+="</tbody>";
+	//console.log("MACIAAAAAAAA !!!!!!!!!!!2222", alerts_to_show);
+	//console.log("MACIAAAAAAAA !!!!!!!!!!!2222 FIIIIIN")
 }
+
 
 function loadAlerts() {
     //var alertas=null;	
@@ -36,7 +60,7 @@ function loadAlerts() {
 	type: 'POST',
 	//url: './php/connect.php',
         url: './Back-End/reciver.php',
-	//dataType:'text',
+	dataType:"json",
 	data: {
             dat: "macia"
         },

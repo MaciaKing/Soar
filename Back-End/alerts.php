@@ -109,6 +109,9 @@ function getAllAlerts(){
   $query = "SELECT incident_id, fields__time, title, fields_urgency, fields_action, index  FROM event";
   //$query = "SELECT * FROM ALERT";
   $res=$db->query($query); 
+  $allRes=pg_fetch_all($res);
+  echo json_encode($allRes);
+  /*
   //$lineCount=0
   while ($row = (pg_fetch_row($res))){
 	echo "".gettype($row)." array.length=".count($row)."\n";
@@ -116,7 +119,7 @@ function getAllAlerts(){
 	for ($i = 0; $i < count($row); $i++) {
 		echo  "valor=".$row[$i]."\n";
 	}
-  }
+ }*/
   
 }
 
