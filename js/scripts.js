@@ -22,23 +22,37 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
+function showAlerts(alerts_to_show){
+
+console.log("MACIAAAAAAAA !!!!!!!!!!!2222", alerts_to_show);
+console.log("MACIAAAAAAAA !!!!!!!!!!!2222 FIIIIIN")
+
+}
 
 function loadAlerts() {
-    jQuery.ajax({
+    //var alertas=null;	
+    var alertas= jQuery.ajax({
         //type: "POST",
 	type: 'POST',
 	//url: './php/connect.php',
         url: './Back-End/reciver.php',
 	//dataType:'text',
 	data: {
-            dat: "data1macia"
+            dat: "macia"
         },
         success: function (data) {
-	   //m(JSON.parse(obj));
-	  console.log("Ha ido bien");
-          console.log("Recivido --> ",data);
+          console.log("Recibido --> ",data);
+	  showAlerts(data);
+	  //return data;
+	},
+	error: function(xhr, status, error) {
+ 	  var err = eval("(" + xhr.responseText + ")");
+  	  alert(err.Message);
 	}
     });
+
+    //console.log("MACIAAAAAAAA !!!!!!!!!!!1");
+    //console.log("Alertas recibidas"+alertas);
 }
 
 

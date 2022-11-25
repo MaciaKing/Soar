@@ -1,17 +1,19 @@
 <?php
 //$pp = mysqli_connect("localhost","root","") or die("adios");
 //$db = mysqli_select_db($pp,"adiiu") or die("hola");
+include 'alerts.php';
 
 $recogida=$_POST['dat'];
-echo $recogida;
+$res="";
 
-if($recogida=="data1macia"){
-	data1macia();
-	echo "CONECTAADOOOOO !!!";
+if($recogida=="macia"){
+	//$res="si coincide";
+	getAllAlerts();
 }else{
-	echo "NO RECOGIDA";
+	$res="no coincide";
 }
 
+echo $res;
 
 
 ?>

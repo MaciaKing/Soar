@@ -21,7 +21,7 @@ alerts = {'_bkt': '', '_cd': '', '_indextime': '', '_kv': '', '_raw': '', '_seri
 
 #events = {'alert_time':'','incident_id':'','alert':'','status':'','fields{}._raw':''}
 
-events = {'incident_id':'','fields{}._raw':'','fields{}.EventCode':'','fields{}._time':'','fields{}.action':'','fields{}.app':'','fields{}.cat':'','fields{}.catdesc':'','fields{}.category':'','fields{}.conn_count':'','fields{}.date':'','fields{}.dest_ip':'','fields{}.dest_port':'','fields{}.devname':'','fields{}.diff_deviation':'','fields{}.eventtype':'','fields{}.host':'','fields{}.index':'','fields{}.level':'','fields{}.msg':'','fields{}.severity':'','fields{}.signature':'','fields{}.source':'','fields{}.source_ip':'','fields{}.src_ip':'','fields{}.src_user':'','fields{}.srcintf':'','fields{}.subtype':'','fields{}.ta_windows_action':'','fields{}.time':'','fields{}.type':'','fields{}.urgency':'','fields{}.url':'','fields{}.user':'','host':'','index':'','tag':''}
+events = {'incident_id':'', 'title':'', 'fields{}._raw':'','fields{}.EventCode':'','fields{}._time':'','fields{}.action':'','fields{}.app':'','fields{}.cat':'','fields{}.catdesc':'','fields{}.category':'','fields{}.conn_count':'','fields{}.date':'','fields{}.dest_ip':'','fields{}.dest_port':'','fields{}.devname':'','fields{}.diff_deviation':'','fields{}.eventtype':'','fields{}.host':'','fields{}.index':'','fields{}.level':'','fields{}.msg':'','fields{}.severity':'','fields{}.signature':'','fields{}.source':'','fields{}.source_ip':'','fields{}.src_ip':'','fields{}.src_user':'','fields{}.srcintf':'','fields{}.subtype':'','fields{}.ta_windows_action':'','fields{}.time':'','fields{}.type':'','fields{}.urgency':'','fields{}.url':'','fields{}.user':'','host':'','index':'','tag':''}
 
 
 '''
@@ -29,6 +29,7 @@ events = {'incident_id':'','fields{}._raw':'','fields{}.EventCode':'','fields{}.
 
 {
 'incident_id':'',
+'title':'','title':'',
 'fields{}._raw':'',
 'fields{}.EventCode':'',
 'fields{}._time':'',
@@ -106,7 +107,7 @@ NAME_DB="soardatabase"
 
 #querys= ["search index=\"alerts_omniaccess\" AND sourcetype=\"incident_change\" status=new NOT alert IN (\"OA - HTTP/HTTPS Beaconing\")| table alert_time, incident_id, alert, status| join incident_id[| search index=\"alerts_omniaccess\" AND sourcetype=\"alert_data_results\"| fields incident_id, fields{}._raw]"]
 
-querys=["search index=\"alerts_omniaccess\" AND sourcetype=\"incident_change\" status=new NOT alert IN (\"OA - HTTP/HTTPS Beaconing\")| table alert_time, incident_id, alert, status| join incident_id[| search index=\"alerts_omniaccess\" AND sourcetype=\"alert_data_results\"| fields incident_id, fields{}._raw, fields{}.EventCode, fields{}._time, fields{}.action, fields{}.app, fields{}.cat, fields{}.catdesc,  fields{}.category, fields{}.conn_count, fields{}.date, fields{}.dest_ip, fields{}.dest_port, fields{}.devname, fields{}.diff_deviation, fields{}.eventtype, fields{}.host,  fields{}.index, fields{}.level, fields{}.msg, fields{}.severity,  fields{}.signature,  fields{}.source, fields{}.source_ip,fields{}.src_ip,fields{}.src_user,fields{}.srcintf,fields{}.subtype,fields{}.ta_windows_action,fields{}.time,fields{}.type,fields{}.urgency,fields{}.url,fields{}.user,host,index,tag]"]
+querys=["search index=\"alerts_omniaccess\" AND sourcetype=\"incident_change\" status=new NOT alert IN (\"OA - HTTP/HTTPS Beaconing\")| table alert_time, incident_id, alert, status| join incident_id[| search index=\"alerts_omniaccess\" AND sourcetype=\"alert_data_results\"| fields incident_id, title, fields{}._raw, fields{}.EventCode, fields{}._time, fields{}.action, fields{}.app, fields{}.cat, fields{}.catdesc,  fields{}.category, fields{}.conn_count, fields{}.date, fields{}.dest_ip, fields{}.dest_port, fields{}.devname, fields{}.diff_deviation, fields{}.eventtype, fields{}.host,  fields{}.index, fields{}.level, fields{}.msg, fields{}.severity,  fields{}.signature,  fields{}.source, fields{}.source_ip,fields{}.src_ip,fields{}.src_user,fields{}.srcintf,fields{}.subtype,fields{}.ta_windows_action,fields{}.time,fields{}.type,fields{}.urgency,fields{}.url,fields{}.user,host,index,tag]"]
 
 #querys = ["search index=\"alerts_omniaccess\" AND sourcetype=\"alert_data_results\" AND fields{}._raw=* AND NOT alert=*Beaconing| fields{}._raw"]
 #querys = ["search index=alerts_omniaccess AND action=create"]

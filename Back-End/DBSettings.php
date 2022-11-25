@@ -1,7 +1,6 @@
 <?php
 class DatabaseSettings{
 	var $settings;
-
 	function getSettings(){
 		/*
 		USER_DB="soar"
@@ -12,7 +11,7 @@ class DatabaseSettings{
 
 		// Database variables
 		// Host name
-		$settings['dbhost'] = 'soar';
+		$settings['dbhost'] = '';
 		// Database name
 		$settings['dbname'] = 'soardatabase';
 		// Username

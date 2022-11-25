@@ -1,11 +1,15 @@
-<?php
-	
-require_once( 'DBSettings.php' ); 
+<?php	
+//require_once( 'DBSettings.php' ); 
+
+include 'DBSettings.php';
+
 //Database class to connect to database and fire queries
 class DBClass extends DatabaseSettings{
 
-	var $classQuery;
-	var $link;
+	var $classQuery; //borra
+	var $link; //borra
+	private $conn_string;
+	private $dbconn;
 	
 	var $errno = '';
 	var $error = '';
@@ -13,22 +17,33 @@ class DBClass extends DatabaseSettings{
 	// Connects to the database
 	function openConnection(){
 		// Load settings from parent class
-		$settings = DatabaseSettings::getSettings();
+	//	$settings = DatabaseSettings::getSettings();
 		
 		// Get the main settings from the array we just loaded
-		$host = $settings['dbhost'];
-		$name = $settings['dbname'];
-		$user = $settings['dbusername'];
-		$pass = $settings['dbpassword'];
-		
+	//	$host = $settings['dbhost'];
+	//	$name = $settings['dbname'];
+	//	$user = $settings['dbusername'];
+	//	$pass = $settings['dbpassword'];
+
 		// Connect to the database
-		$this->link = new mysqli( $host , $user , $pass , $name );
+		$this->conn_string = "host=localhost port=5432 dbname=soardatabase user=soar password=soar";
+		$this->dbconn = pg_connect($this->conn_string);
+		/*FuncionantSELECT * FROM ALERT
+		$res=pg_query($this->dbconn,"SELECT * FROM ALERT");
+		while ($row = (pg_fetch_row($res))){
+			echo "macia\n";
+			echo "$row[3] \n"; 
+		}*/
 	}
 	
 	// Executes a database query
 	function query( $query ){
-		$this->classQuery = $query;
-		return $this->link->query( $query );
+		/*$res=pg_query($this->dbconn,"SELECT * FROM ALERT");
+                while ($row = (pg_fetch_row($res))){
+			echo "macia\n";
+			echo "$row[1] \n";
+		}*/
+                return pg_query($this->dbconn,$query);
 	}
 	
 	function escapeString( $query ){
@@ -86,14 +101,23 @@ class DBClass extends DatabaseSettings{
 
 
 //All selects
-function getAllAlerts(){
- $db = new DBClass();
- $conn = $db->openConnection();
- $res = $db->query("select incident_id from event;");
- $toReturn = $db-> fetchRow($res);
- $db->freeResult($res);
- $db->close();  
- return $toReturn;
+function getAllAlerts(){	
+  $db = new DBClass();
+  $db->openConnection();
+
+  //$query = "SELECT incident_id, fields__time, title, owner, status, fields_urgency, fields_action, index  FROM event"; //IDEAL
+  $query = "SELECT incident_id, fields__time, title, fields_urgency, fields_action, index  FROM event";
+  //$query = "SELECT * FROM ALERT";
+  $res=$db->query($query); 
+  //$lineCount=0
+  while ($row = (pg_fetch_row($res))){
+	echo "".gettype($row)." array.length=".count($row)."\n";
+	//foreach ($row as $elemnt) { //Tratamiento de la quey
+	for ($i = 0; $i < count($row); $i++) {
+		echo  "valor=".$row[$i]."\n";
+	}
+  }
+  
 }
 
 

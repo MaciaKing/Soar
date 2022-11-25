@@ -60,6 +60,8 @@ CREATE TABLE Alert(
 
 CREATE TABLE event (
 	incident_id text,
+	title text,
+	status text,
 	fields__raw text,
 	fields_EventCode text,
 	fields__time text,
