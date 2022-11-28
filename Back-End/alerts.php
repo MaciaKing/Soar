@@ -80,13 +80,13 @@ class DBClass extends DatabaseSettings{
 	}
 	
 	// Free all MySQL result memory
-	function freeResult( $result ){
-		$this->link->free_result( $result );
+	function freeResult( $res ){
+		pg_free_result($res);
 	}
 	
 	//Closes the database connection
 	function close(){
-		$this->link->close();
+  		pg_close($this->dbconn);	
 	}
 	
 	function sql_error(){
@@ -120,9 +120,25 @@ function getAllAlerts(){
 		echo  "valor=".$row[$i]."\n";
 	}
  }*/
-  
+
+  $db->freeResult($res);
+  $db->close();
 }
 
+
+function getEvents($incident_id){
+  $db = new DBClass();
+  $db->openConnection();
+
+  //Ideal tenir tables separades de ALERTS i EVENTS
+  $query = "SELECT * EXCEPT(incident_id, fields__time, title, fields_urgency, fields_action, index) FROM event WHERE incident_id=".$incident_id;
+  $res=$db->query($query);
+  $allRes=pg_fetch_all($res); 
+  echo json_encode($allRes);
+	
+  $db->freeResult($res);
+  $db->close();  
+}
 
 //All Inserts
 

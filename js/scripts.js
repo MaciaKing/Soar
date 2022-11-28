@@ -1,6 +1,10 @@
 // 
 // Scripts for Alerts
-// 
+//
+
+
+
+
 var divs = new Array("DASHBOARD", "ALERTAS"); //Variable donde guardamos los divs que ocultamos y mostramos.
 var selected_alerts = []; //Variable donde editamos las Alertas seleccionadas.
 
@@ -24,32 +28,71 @@ window.addEventListener('DOMContentLoaded', event => {
 
 
 function showAlerts(alerts_to_show){
+/*
+<tbody>
+
+                                    <tr id="row1">
+                                        <td>
+                                            <div>
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckIndeterminate" onclick="selectAlert(this,'row1')">
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="showHideRow('hidden_row1')"><i class="far fa-eye"
+                                                        width="10" height="10"></i></button>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    onclick="quickEdit(this)" data-target="#EditAlert">
+                                                    <i class="fas fa-edit" width="10" height="10"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>Sales Assistant</td>
+                                        <td>New York</td>
+                                        <td>46</td>
+                                    <tr id="hidden_row1" class="hidden_row" style="display: none;">
+                                        <td colspan=4>
+                                            INFORMACION DE LA ALERTA !!!!!!!!!!!!!
+                                        </td>
+                                    </tr>
+                                    </tr>
+ 
+*/	
 	console.log(document.getElementById("table_alerts"));
 	var div=document.getElementById("table_alerts");
 	//SELECT incident_id, fields__time, title, fields_urgency, fields_action, index  FROM event
         //Cabecera de la taula
-	var content= '<thead><tr><th scope="col">Time</th><th scope="col">Title</th><th scope="col">Urgency</th><th scope="col">Action</th><th scope="col">Index</th></tr></thead>'; 
-	div.innerHTML = content;
+	div.innerHTML='' //Para que siempre se actualize y no queden restos de la tabla anterior
+	var content= '<thead><tr><th scope=\"col\">Actions</th> <th scope=\"col\">Time</th><th scope=\"col\">Title</th><th scope=\"col\">Urgency</th><th scope=\"col\">Action</th><th scope=\"col\">Index</th></tr></thead>'; 
+	//div.innerHTML += content;
 
 	//Afegim les alertes
 	console.log(typeof(alerts_to_show));
 	//console.log("ALERTS --> ", typeof(alerts), alerts);
 	
-	content+="<tbody>";
+	content+='<tbody>';
 	for (var i = 0; i < alerts_to_show.length; i++){
  		//document.write("<br><br>array index: " + i);
   		console.log("i = ",i);
 		var obj = alerts_to_show[i];
   		console.log(obj);
+		var aux=0
+		var aux_id='';
 		for (var key in obj){
-    			var value = obj[key];
-    			//document.write("<br> - " + key + ": " + value);
-  			console.log("valor --> ", value);
+			var value = obj[key];
+			if(aux==0){//idAlert	
+		  	  aux_id=value;	
+		          content+='<tr id=\"'+value+'\"><td><div><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckIndeterminate\" onclick=\"selectAlert(this,\''+value +'\')\" ><button type=\"button\" class=\"btn btn-primary\" onclick=\"showHideRow(\'hidden_row_'+value+'\')\" ><i class=\"far fa-eye\" width=\"10\" height=\"10\"></i></button><button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" onclick=\"quickEdit(this)\"  data-target=\"#EditAlert\"><i class=\"fas fa-edit\" width=\"10\" height=\"10\"></i></button> </div></td>';
+			  aux=aux+1;
+			}else{
+			  //document.write("<br> - " + key + ": " + value);
+                          //console.log(key," --> ", value)
+		          content+='<td>'+ value+'</td>';
+			}
 		}
+		content+='<tr id=\"hidden_row_'+aux_id+'\" class=\"hidden_row\" style=\"display: none;\"> <td colspan=4> INFORMACION DE LA ALERTA !!!!!!!!!!!!!</td></tr></tr>';
 	}
-	content+="</tbody>";
-	//console.log("MACIAAAAAAAA !!!!!!!!!!!2222", alerts_to_show);
-	//console.log("MACIAAAAAAAA !!!!!!!!!!!2222 FIIIIIN")
+	content+='</tbody>';
+	div.innerHTML += content;
+	console.log("CONTENT--> ",content);
 }
 
 
@@ -62,7 +105,7 @@ function loadAlerts() {
         url: './Back-End/reciver.php',
 	dataType:"json",
 	data: {
-            dat: "macia"
+            dat: "getAlerts"
         },
         success: function (data) {
           console.log("Recibido --> ",data);
@@ -74,15 +117,34 @@ function loadAlerts() {
   	  alert(err.Message);
 	}
     });
+}
 
-    //console.log("MACIAAAAAAAA !!!!!!!!!!!1");
-    //console.log("Alertas recibidas"+alertas);
+
+
+function loadEvent(incident_id){
+	var events= jQuery.ajax({
+        type: 'POST',
+        url: './Back-End/reciver.php',
+        dataType:"json",
+        data: {
+		dat: "getEvents", incident_id: incident_id
+        },
+        success: function (data) {
+          console.log("Recibido --> ",data);
+          showAlerts(data);
+          //return data;
+        },
+        error: function(xhr, status, error) {
+          var err = eval("(" + xhr.responseText + ")");
+          alert(err.Message);
+        }
+    });
 }
 
 
 
 function showHideRow(row) {
-    var x = $("#" + row).toggle();
+    var x = $("#"+row).toggle();
 }
 
 
@@ -163,7 +225,6 @@ function selectAlert(val, idAlert) {
     }
 }
 
-//selectAlert:
 //Deselecionamos todas las alertas.
 function cleanAll() {
     alerts = document.getElementsByClassName("form-check-input");
@@ -179,6 +240,7 @@ function cleanAll() {
 //  param: divToShow    --> id= "divToShow"
 //Ocultamos todos los divs y solo mostramos el idDivs que entra por parametro
 function ocultarTodosDivsYMostrar1(divToShow) {
+    console.log("ENSEÑAR --> "+divToShow);
     for (var i = 0; i < divs.length; i++) {
         if (divs[i] === divToShow) {
             //mostramos este divs

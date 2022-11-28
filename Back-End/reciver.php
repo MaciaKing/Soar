@@ -1,16 +1,22 @@
 <?php
-//$pp = mysqli_connect("localhost","root","") or die("adios");
-//$db = mysqli_select_db($pp,"adiiu") or die("hola");
 include 'alerts.php';
 
-$recogida=$_POST['dat'];
+$values=array('dat','incident_id');
+
+$recogida=$_POST['dat']; //function
+
+if (empty($_POST[$values[2]])){
+   $incident_id=$_POST[$values[2]]; 
+}
+
 $res="";
 
-if($recogida=="macia"){
-	//$res="si coincide";
+if($recogida=="getAlerts"){
 	getAllAlerts();
+}elseif($recogida=="getEvents"){
+       echo "getEvents".$incident_id;
 }else{
-	$res="no coincide";
+  $res="no coincide";
 }
 
 echo $res;
