@@ -80,7 +80,7 @@ function showAlerts(alerts_to_show){
 			var value = obj[key];
 			if(aux==0){//idAlert	
 		  	  aux_id=value;	
-		          content+='<tr id=\"'+value+'\"><td><div><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckIndeterminate\" onclick=\"selectAlert(this,\''+value +'\')\" ><button type=\"button\" class=\"btn btn-primary\" onclick=\"showHideRow(\'hidden_row_'+value+'\')\" ><i class=\"far fa-eye\" width=\"10\" height=\"10\"></i></button><button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" onclick=\"quickEdit(this)\"  data-target=\"#EditAlert\"><i class=\"fas fa-edit\" width=\"10\" height=\"10\"></i></button> </div></td>';
+		          content+='<tr id=\"'+value+'\"><td><div><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckIndeterminate\" onclick=\"selectAlert(this,\''+value +'\')\" ><button type=\"button\" class=\"btn btn-primary\" onclick=\"showHideRow(\'hidden_row_'+value+'\',\''+value+'\')\" ><i class=\"far fa-eye\" width=\"10\" height=\"10\"></i></button><button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" onclick=\"quickEdit(this)\"  data-target=\"#EditAlert\"><i class=\"fas fa-edit\" width=\"10\" height=\"10\"></i></button> </div></td>';
 			  aux=aux+1;
 			}else{
 			  //document.write("<br> - " + key + ": " + value);
@@ -120,19 +120,59 @@ function loadAlerts() {
 }
 
 
+function viewEventAlert(data, div){
+	/*
+	 <table border="2" bordercolor="blue">
+                    <tr>
+                        <td>inner Table row 1 column 1</td>
+                        <td>inner Table row 1 column 2</td>
+                    </tr>
+                    <tr>
+                        <td>inner Table row 2 column 1 </td>
+                        <td>inner Table row 2 column 2</td>
+                    </tr>
+                    <tr>
+                        <td>inner Table row 3 column 1 </td>
+                        <td>inner Table row 3 column 2</td>
+                    </tr>
+                </table>
+	*/
 
-function loadEvent(incident_id){
+	var div_element = document.getElementById(div);
+	var content='';
+	content = '<td>';
+	console.log("dades a mostrar "+typeof(data));
+	var events = JSON.parse(data);
+	console.log(typeof(events));
+	for (var i = 0; i < events.length; i++){
+                var obj = events[i];
+                console.log(obj);
+                for (var key in obj){
+		    //console.log("LENGTHHH ", obj[key].length)	
+		   if(obj[key].length ===1){
+		       content+=key+':\t - <br>';
+		   }else{
+		   	content+=key+':\t'+obj[key]+'<br>';	
+		   }
+		 }
+	}
+	
+	content+='</td>';
+	div_element.innerHTML=content;
+	console.log(content);
+}
+
+
+function loadEvent(incident){
 	var events= jQuery.ajax({
         type: 'POST',
         url: './Back-End/reciver.php',
-        dataType:"json",
+        //dataType:"json",
         data: {
-		dat: "getEvents", incident_id: incident_id
+		dat: "getEvents", incident_id: incident
         },
         success: function (data) {
-          console.log("Recibido --> ",data);
-          showAlerts(data);
-          //return data;
+          viewEventAlert(data, ("hidden_row_"+incident));
         },
         error: function(xhr, status, error) {
           var err = eval("(" + xhr.responseText + ")");
@@ -143,8 +183,11 @@ function loadEvent(incident_id){
 
 
 
-function showHideRow(row) {
+function showHideRow(row,incident_id) {
+    console.log("search events for --> "+incident_id);
+    loadEvent(incident_id);
     var x = $("#"+row).toggle();
+    //console.log("FIN");
 }
 
 

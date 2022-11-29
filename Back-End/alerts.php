@@ -28,21 +28,10 @@ class DBClass extends DatabaseSettings{
 		// Connect to the database
 		$this->conn_string = "host=localhost port=5432 dbname=soardatabase user=soar password=soar";
 		$this->dbconn = pg_connect($this->conn_string);
-		/*FuncionantSELECT * FROM ALERT
-		$res=pg_query($this->dbconn,"SELECT * FROM ALERT");
-		while ($row = (pg_fetch_row($res))){
-			echo "macia\n";
-			echo "$row[3] \n"; 
-		}*/
 	}
 	
 	// Executes a database query
 	function query( $query ){
-		/*$res=pg_query($this->dbconn,"SELECT * FROM ALERT");
-                while ($row = (pg_fetch_row($res))){
-			echo "macia\n";
-			echo "$row[1] \n";
-		}*/
                 return pg_query($this->dbconn,$query);
 	}
 	
@@ -111,15 +100,6 @@ function getAllAlerts(){
   $res=$db->query($query); 
   $allRes=pg_fetch_all($res);
   echo json_encode($allRes);
-  /*
-  //$lineCount=0
-  while ($row = (pg_fetch_row($res))){
-	echo "".gettype($row)." array.length=".count($row)."\n";
-	//foreach ($row as $elemnt) { //Tratamiento de la quey
-	for ($i = 0; $i < count($row); $i++) {
-		echo  "valor=".$row[$i]."\n";
-	}
- }*/
 
   $db->freeResult($res);
   $db->close();
@@ -131,9 +111,12 @@ function getEvents($incident_id){
   $db->openConnection();
 
   //Ideal tenir tables separades de ALERTS i EVENTS
-  $query = "SELECT * EXCEPT(incident_id, fields__time, title, fields_urgency, fields_action, index) FROM event WHERE incident_id=".$incident_id;
+  //$query = "SELECT * EXCEPT(incident_id, fields__time, title, fields_urgency, fields_action, index) FROM event WHERE incident_id=".$incident_id;
+  $query = "SELECT fields_host, fields_dest_ip, fields_dest_port, fields_source, fields_source_ip, fields_src_ip,fields_src_user, fields_user, fields_ta_windows_action, fields_signature, fields_url FROM event WHERE incident_id='$incident_id'";
+
+
   $res=$db->query($query);
-  $allRes=pg_fetch_all($res); 
+  $allRes=pg_fetch_all($res);
   echo json_encode($allRes);
 	
   $db->freeResult($res);
