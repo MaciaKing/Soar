@@ -61,7 +61,7 @@ function showAlerts(alerts_to_show){
 	//SELECT incident_id, fields__time, title, fields_urgency, fields_action, index  FROM event
         //Cabecera de la taula
 	div.innerHTML='' //Para que siempre se actualize y no queden restos de la tabla anterior
-	var content= '<thead><tr><th scope=\"col\">Actions</th> <th scope=\"col\">Time</th><th scope=\"col\">Title</th><th scope=\"col\">Urgency</th><th scope=\"col\">Action</th><th scope=\"col\">Index</th></tr></thead>'; 
+	var content= '<thead><tr><th scope=\"col\">Actions</th> <th scope=\"col\">Time</th><th scope=\"col\">Title</th><th scope=\"col\">Urgency</th><th scope=\"col\">Action</th><th scope=\"col\">Index</th><th scope=\"col\">Comment</th><th scope=\"col\">User</th></tr></thead>'; 
 	//div.innerHTML += content;
 
 	//Afegim les alertes
