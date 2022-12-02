@@ -1005,7 +1005,7 @@
                                 <div class="row g-2">
                                     <div class="col-md">
                                         <div class="form-floating">
-                                            <select class="form-select" id="floatingSelectGrid"
+                                            <select id="selectOwner" class="form-select" id="floatingSelectGrid"
                                                 aria-label="Floating label select example">
                                                 <option selected>Empty</option>
                                                 <option value="1">Macia</option>
@@ -1017,7 +1017,7 @@
                                     </div>
                                     <div class="col-md">
                                         <div class="form-floating">
-                                            <select class="form-select" id="floatingSelectGrid"
+                                            <select id="selectStatus" class="form-select" id="floatingSelectGrid"
                                                 aria-label="Floating label select example">
                                                 <option selected>Empty</option>
                                                 <option value="1">Reject</option>
@@ -1037,9 +1037,9 @@
                                     <div class="row g-2">
                                         <div class="col-md">
                                             <div class="form-floating">
-                                                <input type="email" class="form-control" id="floatingInputGrid"
+                                                <input id="selectComment" type="email" class="form-control" id="floatingInputGrid"
                                                     placeholder="name@example.com" value="">
-                                                <label for="floatingInputGrid">Coment</label>
+                                                <label for="floatingInputGrid">Comment</label>
                                             </div>
                                         </div>
                                     </div>
@@ -1048,7 +1048,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                     onclick="endEdit()">Close</button>
-                                <button type="button" class="btn btn-primary" onclick="endEdit()">Save changes</button>
+                                <button type="button" class="btn btn-primary" onclick="getChanges()">Save changes</button>
                             </div>
                         </div>
                     </div>

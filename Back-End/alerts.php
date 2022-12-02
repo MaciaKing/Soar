@@ -26,7 +26,7 @@ class DBClass extends DatabaseSettings{
 	//	$pass = $settings['dbpassword'];
 
 		// Connect to the database
-		$this->conn_string = "host=localhost port=5432 dbname=soardatabase user=soar password=soar";
+		$this->conn_string = "host=localhost port=5432 dbname=prueba user=soar password=soar";
 		$this->dbconn = pg_connect($this->conn_string);
 	}
 	
@@ -96,7 +96,7 @@ function getAllAlerts(){
 
   //$query = "SELECT incident_id, fields__time, title, owner, status, fields_urgency, fields_action, index  FROM event"; //IDEAL
   $query = "SELECT incident_id, fields__time, title, fields_urgency, fields_action, index  FROM event";
-  //$query = "SELECT * FROM ALERT";
+  $query = "SELECT alerta.incident_id, fields__time, alerta.title, fields_urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser";
   $res=$db->query($query); 
   $allRes=pg_fetch_all($res);
   echo json_encode($allRes);

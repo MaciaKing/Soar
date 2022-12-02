@@ -316,7 +316,7 @@ if __name__ == "__main__":
         #idAlert = makeQuery("select max(idalert) from alerta")
         #print("ID ALERT --> ",idAlert, " type --> ", type(idAlert))
         for result in results_query:
-           # print("\n"+str(result)+"\n")
+            print("\n"+str(result)+"\n")
             print("\n\n")
             s = Switcher()
             table_name, parser = s.sw_alert()

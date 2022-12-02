@@ -108,7 +108,8 @@ function loadAlerts() {
             dat: "getAlerts"
         },
         success: function (data) {
-          console.log("Recibido --> ",data);
+          console.log("MACIAAAAAAAAAAAAAAAA");
+	  console.log("Recibido --> ",data);
 	  showAlerts(data);
 	  //return data;
 	},
@@ -204,6 +205,24 @@ function selectNewAlert(id_alert){
         selected_alerts.push(id_alert);
     }
 }
+
+
+function getValueOfInputSelection(){
+  
+}
+
+
+function getChanges(){
+ // get owner, status and comment and send to database for update
+ var comment = document.getElementById("selectComment").text;
+ var status_ = document.getElementById("selectStatus").options;
+ var statusText = document.getElementById("selectStatus").options[status_];	
+ var owner = document.getElementById("selectOwner").value;
+ 
+ console.log("comment -->"+comment+" , status -->"+statusText+" , owner -->"+owner);
+ endEdit();
+}
+
 
 //Reset all alerts
 function endEdit() {
