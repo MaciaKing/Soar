@@ -20,6 +20,7 @@ CREATE TABLE alerta(
         index_ text,
         host text,
         tag text,
+	comment_ text,
 	idUser integer,
 	FOREIGN KEY(idUser) REFERENCES usr(idUser)
 );

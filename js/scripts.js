@@ -311,13 +311,7 @@ function EditSelected(button) {
     } else {
         //No se puede editar ninguna alerta ya que no hay ninguna seleccionada
         console.log("Error no se puede editar, no hay alertas seleccionadas!");
-	//console.log(button);
-        //button.dataset.target = "#NoEdit";
-        //var x =document.getElementById("EditSelected");
-    	//var x = document.getElementById("NoEdit");
-	//console.log(x);
 	alert("No hay alertas seleccionadas");
-	//x.attr("NoEdit");
 	
     }
 }
