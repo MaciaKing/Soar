@@ -108,8 +108,6 @@ function loadAlerts() {
             dat: "getAlerts"
         },
         success: function (data) {
-          console.log("MACIAAAAAAAAAAAAAAAA");
-	  console.log("Recibido --> ",data);
 	  showAlerts(data);
 	  //return data;
 	},
@@ -208,45 +206,42 @@ function selectNewAlert(id_alert){
 
 
 function getChanges(){
- // get owner, status and comment and send to database for update
- //var comment = document.getElementById("selectComment").value;
- //var status_ = document.getElementById("selectStatus").options;
- //var statusText = document.getElementById("selectStatus").options[status_];	
- //var owner = document.getElementById("selectOwner").value;
- //var posible_owners=document.getElementById("selectOwne").options[owner];
- 
+ //select status
  var status_ = document.getElementById("selectStatus");
  var status_value = status_.value;
  var status_selected = status_.options[status_.selectedIndex].text;
 
+ //select owner
  var owner = document.getElementById("selectOwner");
  var owner_value = owner.value;
  var owner_selected = owner.options[status_.selectedIndex].text;
 
+ //select comment
  var comment = document.getElementById("selectComment").value;
  console.log("status --> ",status_selected , " owner --> ", owner_selected, " comment --> ", comment);
  updateAlert(owner_selected, comment, status_selected);
 
- //console.log("comment -->"+comment+" , status -->"+statusText+" , owner -->"+posible_owners);
+ console.log("comment -->"+comment+" , status -->"+status_selected+" , owner -->"+owner_selected+ ", incident_id -> ", selected_alerts);
  endEdit();
 }
 
 
 function updateAlert(owner, comment, status_ ){
- console.log("UPDATE ",owner," ", comment, " ", status_);
-    jQuery.ajax({
+ console.log("UPDATE  1111 ",owner," ", comment, " ", status_);
+    var update=jQuery.ajax({
         type: 'POST',
         url: './Back-End/reciver.php',
-        //dataType:"json",
+        dataType:"json",
         data: {
 		dat: "updateAlertas", owner:owner, comment:comment, status_:status_
         },
         success: function (data) {
           console.log("Update enviado   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-          return data;
+          console.log(data);
+	  //return data;
         },
         error: function(xhr, status, error) {
-          var err = eval("(" + xhr.responseText + ")");
+	  var err = eval("(" + xhr.responseText + ")");
           alert(err.Message);
         }
     });

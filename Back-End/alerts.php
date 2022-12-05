@@ -125,7 +125,19 @@ function getEvents($incident_id){
 
 //All Updates
 function update_alerta($incident_id, $comment, $status, $owner){
+  $db = new DBClass();
+  $db->openConnection();
 
+  foreach ($incident_id as &$value) {
+	  //find the new owner id
+	  //UPDATE alerta SET status='close', comment_='prueba', iduser=(SELECT iduser FROM usr WHERE name='Macia Salva') WHERE incident_id='8c325976-44d6-4499-97e7-71b2ae330a11';
+	  //SELECT iduser FROM usr WHERE name='Macia Salva'
+	  $id=$db->query("SELECT iduser FROM usr WHERE name='$owner'");
+	  //Update where incident_id
+	  $db->query("UPDATE alerta SET status='$status', comment='$comment', owner='$id' WHERE incident_id=$value");
+  }
+
+  echo "  \n\nUPDATE";
 
 }
 
