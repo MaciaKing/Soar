@@ -207,20 +207,50 @@ function selectNewAlert(id_alert){
 }
 
 
-function getValueOfInputSelection(){
-  
+function getChanges(){
+ // get owner, status and comment and send to database for update
+ //var comment = document.getElementById("selectComment").value;
+ //var status_ = document.getElementById("selectStatus").options;
+ //var statusText = document.getElementById("selectStatus").options[status_];	
+ //var owner = document.getElementById("selectOwner").value;
+ //var posible_owners=document.getElementById("selectOwne").options[owner];
+ 
+ var status_ = document.getElementById("selectStatus");
+ var status_value = status_.value;
+ var status_selected = status_.options[status_.selectedIndex].text;
+
+ var owner = document.getElementById("selectOwner");
+ var owner_value = owner.value;
+ var owner_selected = owner.options[status_.selectedIndex].text;
+
+ var comment = document.getElementById("selectComment").value;
+ console.log("status --> ",status_selected , " owner --> ", owner_selected, " comment --> ", comment);
+ updateAlert(owner_selected, comment, status_selected);
+
+ //console.log("comment -->"+comment+" , status -->"+statusText+" , owner -->"+posible_owners);
+ endEdit();
 }
 
 
-function getChanges(){
- // get owner, status and comment and send to database for update
- var comment = document.getElementById("selectComment").text;
- var status_ = document.getElementById("selectStatus").options;
- var statusText = document.getElementById("selectStatus").options[status_];	
- var owner = document.getElementById("selectOwner").value;
- 
- console.log("comment -->"+comment+" , status -->"+statusText+" , owner -->"+owner);
- endEdit();
+function updateAlert(owner, comment, status_ ){
+ console.log("UPDATE ",owner," ", comment, " ", status_);
+    jQuery.ajax({
+        type: 'POST',
+        url: './Back-End/reciver.php',
+        //dataType:"json",
+        data: {
+		dat: "updateAlertas", owner:owner, comment:comment, status_:status_
+        },
+        success: function (data) {
+          console.log("Update enviado   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+          return data;
+        },
+        error: function(xhr, status, error) {
+          var err = eval("(" + xhr.responseText + ")");
+          alert(err.Message);
+        }
+    });
+
 }
 
 
@@ -234,6 +264,7 @@ function endEdit() {
     selected_alerts = [];
     console.log(selected_alerts);
 }
+
 
 function quickEdit(el) {
     //Desseleccionamos más alertas si habian alguna ya seleccionada

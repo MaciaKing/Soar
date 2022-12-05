@@ -95,7 +95,7 @@ function getAllAlerts(){
   $db->openConnection();
 
   //$query = "SELECT incident_id, fields__time, title, owner, status, fields_urgency, fields_action, index  FROM event"; //IDEAL
-  $query = "SELECT incident_id, fields__time, title, fields_urgency, fields_action, index  FROM event";
+  //$query = "SELECT incident_id, fields__time, title, fields_urgency, fields_action, index  FROM event";
   $query = "SELECT alerta.incident_id, fields__time, alerta.title, fields_urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser";
   $res=$db->query($query); 
   $allRes=pg_fetch_all($res);
@@ -123,5 +123,10 @@ function getEvents($incident_id){
   $db->close();  
 }
 
-//All Inserts
+//All Updates
+function update_alerta($incident_id, $comment, $status, $owner){
+
+
+}
+
 
