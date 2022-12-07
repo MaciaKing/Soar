@@ -82,10 +82,25 @@ function showAlerts(alerts_to_show){
 		  	  aux_id=value;	
 		          content+='<tr id=\"'+value+'\"><td><div><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckIndeterminate\" onclick=\"selectAlert(this,\''+value +'\')\" ><button type=\"button\" class=\"btn btn-primary\" onclick=\"showHideRow(\'hidden_row_'+value+'\',\''+value+'\')\" ><i class=\"far fa-eye\" width=\"10\" height=\"10\"></i></button><button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" onclick=\"quickEdit(this)\"  data-target=\"#EditAlert\"><i class=\"fas fa-edit\" width=\"10\" height=\"10\"></i></button> </div></td>';
 			  aux=aux+1;
+			}else if(aux==1){//time
+			  //var now = new Date;
+			  //var timenow = [now.getHours(),now.getMinutes(),now.getSeconds()].join(':');
+			  //var date1 = '2011/11/30 ';
+			  //var dat = new Date(date1 + timenow);
+			 
+			  var date = new Date(0);
+			  date.setUTCSeconds(value);
+			  console.log("\nvalue="+value+" date --> "+ date);
+			  final_data= date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+			  
+			   //dateFormat = date.getHours() + ":" + date.getMinutes() + ", "+ date.toDateString();
+			  //content+='<td><p>'+ value +'</p></td>';
+			  content+='<td><p>'+ final_data +'</p></td>';
+		          aux=aux+1;		
 			}else{
 			  //document.write("<br> - " + key + ": " + value);
                           //console.log(key," --> ", value)
-		          content+='<td>'+ value+'</td>';
+		          content+='<td><p>'+ value+'</p></td>';
 			}
 		}
 		content+='<tr id=\"hidden_row_'+aux_id+'\" class=\"hidden_row\" style=\"display: none;\"> <td colspan=4> INFORMACION DE LA ALERTA !!!!!!!!!!!!!</td></tr></tr>';
@@ -218,7 +233,7 @@ function getChanges(){
 
  //select comment
  var comment = document.getElementById("selectComment").value;
- console.log("\nGETCHANGES comment -->"+comment+" , status -->"+status_selected+" , owner -->"+owner_selected+ ", incident_id -> ", selected_alerts, "\n");	
+ 
  updateAlert(selected_alerts ,owner_selected, comment, status_selected);
  
  endEdit();
@@ -226,7 +241,6 @@ function getChanges(){
 
 
 function updateAlert(alerts_ ,owner, comment, status_ ){
- //console.log("UPDATE  1111 ",owner," ", comment, " ", status_);
  console.log("alerts_ --> ",alerts_)
     var update=jQuery.ajax({
         type: 'POST',
@@ -238,9 +252,11 @@ function updateAlert(alerts_ ,owner, comment, status_ ){
 		//update_alerta($incident_id, $comment, $status, $owner)
 	},
         success: function (data) {
-          console.log("Update enviado   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-          console.log(data);
-	  //return data;
+	  //Cuando se ha realizado el update, tenemos que recargar el div de las alertas
+	  //Se limpian las alertas seleccionadas, se cierra la ventana emergente, se vuelve a cargar el mismo div con las alertas actualizadas
+	  endEdit();
+	  document.getElementById("closeEdit").click(); //Cerramos ventana emergente
+	  ocultarTodosDivsYMostrar1('ALERTAS'); //recargamos el div
         },
         error: function(xhr, status, error) {
 	  var err = eval("(" + xhr.responseText + ")");
