@@ -83,18 +83,9 @@ function showAlerts(alerts_to_show){
 		          content+='<tr id=\"'+value+'\"><td><div><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckIndeterminate\" onclick=\"selectAlert(this,\''+value +'\')\" ><button type=\"button\" class=\"btn btn-primary\" onclick=\"showHideRow(\'hidden_row_'+value+'\',\''+value+'\')\" ><i class=\"far fa-eye\" width=\"10\" height=\"10\"></i></button><button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" onclick=\"quickEdit(this)\"  data-target=\"#EditAlert\"><i class=\"fas fa-edit\" width=\"10\" height=\"10\"></i></button> </div></td>';
 			  aux=aux+1;
 			}else if(aux==1){//time
-			  //var now = new Date;
-			  //var timenow = [now.getHours(),now.getMinutes(),now.getSeconds()].join(':');
-			  //var date1 = '2011/11/30 ';
-			  //var dat = new Date(date1 + timenow);
-			 
 			  var date = new Date(0);
 			  date.setUTCSeconds(value);
-			  console.log("\nvalue="+value+" date --> "+ date);
 			  final_data= date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-			  
-			   //dateFormat = date.getHours() + ":" + date.getMinutes() + ", "+ date.toDateString();
-			  //content+='<td><p>'+ value +'</p></td>';
 			  content+='<td><p>'+ final_data +'</p></td>';
 		          aux=aux+1;		
 			}else{
