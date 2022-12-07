@@ -61,7 +61,7 @@ function showAlerts(alerts_to_show){
 	//SELECT incident_id, fields__time, title, fields_urgency, fields_action, index  FROM event
         //Cabecera de la taula
 	div.innerHTML='' //Para que siempre se actualize y no queden restos de la tabla anterior
-	var content= '<thead><tr><th scope=\"col\">Actions</th> <th scope=\"col\">Time</th><th scope=\"col\">Title</th><th scope=\"col\">Urgency</th><th scope=\"col\">Action</th><th scope=\"col\">Index</th><th scope=\"col\">Comment</th><th scope=\"col\">User</th></tr></thead>'; 
+	var content= '<thead><tr><th scope=\"col\">Actions</th> <th scope=\"col\">Time</th><th scope=\"col\">Title</th><th scope=\"col\">Status</th><th scope=\"col\">Action</th><th scope=\"col\">Index</th><th scope=\"col\">Comment</th><th scope=\"col\">User</th></tr></thead>'; 
 	//div.innerHTML += content;
 
 	//Afegim les alertes
@@ -92,7 +92,7 @@ function showAlerts(alerts_to_show){
 	}
 	content+='</tbody>';
 	div.innerHTML += content;
-	console.log("CONTENT--> ",content);
+	//console.log("CONTENT--> ",content);
 }
 
 
@@ -214,27 +214,29 @@ function getChanges(){
  //select owner
  var owner = document.getElementById("selectOwner");
  var owner_value = owner.value;
- var owner_selected = owner.options[status_.selectedIndex].text;
+ var owner_selected = owner.options[owner.selectedIndex].text;
 
  //select comment
  var comment = document.getElementById("selectComment").value;
- console.log("status --> ",status_selected , " owner --> ", owner_selected, " comment --> ", comment);
- updateAlert(owner_selected, comment, status_selected);
-
- console.log("comment -->"+comment+" , status -->"+status_selected+" , owner -->"+owner_selected+ ", incident_id -> ", selected_alerts);
+ console.log("\nGETCHANGES comment -->"+comment+" , status -->"+status_selected+" , owner -->"+owner_selected+ ", incident_id -> ", selected_alerts, "\n");	
+ updateAlert(selected_alerts ,owner_selected, comment, status_selected);
+ 
  endEdit();
 }
 
 
-function updateAlert(owner, comment, status_ ){
- console.log("UPDATE  1111 ",owner," ", comment, " ", status_);
+function updateAlert(alerts_ ,owner, comment, status_ ){
+ //console.log("UPDATE  1111 ",owner," ", comment, " ", status_);
+ console.log("alerts_ --> ",alerts_)
     var update=jQuery.ajax({
         type: 'POST',
         url: './Back-End/reciver.php',
-        dataType:"json",
+        //dataType:"json",
         data: {
-		dat: "updateAlertas", owner:owner, comment:comment, status_:status_
-        },
+		//dat: "updateAlertas", owner:owner, comment:comment, status_:status_
+		dat: "updateAlertas", incident_id:alerts_, comment:comment, status_:status_, owner:owner
+		//update_alerta($incident_id, $comment, $status, $owner)
+	},
         success: function (data) {
           console.log("Update enviado   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
           console.log(data);
@@ -245,6 +247,7 @@ function updateAlert(owner, comment, status_ ){
           alert(err.Message);
         }
     });
+   //console.log("update returns-->",update);
 
 }
 

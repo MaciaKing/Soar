@@ -10,6 +10,8 @@ if(!empty($_POST['incident_id'])){
 	$inci=$_POST['incident_id'];
 }
 
+
+
 if(!empty($_POST['owner'])){
         $owner=$_POST['owner'];
 }
@@ -30,11 +32,9 @@ if($recogida=="getAlerts"){
 }elseif($recogida=="getEvents"){
 	getEvents($inci);
 }elseif($recogida=="updateAlertas"){
-	//$incident_id, $comment, $status, $owner
-	//$p='sii';
-	//echo $p;
-	//echo 'suu';
-	update_alerta($inci, $owner, $comment, $status_);	
+	echo "incidentid=", $inci ," comment =",$comment, " status_ =",$status_, " owner= ",$owner ;
+	update_alerta($inci, $comment, $status_, $owner);	
+	//update_alerta($incident_id, $comment, $status, $owner)
 }else{
 	//echo "No coincide m11 ".$recogida." m22";
 	echo gettype($recogida);
