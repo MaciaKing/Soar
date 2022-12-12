@@ -27,109 +27,109 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 
-function showAlerts(alerts_to_show){
-/*
-<tbody>
+function showAlerts(alerts_to_show) {
+    /*
+    <tbody>
+    
+                                        <tr id="row1">
+                                            <td>
+                                                <div>
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="flexCheckIndeterminate" onclick="selectAlert(this,'row1')">
+                                                    <button type="button" class="btn btn-primary"
+                                                        onclick="showHideRow('hidden_row1')"><i class="far fa-eye"
+                                                            width="10" height="10"></i></button>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        onclick="quickEdit(this)" data-target="#EditAlert">
+                                                        <i class="fas fa-edit" width="10" height="10"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td>Sales Assistant</td>
+                                            <td>New York</td>
+                                            <td>46</td>
+                                        <tr id="hidden_row1" class="hidden_row" style="display: none;">
+                                            <td colspan=4>
+                                                INFORMACION DE LA ALERTA !!!!!!!!!!!!!
+                                            </td>
+                                        </tr>
+                                        </tr>
+     
+    */
+    console.log(document.getElementById("table_alerts"));
+    var div = document.getElementById("table_alerts");
+    //SELECT incident_id, fields__time, title, fields_urgency, fields_action, index  FROM event
+    //Cabecera de la taula
+    div.innerHTML = '' //Para que siempre se actualize y no queden restos de la tabla anterior
+    var content = '<thead><tr><th scope=\"col\">Actions</th> <th scope=\"col\">Time</th><th scope=\"col\">Title</th><th scope=\"col\">Status</th><th scope=\"col\">Urgency</th><th scope=\"col\">Action</th><th scope=\"col\">Index</th><th scope=\"col\">Comment</th><th scope=\"col\">User</th></tr></thead>';
+    //div.innerHTML += content;
 
-                                    <tr id="row1">
-                                        <td>
-                                            <div>
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckIndeterminate" onclick="selectAlert(this,'row1')">
-                                                <button type="button" class="btn btn-primary"
-                                                    onclick="showHideRow('hidden_row1')"><i class="far fa-eye"
-                                                        width="10" height="10"></i></button>
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    onclick="quickEdit(this)" data-target="#EditAlert">
-                                                    <i class="fas fa-edit" width="10" height="10"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                        <td>Sales Assistant</td>
-                                        <td>New York</td>
-                                        <td>46</td>
-                                    <tr id="hidden_row1" class="hidden_row" style="display: none;">
-                                        <td colspan=4>
-                                            INFORMACION DE LA ALERTA !!!!!!!!!!!!!
-                                        </td>
-                                    </tr>
-                                    </tr>
- 
-*/	
-	console.log(document.getElementById("table_alerts"));
-	var div=document.getElementById("table_alerts");
-	//SELECT incident_id, fields__time, title, fields_urgency, fields_action, index  FROM event
-        //Cabecera de la taula
-	div.innerHTML='' //Para que siempre se actualize y no queden restos de la tabla anterior
-	var content= '<thead><tr><th scope=\"col\">Actions</th> <th scope=\"col\">Time</th><th scope=\"col\">Title</th><th scope=\"col\">Status</th><th scope=\"col\">Urgency</th><th scope=\"col\">Action</th><th scope=\"col\">Index</th><th scope=\"col\">Comment</th><th scope=\"col\">User</th></tr></thead>'; 
-	//div.innerHTML += content;
+    //Afegim les alertes
+    console.log(typeof (alerts_to_show));
+    //console.log("ALERTS --> ", typeof(alerts), alerts);
 
-	//Afegim les alertes
-	console.log(typeof(alerts_to_show));
-	//console.log("ALERTS --> ", typeof(alerts), alerts);
-	
-	content+='<tbody>';
-	for (var i = 0; i < alerts_to_show.length; i++){
- 		//document.write("<br><br>array index: " + i);
-  		console.log("i = ",i);
-		var obj = alerts_to_show[i];
-  		console.log(obj);
-		var aux=0
-		var aux_id='';
-		for (var key in obj){
-			var value = obj[key];
-			if(aux==0){//idAlert	
-		  	  aux_id=value;	
-		          content+='<tr id=\"'+value+'\"><td style="min-width:150px;"><div><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckIndeterminate\" onclick=\"selectAlert(this,\''+value +'\')\" ><button type=\"button\" class=\"btn btn-primary\" onclick=\"showHideRow(\'hidden_row_'+value+'\',\''+value+'\')\" ><i class=\"far fa-eye\" width=\"10\" height=\"10\"></i></button><button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" onclick=\"quickEdit(this)\"  data-target=\"#EditAlert\"><i class=\"fas fa-edit\" width=\"10\" height=\"10\"></i></button> </div></td>';
-			 //content+='<div class="btn-group btn-group-toggle" data-toggle="buttons"><label class="btn btn-secondary active"><input type="radio" name="options" id="option1" autocomplete="off" checked> Active</label><label class="btn btn-secondary"><input type="radio" name="options" id="option2" autocomplete="off"> Radio</label><label class="btn btn-secondary"><input type="radio" name="options" id="option3" autocomplete="off"> Radio</label></div>'; 
-			 aux=aux+1;
-			//}else if(aux==1){//time
-			//  var date = new Date(0);
-			//  date.setUTCSeconds(value);
-			//  final_data= date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-			//  content+='<td><p>'+ final_data +'</p></td>';
-		        //  aux=aux+1;		
-			}else{
-			  //document.write("<br> - " + key + ": " + value);
-                          //console.log(key," --> ", value)
-		          content+='<td><p>'+ value+'</p></td>';
-			}
-		}
-		//content+='<tr id=\"hidden_row_'+aux_id+'\" class=\"hidden_row\" style=\"display: none;\"> <td colspan=4> INFORMACION DE LA ALERTA !!!!!!!!!!!!!</td></tr></tr>';
-	        content+='<tr id=\"hidden_row_'+aux_id+'\" class=\"hidden_row\" style=\"display: none;\"> <td colspan=4></td></tr></tr>';
-	}
-	content+='</tbody>';
-	div.innerHTML += content;
-	//console.log("CONTENT--> ",content);
+    content += '<tbody>';
+    for (var i = 0; i < alerts_to_show.length; i++) {
+        //document.write("<br><br>array index: " + i);
+        console.log("i = ", i);
+        var obj = alerts_to_show[i];
+        console.log(obj);
+        var aux = 0
+        var aux_id = '';
+        for (var key in obj) {
+            var value = obj[key];
+            if (aux == 0) {//idAlert	
+                aux_id = value;
+                content += '<tr id=\"' + value + '\"><td style="min-width:150px;"><div><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckIndeterminate\" onclick=\"selectAlert(this,\'' + value + '\')\" ><button type=\"button\" class=\"btn btn-primary\" onclick=\"showHideRow(\'hidden_row_' + value + '\',\'' + value + '\')\" ><i class=\"far fa-eye\" width=\"10\" height=\"10\"></i></button><button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" onclick=\"quickEdit(this)\"  data-target=\"#EditAlert\"><i class=\"fas fa-edit\" width=\"10\" height=\"10\"></i></button> </div></td>';
+                //content+='<div class="btn-group btn-group-toggle" data-toggle="buttons"><label class="btn btn-secondary active"><input type="radio" name="options" id="option1" autocomplete="off" checked> Active</label><label class="btn btn-secondary"><input type="radio" name="options" id="option2" autocomplete="off"> Radio</label><label class="btn btn-secondary"><input type="radio" name="options" id="option3" autocomplete="off"> Radio</label></div>'; 
+                aux = aux + 1;
+                //}else if(aux==1){//time
+                //  var date = new Date(0);
+                //  date.setUTCSeconds(value);
+                //  final_data= date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                //  content+='<td><p>'+ final_data +'</p></td>';
+                //  aux=aux+1;		
+            } else {
+                //document.write("<br> - " + key + ": " + value);
+                //console.log(key," --> ", value)
+                content += '<td><p>' + value + '</p></td>';
+            }
+        }
+        //content+='<tr id=\"hidden_row_'+aux_id+'\" class=\"hidden_row\" style=\"display: none;\"> <td colspan=4> INFORMACION DE LA ALERTA !!!!!!!!!!!!!</td></tr></tr>';
+        content += '<tr id=\"hidden_row_' + aux_id + '\" class=\"hidden_row\" style=\"display: none;\"> <td colspan=4></td></tr></tr>';
+    }
+    content += '</tbody>';
+    div.innerHTML += content;
+    //console.log("CONTENT--> ",content);
 }
 
 
 function loadAlerts() {
     //var alertas=null;	
-    var alertas= jQuery.ajax({
+    var alertas = jQuery.ajax({
         //type: "POST",
-	type: 'POST',
-	//url: './php/connect.php',
+        type: 'POST',
+        //url: './php/connect.php',
         url: './Back-End/reciver.php',
-	dataType:"json",
-	data: {
+        dataType: "json",
+        data: {
             dat: "getAlerts"
         },
         success: function (data) {
-	  showAlerts(data);
-	  //return data;
-	},
-	error: function(xhr, status, error) {
- 	  var err = eval("(" + xhr.responseText + ")");
-  	  alert(err.Message);
-	}
+            showAlerts(data);
+            //return data;
+        },
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
+        }
     });
 }
 
 
-function viewEventAlert(data, div){
-	/*
-	 <table border="2" bordercolor="blue">
+function viewEventAlert(data, div) {
+    /*
+     <table border="2" bordercolor="blue">
                     <tr>
                         <td>inner Table row 1 column 1</td>
                         <td>inner Table row 1 column 2</td>
@@ -143,225 +143,225 @@ function viewEventAlert(data, div){
                         <td>inner Table row 3 column 2</td>
                     </tr>
                 </table>
-	*/
-       
-	/*
-	var div_element = document.getElementById(div);
-	var content='';
-	content = '<td>';
-	console.log("dades a mostrar "+typeof(data));
-	var events = JSON.parse(data);
-	console.log(typeof(events));
-	for (var i = 0; i < events.length; i++){
+    */
+
+    /*
+    var div_element = document.getElementById(div);
+    var content='';
+    content = '<td>';
+    console.log("dades a mostrar "+typeof(data));
+    var events = JSON.parse(data);
+    console.log(typeof(events));
+    for (var i = 0; i < events.length; i++){
                 var obj = events[i];
                 console.log(obj);
                 for (var key in obj){
-		  if(obj[key].length !=1){
-	  	    //limpiamos "fields_" de los eventos para que se vea mejor
-		    content+=key.split("fields_").pop()+':\t'+obj[key]+'<br>';
-		  }
-		 }
-	}
+          if(obj[key].length !=1){
+                //limpiamos "fields_" de los eventos para que se vea mejor
+            content+=key.split("fields_").pop()+':\t'+obj[key]+'<br>';
+          }
+         }
+    }
 	
-	content+='</td>';
-	div_element.innerHTML=content;
-	console.log(content);
-	*/
+    content+='</td>';
+    div_element.innerHTML=content;
+    console.log(content);
+    */
 
-	
-	var div_element = document.getElementById(div);
-        var content='';
-	content = '<tr> <table><tbody><tr>';
-        console.log("dades a mostrar "+typeof(data));
-        var events = JSON.parse(data);
-        console.log(typeof(events));
-        for (var i = 0; i < events.length; i++){
-                console.log("i=",i," events.length=", events.length)
-		var obj = events[i];
-                console.log(obj);
-		content+='<td>';
-                for (var key in obj){
-                  if(obj[key].length !=1){
-	            if(key.split("fields_").pop()==="_raw"){
-		     	content+='<td>'+key.split("fields_").pop()+':\t'+obj[key]+'</td>';
-		    }else{
-                    	//limpiamos "fields_" de los eventos para que se vea mejor
-                    	content+=key.split("fields_").pop()+':\t'+obj[key]+'<br>';
-		    }
-		   }
-                 }
-		content+='</td>';
+
+    var div_element = document.getElementById(div);
+    var content = '';
+    content = '<tr> <table><tbody><tr>';
+    console.log("dades a mostrar " + typeof (data));
+    var events = JSON.parse(data);
+    console.log(typeof (events));
+    for (var i = 0; i < events.length; i++) {
+        console.log("i=", i, " events.length=", events.length)
+        var obj = events[i];
+        console.log(obj);
+        content += '<td>';
+        for (var key in obj) {
+            if (obj[key].length != 1) {
+                if (key.split("fields_").pop() === "_raw") {
+                    content += '<td>' + key.split("fields_").pop() + ':\t' + obj[key] + '</td>';
+                } else {
+                    //limpiamos "fields_" de los eventos para que se vea mejor
+                    content += key.split("fields_").pop() + ':\t' + obj[key] + '<br>';
+                }
+            }
         }
+        content += '</td>';
+    }
 
-        content+='</tr></tbody></table></tr>';
-        div_element.innerHTML=content;
-        console.log(content);
-	
+    content += '</tr></tbody></table></tr>';
+    div_element.innerHTML = content;
+    console.log(content);
 
- 	/*
-	var div_element = document.getElementById(div);
-        var content='';
-        content = '<table><tbody>';
-        console.log("dades a mostrar "+typeof(data));
-        var events = JSON.parse(data);
-        console.log(typeof(events));
-        for (var i = 0; i < events.length; i++){
-                console.log("i=",i," events.length=", events.length)
-                var obj = events[i];
-                console.log(obj);
-                content+='<tr>';
-                for (var key in obj){
-                  if(obj[key].length !=1){
-                    if(key.split("fields_").pop()==="_raw"){
-                        content+='<td>'+key.split("fields_").pop()+':\t'+obj[key]+'</td>';
-                    }else{
-                        //limpiamos "fields_" de los eventos para que se vea mejor
-                        content+=key.split("fields_").pop()+':\t'+obj[key]+'<br>';
-                    }
-                   }
+
+    /*
+  var div_element = document.getElementById(div);
+      var content='';
+      content = '<table><tbody>';
+      console.log("dades a mostrar "+typeof(data));
+      var events = JSON.parse(data);
+      console.log(typeof(events));
+      for (var i = 0; i < events.length; i++){
+              console.log("i=",i," events.length=", events.length)
+              var obj = events[i];
+              console.log(obj);
+              content+='<tr>';
+              for (var key in obj){
+                if(obj[key].length !=1){
+                  if(key.split("fields_").pop()==="_raw"){
+                      content+='<td>'+key.split("fields_").pop()+':\t'+obj[key]+'</td>';
+                  }else{
+                      //limpiamos "fields_" de los eventos para que se vea mejor
+                      content+=key.split("fields_").pop()+':\t'+obj[key]+'<br>';
+                  }
                  }
-                content+='</tr>';
-        }
+               }
+              content+='</tr>';
+      }
 
-        content+='</tbody></table>';
-        div_element.innerHTML=content;
-        console.log(content);
+      content+='</tbody></table>';
+      div_element.innerHTML=content;
+      console.log(content);
 */
 }
 
 
-function filterByStatus(status_ ){
-	console.log("status: -->"+ status_);
-	var alertas= jQuery.ajax({
+function filterByStatus(status_) {
+    console.log("status: -->" + status_);
+    var alertas = jQuery.ajax({
         //type: "POST",
         type: 'POST',
         //url: './php/connect.php',
         url: './Back-End/reciver.php',
         //dataType:"json",
         data: {
-		dat: "getAlertsByStatus", status_:status_
+            dat: "getAlertsByStatus", status_: status_
         },
         success: function (data) {
-          	console.log(data);
-		showAlerts(JSON.parse(data));
+            console.log(data);
+            showAlerts(JSON.parse(data));
         },
-        error: function(xhr, status, error) {
-          var err = eval("(" + xhr.responseText + ")");
-          alert(err.Message);
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
         }
     });
 }
 
-function filterByUrgency(urgency ){
-	console.log("urgency: -->"+ urgency);
-        var alertas= jQuery.ajax({
+function filterByUrgency(urgency) {
+    console.log("urgency: -->" + urgency);
+    var alertas = jQuery.ajax({
         //type: "POST",
         type: 'POST',
         //url: './php/connect.php',
         url: './Back-End/reciver.php',
         //dataType:"json",
         data: {
-                dat: "getAlertsByUrgency", urgency:urgency
+            dat: "getAlertsByUrgency", urgency: urgency
         },
         success: function (data) {
-                console.log(data);
-                showAlerts(JSON.parse(data));
+            console.log(data);
+            showAlerts(JSON.parse(data));
         },
-        error: function(xhr, status, error) {
-          var err = eval("(" + xhr.responseText + ")");
-          alert(err.Message);
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
         }
     });
 }
 
 
-function loadEvent(incident){
-	var events= jQuery.ajax({
+function loadEvent(incident) {
+    var events = jQuery.ajax({
         type: 'POST',
         url: './Back-End/reciver.php',
         //dataType:"json",
         data: {
-		dat: "getEvents", incident_id: incident
+            dat: "getEvents", incident_id: incident
         },
         success: function (data) {
-          viewEventAlert(data, ("hidden_row_"+incident));
+            viewEventAlert(data, ("hidden_row_" + incident));
         },
-        error: function(xhr, status, error) {
-          var err = eval("(" + xhr.responseText + ")");
-          alert(err.Message);
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
         }
     });
 }
 
 
 
-function showHideRow(row,incident_id) {
-    console.log("search events for --> "+incident_id);
+function showHideRow(row, incident_id) {
+    console.log("search events for --> " + incident_id);
     loadEvent(incident_id);
-    var x = $("#"+row).toggle();
+    var x = $("#" + row).toggle();
     //console.log("FIN");
 }
 
 
-function selectNewAlert(id_alert){
-    var isSelected=false;
+function selectNewAlert(id_alert) {
+    var isSelected = false;
     //Comprovar que no haya estado seleccionada antes
     for (var i = 0; i < selected_alerts.length && !isSelected; i++) {
-        if(selected_alerts[i]==id_alert){
-            isSelected=true;
+        if (selected_alerts[i] == id_alert) {
+            isSelected = true;
         }
     }
     //Si la alerta no estaba seleccionada, la seleccionamos
-    if(!isSelected){ 
+    if (!isSelected) {
         selected_alerts.push(id_alert);
     }
 }
 
 
-function getChanges(){
- //select status
- var status_ = document.getElementById("selectStatus");
- var status_value = status_.value;
- var status_selected = status_.options[status_.selectedIndex].text;
+function getChanges() {
+    //select status
+    var status_ = document.getElementById("selectStatus");
+    var status_value = status_.value;
+    var status_selected = status_.options[status_.selectedIndex].text;
 
- //select owner
- var owner = document.getElementById("selectOwner");
- var owner_value = owner.value;
- var owner_selected = owner.options[owner.selectedIndex].text;
+    //select owner
+    var owner = document.getElementById("selectOwner");
+    var owner_value = owner.value;
+    var owner_selected = owner.options[owner.selectedIndex].text;
 
- //select comment
- var comment = document.getElementById("selectComment").value;
- 
- updateAlert(selected_alerts ,owner_selected, comment, status_selected);
- 
- endEdit();
+    //select comment
+    var comment = document.getElementById("selectComment").value;
+
+    updateAlert(selected_alerts, owner_selected, comment, status_selected);
+
+    endEdit();
 }
 
 
-function updateAlert(alerts_ ,owner, comment, status_ ){
- console.log("alerts_ --> ",alerts_)
-    var update=jQuery.ajax({
+function updateAlert(alerts_, owner, comment, status_) {
+    console.log("alerts_ --> ", alerts_)
+    var update = jQuery.ajax({
         type: 'POST',
         url: './Back-End/reciver.php',
         //dataType:"json",
         data: {
-		//dat: "updateAlertas", owner:owner, comment:comment, status_:status_
-		dat: "updateAlertas", incident_id:alerts_, comment:comment, status_:status_, owner:owner
-		//update_alerta($incident_id, $comment, $status, $owner)
-	},
-        success: function (data) {
-	  //Cuando se ha realizado el update, tenemos que recargar el div de las alertas
-	  //Se limpian las alertas seleccionadas, se cierra la ventana emergente, se vuelve a cargar el mismo div con las alertas actualizadas
-	  endEdit();
-	  document.getElementById("closeEdit").click(); //Cerramos ventana emergente
-	  ocultarTodosDivsYMostrar1('ALERTAS'); //recargamos el div
+            //dat: "updateAlertas", owner:owner, comment:comment, status_:status_
+            dat: "updateAlertas", incident_id: alerts_, comment: comment, status_: status_, owner: owner
+            //update_alerta($incident_id, $comment, $status, $owner)
         },
-        error: function(xhr, status, error) {
-	  var err = eval("(" + xhr.responseText + ")");
-          alert(err.Message);
+        success: function (data) {
+            //Cuando se ha realizado el update, tenemos que recargar el div de las alertas
+            //Se limpian las alertas seleccionadas, se cierra la ventana emergente, se vuelve a cargar el mismo div con las alertas actualizadas
+            endEdit();
+            document.getElementById("closeEdit").click(); //Cerramos ventana emergente
+            ocultarTodosDivsYMostrar1('ALERTAS'); //recargamos el div
+        },
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
         }
     });
-   //console.log("update returns-->",update);
+    //console.log("update returns-->",update);
 
 }
 
@@ -387,7 +387,7 @@ function quickEdit(el) {
     console.log(selected_alerts);
 }
 
-function EditAll(button){
+function EditAll(button) {
     selectAll(); //Select all alerts
     EditSelected(button);  //Edit all alerts
 }
@@ -445,17 +445,17 @@ function cleanAll() {
 //  param: divToShow    --> id= "divToShow"
 //Ocultamos todos los divs y solo mostramos el idDivs que entra por parametro
 function ocultarTodosDivsYMostrar1(divToShow) {
-    console.log("ENSEÑAR --> "+divToShow);
+    console.log("ENSEÑAR --> " + divToShow);
     for (var i = 0; i < divs.length; i++) {
         if (divs[i] === divToShow) {
             //mostramos este divs
             console.log("Mostramos div: ", divToShow);
             document.getElementById(divToShow).style.display = "block";
-           // console.log("Activado")
-	    if( divs[i] == "ALERTAS"){ //Cargamos todas las alertas
-	       console.log("ANTES DE CONNECTAR SERVIDOR: ");
-	       loadAlerts();     
-	    }
+            // console.log("Activado")
+            if (divs[i] == "ALERTAS") { //Cargamos todas las alertas
+                console.log("ANTES DE CONNECTAR SERVIDOR: ");
+                loadAlerts();
+            }
         } else {
             //ocultamos el divs
             console.log("Ocultamos div: " + divs[i]);
@@ -473,8 +473,8 @@ function EditSelected(button) {
     } else {
         //No se puede editar ninguna alerta ya que no hay ninguna seleccionada
         console.log("Error no se puede editar, no hay alertas seleccionadas!");
-	alert("No hay alertas seleccionadas");
-	
+        alert("No hay alertas seleccionadas");
+
     }
 }
 
