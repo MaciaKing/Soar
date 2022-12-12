@@ -94,8 +94,39 @@ function getAllAlerts(){
   $db = new DBClass();
   $db->openConnection();
 
-  $query = "SELECT alerta.incident_id, fields__time, alerta.title, status, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser";
+  $query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser";
   $res=$db->query($query); 
+  $allRes=pg_fetch_all($res);
+  echo json_encode($allRes);
+
+  $db->freeResult($res);
+  $db->close();
+}
+
+
+function getAllAlertsByStatus($sta){
+  $db = new DBClass();
+  $db->openConnection();
+  if($sta == '*'){
+     $query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser";
+  }else{
+  	$query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event JOIN alerta ON  alerta.status='$sta' AND event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser";
+  }
+  //echo $query;
+  $res=$db->query($query);
+  $allRes=pg_fetch_all($res);
+  echo json_encode($allRes);
+
+  $db->freeResult($res);
+  $db->close();
+}
+ 
+function getAlertsByUrgency($urgen){
+  $db = new DBClass();
+  $db->openConnection();
+  $query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event JOIN alerta ON  alerta.urgency='$urgen' AND event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser";
+  //echo $query;
+  $res=$db->query($query);
   $allRes=pg_fetch_all($res);
   echo json_encode($allRes);
 
@@ -108,9 +139,7 @@ function getEvents($incident_id){
   $db = new DBClass();
   $db->openConnection();
 
-  //Ideal tenir tables separades de ALERTS i EVENTS
-  //$query = "SELECT * EXCEPT(incident_id, fields__time, title, fields_urgency, fields_action, index) FROM event WHERE incident_id=".$incident_id;
-  $query = "SELECT fields_host, fields_dest_ip, fields_dest_port, fields_source, fields_source_ip, fields_src_ip,fields_src_user, fields_user, fields_ta_windows_action, fields_signature, fields_url FROM event WHERE incident_id='$incident_id'";
+  $query = "SELECT fields_host, fields_dest_ip, fields_dest_port, fields_source, fields_source_ip, fields_src_ip,fields_src_user, fields_user, fields_ta_windows_action, fields_signature, fields_url, fields_srcip, fields_vlan_dst, fields_vlan_src, fields_dstip, fields_index, fields_score, fields__raw  FROM event WHERE incident_id='$incident_id' LIMIT 1";
 
 
   $res=$db->query($query);
@@ -130,8 +159,8 @@ function update_alerta($incident_id, $comment, $status, $owner){
 	//SELECT iduser FROM usr WHERE name='Macia Salva'
 	//echo "\n incidentID value--> ".$value;
 	//echo "\nSELECT iduser FROM usr WHERE name='$owner'";
-	$id=$db->query("SELECT iduser FROM usr WHERE name='$owner'");
-	echo "\nSelect id= ",$id;
+	//$id=$db->query("SELECT iduser FROM usr WHERE name='$owner'");
+	//echo "\nSelect id= ",$id;
 	//Update where incident_id
 	$q = "UPDATE alerta SET status='$status', comment_='$comment', iduser=(SELECT iduser FROM usr WHERE name='$owner')  WHERE incident_id='$value'";
 	echo "\n".$q;

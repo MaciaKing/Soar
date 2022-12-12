@@ -61,7 +61,7 @@ function showAlerts(alerts_to_show){
 	//SELECT incident_id, fields__time, title, fields_urgency, fields_action, index  FROM event
         //Cabecera de la taula
 	div.innerHTML='' //Para que siempre se actualize y no queden restos de la tabla anterior
-	var content= '<thead><tr><th scope=\"col\">Actions</th> <th scope=\"col\">Time</th><th scope=\"col\">Title</th><th scope=\"col\">Status</th><th scope=\"col\">Action</th><th scope=\"col\">Index</th><th scope=\"col\">Comment</th><th scope=\"col\">User</th></tr></thead>'; 
+	var content= '<thead><tr><th scope=\"col\">Actions</th> <th scope=\"col\">Time</th><th scope=\"col\">Title</th><th scope=\"col\">Status</th><th scope=\"col\">Urgency</th><th scope=\"col\">Action</th><th scope=\"col\">Index</th><th scope=\"col\">Comment</th><th scope=\"col\">User</th></tr></thead>'; 
 	//div.innerHTML += content;
 
 	//Afegim les alertes
@@ -80,21 +80,23 @@ function showAlerts(alerts_to_show){
 			var value = obj[key];
 			if(aux==0){//idAlert	
 		  	  aux_id=value;	
-		          content+='<tr id=\"'+value+'\"><td><div><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckIndeterminate\" onclick=\"selectAlert(this,\''+value +'\')\" ><button type=\"button\" class=\"btn btn-primary\" onclick=\"showHideRow(\'hidden_row_'+value+'\',\''+value+'\')\" ><i class=\"far fa-eye\" width=\"10\" height=\"10\"></i></button><button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" onclick=\"quickEdit(this)\"  data-target=\"#EditAlert\"><i class=\"fas fa-edit\" width=\"10\" height=\"10\"></i></button> </div></td>';
-			  aux=aux+1;
-			}else if(aux==1){//time
-			  var date = new Date(0);
-			  date.setUTCSeconds(value);
-			  final_data= date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-			  content+='<td><p>'+ final_data +'</p></td>';
-		          aux=aux+1;		
+		          content+='<tr id=\"'+value+'\"><td style="min-width:150px;"><div><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckIndeterminate\" onclick=\"selectAlert(this,\''+value +'\')\" ><button type=\"button\" class=\"btn btn-primary\" onclick=\"showHideRow(\'hidden_row_'+value+'\',\''+value+'\')\" ><i class=\"far fa-eye\" width=\"10\" height=\"10\"></i></button><button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" onclick=\"quickEdit(this)\"  data-target=\"#EditAlert\"><i class=\"fas fa-edit\" width=\"10\" height=\"10\"></i></button> </div></td>';
+			 //content+='<div class="btn-group btn-group-toggle" data-toggle="buttons"><label class="btn btn-secondary active"><input type="radio" name="options" id="option1" autocomplete="off" checked> Active</label><label class="btn btn-secondary"><input type="radio" name="options" id="option2" autocomplete="off"> Radio</label><label class="btn btn-secondary"><input type="radio" name="options" id="option3" autocomplete="off"> Radio</label></div>'; 
+			 aux=aux+1;
+			//}else if(aux==1){//time
+			//  var date = new Date(0);
+			//  date.setUTCSeconds(value);
+			//  final_data= date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+			//  content+='<td><p>'+ final_data +'</p></td>';
+		        //  aux=aux+1;		
 			}else{
 			  //document.write("<br> - " + key + ": " + value);
                           //console.log(key," --> ", value)
 		          content+='<td><p>'+ value+'</p></td>';
 			}
 		}
-		content+='<tr id=\"hidden_row_'+aux_id+'\" class=\"hidden_row\" style=\"display: none;\"> <td colspan=4> INFORMACION DE LA ALERTA !!!!!!!!!!!!!</td></tr></tr>';
+		//content+='<tr id=\"hidden_row_'+aux_id+'\" class=\"hidden_row\" style=\"display: none;\"> <td colspan=4> INFORMACION DE LA ALERTA !!!!!!!!!!!!!</td></tr></tr>';
+	        content+='<tr id=\"hidden_row_'+aux_id+'\" class=\"hidden_row\" style=\"display: none;\"> <td colspan=4></td></tr></tr>';
 	}
 	content+='</tbody>';
 	div.innerHTML += content;
@@ -142,7 +144,8 @@ function viewEventAlert(data, div){
                     </tr>
                 </table>
 	*/
-
+       
+	/*
 	var div_element = document.getElementById(div);
 	var content='';
 	content = '<td>';
@@ -153,18 +156,122 @@ function viewEventAlert(data, div){
                 var obj = events[i];
                 console.log(obj);
                 for (var key in obj){
-		    //console.log("LENGTHHH ", obj[key].length)	
-		   if(obj[key].length ===1){
-		       content+=key+':\t - <br>';
-		   }else{
-		   	content+=key+':\t'+obj[key]+'<br>';	
-		   }
+		  if(obj[key].length !=1){
+	  	    //limpiamos "fields_" de los eventos para que se vea mejor
+		    content+=key.split("fields_").pop()+':\t'+obj[key]+'<br>';
+		  }
 		 }
 	}
 	
 	content+='</td>';
 	div_element.innerHTML=content;
 	console.log(content);
+	*/
+
+	
+	var div_element = document.getElementById(div);
+        var content='';
+	content = '<tr> <table><tbody><tr>';
+        console.log("dades a mostrar "+typeof(data));
+        var events = JSON.parse(data);
+        console.log(typeof(events));
+        for (var i = 0; i < events.length; i++){
+                console.log("i=",i," events.length=", events.length)
+		var obj = events[i];
+                console.log(obj);
+		content+='<td>';
+                for (var key in obj){
+                  if(obj[key].length !=1){
+	            if(key.split("fields_").pop()==="_raw"){
+		     	content+='<td>'+key.split("fields_").pop()+':\t'+obj[key]+'</td>';
+		    }else{
+                    	//limpiamos "fields_" de los eventos para que se vea mejor
+                    	content+=key.split("fields_").pop()+':\t'+obj[key]+'<br>';
+		    }
+		   }
+                 }
+		content+='</td>';
+        }
+
+        content+='</tr></tbody></table></tr>';
+        div_element.innerHTML=content;
+        console.log(content);
+	
+
+ 	/*
+	var div_element = document.getElementById(div);
+        var content='';
+        content = '<table><tbody>';
+        console.log("dades a mostrar "+typeof(data));
+        var events = JSON.parse(data);
+        console.log(typeof(events));
+        for (var i = 0; i < events.length; i++){
+                console.log("i=",i," events.length=", events.length)
+                var obj = events[i];
+                console.log(obj);
+                content+='<tr>';
+                for (var key in obj){
+                  if(obj[key].length !=1){
+                    if(key.split("fields_").pop()==="_raw"){
+                        content+='<td>'+key.split("fields_").pop()+':\t'+obj[key]+'</td>';
+                    }else{
+                        //limpiamos "fields_" de los eventos para que se vea mejor
+                        content+=key.split("fields_").pop()+':\t'+obj[key]+'<br>';
+                    }
+                   }
+                 }
+                content+='</tr>';
+        }
+
+        content+='</tbody></table>';
+        div_element.innerHTML=content;
+        console.log(content);
+*/
+}
+
+
+function filterByStatus(status_ ){
+	console.log("status: -->"+ status_);
+	var alertas= jQuery.ajax({
+        //type: "POST",
+        type: 'POST',
+        //url: './php/connect.php',
+        url: './Back-End/reciver.php',
+        //dataType:"json",
+        data: {
+		dat: "getAlertsByStatus", status_:status_
+        },
+        success: function (data) {
+          	console.log(data);
+		showAlerts(JSON.parse(data));
+        },
+        error: function(xhr, status, error) {
+          var err = eval("(" + xhr.responseText + ")");
+          alert(err.Message);
+        }
+    });
+}
+
+function filterByUrgency(urgency ){
+	console.log("urgency: -->"+ urgency);
+        var alertas= jQuery.ajax({
+        //type: "POST",
+        type: 'POST',
+        //url: './php/connect.php',
+        url: './Back-End/reciver.php',
+        //dataType:"json",
+        data: {
+                dat: "getAlertsByUrgency", urgency:urgency
+        },
+        success: function (data) {
+                console.log(data);
+                showAlerts(JSON.parse(data));
+        },
+        error: function(xhr, status, error) {
+          var err = eval("(" + xhr.responseText + ")");
+          alert(err.Message);
+        }
+    });
 }
 
 

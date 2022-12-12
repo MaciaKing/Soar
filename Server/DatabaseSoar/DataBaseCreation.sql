@@ -15,20 +15,23 @@ INSERT INTO usr(name) VALUES ('Unassigned'), ('Macia Salva'), ('Arnau Bartres'),
 CREATE TABLE alerta(
         idAlert serial,
 	incident_id text PRIMARY KEY,
-        title text,
+	alert_time text,
+        alert text,
         status text,
         index_ text,
         host text,
         tag text,
 	comment_ text,
 	idUser integer,
+	urgency text,
 	FOREIGN KEY(idUser) REFERENCES usr(idUser)
 );
 
-INSERT INTO alerta(incident_id, title, status, index_, host, tag, idUser) VALUES ('primero','primero','primero','primero','primero',1); 
+INSERT INTO alerta(incident_id, alert, status, index_, host, comment_, tag, idUser) VALUES ( 'incident_id', 'title', 'status', 'index_', 'host', 'comment_', 'tag',1); 
 
 CREATE TABLE event (
-        incident_id text PRIMARY KEY,
+	--idEvent SERIAL PRIMARY KEY,
+        incident_id text,
         fields__raw text,
         fields_EventCode text,
         fields__time text,
@@ -45,7 +48,6 @@ CREATE TABLE event (
         fields_diff_deviation text,
         fields_eventtype text,
         fields_host text,
-        fields_index text,
         fields_level text,
         fields_msg text,
         fields_severity text,
@@ -61,26 +63,32 @@ CREATE TABLE event (
         fields_type text,
         fields_urgency text,
         fields_url text,
-        fields_user text
-	--idAlert integer,
-	--FOREIGN KEY(idAlert) REFERENCES alerta(idAlert)
+	--fields{}.srcip, fields{}.vlan_dst, fields{}.vlan_src, fields{}.dstip, fields{}.index, fields{}.score
+	fields_srcip text,
+	fields_vlan_dst text,
+	fields_vlan_src text,
+	fields_dstip text,
+	fields_index text, 
+	fields_score text,
+        fields_user text,
+	FOREIGN KEY(incident_id) REFERENCES alerta(incident_id)
 );
 
 
 -- Declaram functions i triggers
-CREATE OR REPLACE FUNCTION setNewAlert()
+--CREATE OR REPLACE FUNCTION setNewAlert()
   --RETURNS trigger AS
-   RETURNS TRIGGER AS
-$$
-BEGIN
-    UPDATE alerta SET status = 'new' WHERE status IS NULL;
-    RETURN OLD;
-END;
-$$
-LANGUAGE 'plpgsql';
+  -- RETURNS TRIGGER AS
+--$$
+--BEGIN
+--    UPDATE alerta SET status = 'new' WHERE status IS NULL;
+--    RETURN OLD;
+--END;
+--$$
+--LANGUAGE 'plpgsql';
 
-CREATE TRIGGER trigger_setNewAlert AFTER INSERT ON alerta
-     FOR EACH ROW EXECUTE PROCEDURE setNewAlert();
+--CREATE TRIGGER trigger_setNewAlert AFTER INSERT ON alerta
+--     FOR EACH ROW EXECUTE PROCEDURE setNewAlert();
 
 
 
