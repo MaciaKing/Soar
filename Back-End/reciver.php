@@ -29,6 +29,9 @@ if(!empty($_POST['urgency'])){
 }
 
 
+
+//getAlertsByOwner($owner)
+
 $res="";
 
 if($recogida=="getAlerts"){
@@ -38,13 +41,12 @@ if($recogida=="getAlerts"){
 }elseif($recogida=="updateAlertas"){
 	echo "incidentid=", $inci ," comment =",$comment, " status_ =",$status_, " owner= ",$owner ;
 	update_alerta($inci, $comment, $status_, $owner);	
-	//update_alerta($incident_id, $comment, $status, $owner)
 }elseif($recogida=="getAlertsByStatus"){
-	//echo $status_;
 	getAllAlertsByStatus($status_);
 }elseif($recogida=="getAlertsByUrgency"){
-	//echo $urgen;	
  	getAlertsByUrgency($urgen);
+}elseif($recogida=="getAlertsByOwner"){
+	getAlertsByOwner($owner);	
 }else{
 	//echo "No coincide m11 ".$recogida." m22";
 	echo gettype($recogida);

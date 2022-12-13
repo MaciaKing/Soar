@@ -56,13 +56,12 @@ function showAlerts(alerts_to_show) {
                                         </tr>
      
     */
-    console.log(document.getElementById("table_alerts"));
-    var div = document.getElementById("table_alerts");
-    //SELECT incident_id, fields__time, title, fields_urgency, fields_action, index  FROM event
-    //Cabecera de la taula
+    var div = document.getElementById("maciaAlertas");
     div.innerHTML = '' //Para que siempre se actualize y no queden restos de la tabla anterior
-    var content = '<thead><tr><th scope=\"col\">Actions</th> <th scope=\"col\">Time</th><th scope=\"col\">Title</th><th scope=\"col\">Status</th><th scope=\"col\">Urgency</th><th scope=\"col\">Action</th><th scope=\"col\">Index</th><th scope=\"col\">Comment</th><th scope=\"col\">User</th></tr></thead>';
-    //div.innerHTML += content;
+    
+    var content = '<div class="card mb-4"><div class="card-header"><i class="fas fa-table me-1"></i>Alerts</div><div id="alertas" class="card-body"><table id="table_alerts" class="table table-striped table-dark">'; // Creamos la targeta con las alertas
+    
+    content += '<thead><tr><th scope=\"col\">Actions</th> <th scope=\"col\">Time</th><th scope=\"col\">Title</th><th scope=\"col\">Status</th><th scope=\"col\">Urgency</th><th scope=\"col\">Action</th><th scope=\"col\">Index</th><th scope=\"col\">Comment</th><th scope=\"col\">Owner</th></tr></thead>';
 
     //Afegim les alertes
     console.log(typeof (alerts_to_show));
@@ -99,7 +98,15 @@ function showAlerts(alerts_to_show) {
         content += '<tr id=\"hidden_row_' + aux_id + '\" class=\"hidden_row\" style=\"display: none;\"> <td colspan=4></td></tr></tr>';
     }
     content += '</tbody>';
+    content += '</table></div></div>';
     div.innerHTML += content;
+    console.log(document.getElementById('table_alerts'));
+    const datatables = document.getElementById('table_alerts');
+    if (datatables) {
+        console.log("TABLA CARGADA REAL !!");
+        new simpleDatatables.DataTable(datatables);
+    }
+
     //console.log("CONTENT--> ",content);
 }
 
@@ -251,6 +258,29 @@ function filterByStatus(status_) {
         }
     });
 }
+
+function filterByOwner(owner) {
+    console.log("status: -->" + owner);
+    var alertas = jQuery.ajax({
+        //type: "POST",
+        type: 'POST',
+        //url: './php/connect.php',
+        url: './Back-End/reciver.php',
+        //dataType:"json",
+        data: {
+            dat: "getAlertsByOwner", owner: owner
+        },
+        success: function (data) {
+            console.log(data);
+            showAlerts(JSON.parse(data));
+        },
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
+        }
+    });
+}
+
 
 function filterByUrgency(urgency) {
     console.log("urgency: -->" + urgency);

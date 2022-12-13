@@ -4,6 +4,19 @@ window.addEventListener('DOMContentLoaded', event => {
 
     const datatablesSimple = document.getElementById('datatablesSimple');
     if (datatablesSimple) {
-        new simpleDatatables.DataTable(datatablesSimple);
+        console.log("TABLA CARGADA EJEMPLO");
+	new simpleDatatables.DataTable(datatablesSimple);
     }
+/*
+    const datatables = document.getElementById('table_alerts');
+    if (datatables) {
+	console.log("SUUU !!");
+        new simpleDatatables.DataTable(datatables);
+    }
+    */
 });
+
+
+
+
+
