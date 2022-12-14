@@ -155,8 +155,27 @@ function getEvents($incident_id){
   $db = new DBClass();
   $db->openConnection();
 
-  $query = "SELECT fields_host, fields_dest_ip, fields_dest_port, fields_source, fields_source_ip, fields_src_ip,fields_src_user, fields_user, fields_ta_windows_action, fields_signature, fields_url, fields_srcip, fields_vlan_dst, fields_vlan_src, fields_dstip, fields_index, fields_score, fields__raw  FROM event WHERE incident_id='$incident_id' LIMIT 1";
+ // $query = "SELECT fields_host, fields_dest_ip, fields_dest_port, fields_source, fields_source_ip, fields_src_ip,fields_src_user, fields_user, fields_ta_windows_action, fields_signature, fields_url, fields_srcip, fields_vlan_dst, fields_vlan_src, fields_dstip, fields_index, fields_score, fields__raw  FROM event WHERE incident_id='$incident_id' LIMIT 1";
+ 
 
+  $q1 = "SELECT column_name FROM information_schema.columns WHERE table_name = 'event'";
+  $res=$db->query($q1);
+  $fields='';
+  $aux=0;
+  while ($row = pg_fetch_row($res)) {
+	  if ($aux===0){
+		  $fields .= $row[0];
+	  	  $aux=1;
+	  } else{
+	  	$fields .= ",".$row[0];
+	}	  
+   }
+  //echo $fields;
+  $db->freeResult($res);
+
+  $query = "SELECT $fields  FROM event WHERE incident_id='$incident_id' LIMIT 1";
+   
+  //echo $query."\n";
 
   $res=$db->query($query);
   $allRes=pg_fetch_all($res);

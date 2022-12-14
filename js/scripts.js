@@ -79,7 +79,7 @@ function showAlerts(alerts_to_show) {
             var value = obj[key];
             if (aux == 0) {//idAlert	
                 aux_id = value;
-                content += '<tr id=\"' + value + '\"><td style="min-width:150px;"><div><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckIndeterminate\" onclick=\"selectAlert(this,\'' + value + '\')\" ><button type=\"button\" class=\"btn btn-primary\" onclick=\"showHideRow(\'hidden_row_' + value + '\',\'' + value + '\')\" ><i class=\"far fa-eye\" width=\"10\" height=\"10\"></i></button><button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" onclick=\"quickEdit(this)\"  data-target=\"#EditAlert\"><i class=\"fas fa-edit\" width=\"10\" height=\"10\"></i></button> </div></td>';
+                content += '<tr id=\"' + value + '\"><td style="min-width:150px;"><div><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckIndeterminate\" onclick=\"selectAlert(this,\'' + value + '\')\" ><button type=\"button\" class=\"btn btn-primary\" style=\"margin-left:5px;\"  onclick=\"showHideRow(\'hidden_row_' + value + '\',\'' + value + '\')\" ><i class=\"far fa-eye\" width=\"10\" height=\"10\"></i></button><button type=\"button\" class=\"btn btn-primary\" style=\"margin-left:5px;\"  data-toggle=\"modal\" onclick=\"quickEdit(this)\"  data-target=\"#EditAlert\"><i class=\"fas fa-edit\" width=\"10\" height=\"10\"></i></button> </div></td>';
                 //content+='<div class="btn-group btn-group-toggle" data-toggle="buttons"><label class="btn btn-secondary active"><input type="radio" name="options" id="option1" autocomplete="off" checked> Active</label><label class="btn btn-secondary"><input type="radio" name="options" id="option2" autocomplete="off"> Radio</label><label class="btn btn-secondary"><input type="radio" name="options" id="option3" autocomplete="off"> Radio</label></div>'; 
                 aux = aux + 1;
                 //}else if(aux==1){//time
@@ -103,12 +103,33 @@ function showAlerts(alerts_to_show) {
     console.log(document.getElementById('table_alerts'));
     const datatables = document.getElementById('table_alerts');
     if (datatables) {
-        console.log("TABLA CARGADA REAL !!");
-        new simpleDatatables.DataTable(datatables);
+        //console.log("TABLA CARGADA REAL !!");
+        //var m = new simpleDatatables.DataTable(datatables); //Funciona
+     	/*
+	$('#table_alerts').DataTable( {
+  		"lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ]
+	});
+	*/
+	
+	
+	new simpleDatatables.DataTable(datatables, {
+    	"lengthMenu": [ 10, 15, 20, 25],
+	"pageLength": 10
+	});
+	
+
+	 /*   
+	 $('#table_alerts').dataTable({
+	    "iDisplayLength": 5,
+   	    "aLengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+    	});*/
+
+	console.log("PAGINAS CARGADAS");
     }
 
     //console.log("CONTENT--> ",content);
 }
+
 
 
 function loadAlerts() {
@@ -135,105 +156,40 @@ function loadAlerts() {
 
 
 function viewEventAlert(data, div) {
-    /*
-     <table border="2" bordercolor="blue">
-                    <tr>
-                        <td>inner Table row 1 column 1</td>
-                        <td>inner Table row 1 column 2</td>
-                    </tr>
-                    <tr>
-                        <td>inner Table row 2 column 1 </td>
-                        <td>inner Table row 2 column 2</td>
-                    </tr>
-                    <tr>
-                        <td>inner Table row 3 column 1 </td>
-                        <td>inner Table row 3 column 2</td>
-                    </tr>
-                </table>
-    */
-
-    /*
-    var div_element = document.getElementById(div);
-    var content='';
-    content = '<td>';
-    console.log("dades a mostrar "+typeof(data));
-    var events = JSON.parse(data);
-    console.log(typeof(events));
-    for (var i = 0; i < events.length; i++){
-                var obj = events[i];
-                console.log(obj);
-                for (var key in obj){
-          if(obj[key].length !=1){
-                //limpiamos "fields_" de los eventos para que se vea mejor
-            content+=key.split("fields_").pop()+':\t'+obj[key]+'<br>';
-          }
-         }
-    }
-	
-    content+='</td>';
-    div_element.innerHTML=content;
-    console.log(content);
-    */
-
-
     var div_element = document.getElementById(div);
     var content = '';
-    content = '<tr> <table><tbody><tr>';
+    content = '<tr><table><tbody><tr>';
     console.log("dades a mostrar " + typeof (data));
+    console.log("dataaa :\n"+ data); 
     var events = JSON.parse(data);
     console.log(typeof (events));
+    console.log("eventssss :\n"+ events);
+    var raw='';
     for (var i = 0; i < events.length; i++) {
         console.log("i=", i, " events.length=", events.length)
         var obj = events[i];
         console.log(obj);
-        content += '<th >';
+        content += '<th colspan="2">';
         for (var key in obj) {
+	    console.log();
+	   if (obj[key]!=null){
             if (obj[key].length != 1) {
                 if (key.split("fields_").pop() === "_raw") {
-                    content += '<td colspan="8">' + key.split("fields_").pop() + ':\t' + obj[key] + '</td>';
+                    raw += '<td colspan="7"><b>' + key.split("fields_").pop() + '</b>:\t' + obj[key] + '</td>';
                 } else {
                     //limpiamos "fields_" de los eventos para que se vea mejor
-                    content += key.split("fields_").pop() + ':\t' + obj[key] + '<br>';
+    		content += '<b>'+key.split("fields_").pop() + '</b>:\t' + obj[key] + '<br>';
                 }
             }
+	   }
         }
+	content+=raw;    
         content += '</th>';
     }
 
     content += '</tr></tbody></table></tr>';
     div_element.innerHTML = content;
     console.log(content);
-
-
-    /*
-  var div_element = document.getElementById(div);
-      var content='';
-      content = '<table><tbody>';
-      console.log("dades a mostrar "+typeof(data));
-      var events = JSON.parse(data);
-      console.log(typeof(events));
-      for (var i = 0; i < events.length; i++){
-              console.log("i=",i," events.length=", events.length)
-              var obj = events[i];
-              console.log(obj);
-              content+='<tr>';
-              for (var key in obj){
-                if(obj[key].length !=1){
-                  if(key.split("fields_").pop()==="_raw"){
-                      content+='<td>'+key.split("fields_").pop()+':\t'+obj[key]+'</td>';
-                  }else{
-                      //limpiamos "fields_" de los eventos para que se vea mejor
-                      content+=key.split("fields_").pop()+':\t'+obj[key]+'<br>';
-                  }
-                 }
-               }
-              content+='</tr>';
-      }
-
-      content+='</tbody></table>';
-      div_element.innerHTML=content;
-      console.log(content);
-*/
 }
 
 
@@ -314,6 +270,7 @@ function loadEvent(incident) {
             dat: "getEvents", incident_id: incident
         },
         success: function (data) {
+	    //console.log("BASE DE DATOS DEVUELVE", data);	
             viewEventAlert(data, ("hidden_row_" + incident));
         },
         error: function (xhr, status, error) {
