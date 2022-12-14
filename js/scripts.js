@@ -186,18 +186,18 @@ function viewEventAlert(data, div) {
         console.log("i=", i, " events.length=", events.length)
         var obj = events[i];
         console.log(obj);
-        content += '<td>';
+        content += '<th >';
         for (var key in obj) {
             if (obj[key].length != 1) {
                 if (key.split("fields_").pop() === "_raw") {
-                    content += '<td>' + key.split("fields_").pop() + ':\t' + obj[key] + '</td>';
+                    content += '<td colspan="8">' + key.split("fields_").pop() + ':\t' + obj[key] + '</td>';
                 } else {
                     //limpiamos "fields_" de los eventos para que se vea mejor
                     content += key.split("fields_").pop() + ':\t' + obj[key] + '<br>';
                 }
             }
         }
-        content += '</td>';
+        content += '</th>';
     }
 
     content += '</tr></tbody></table></tr>';
