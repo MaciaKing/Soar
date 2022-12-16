@@ -117,7 +117,7 @@ def madeCurl(query):
     #spl = 'search index=alerts_omniaccess earliest=-1h latest=now status=*'
     spl = query
     splunk_search_kwargs = {"exec_mode": "blocking",
-                        "earliest_time": "-72h",
+                        "earliest_time": "-100h",
                         "latest_time": "now",
                         "enable_lookups": "true"}
    

@@ -100,34 +100,31 @@ function showAlerts(alerts_to_show) {
     content += '</tbody>';
     content += '</table></div></div>';
     div.innerHTML += content;
-    console.log(document.getElementById('table_alerts'));
-    const datatables = document.getElementById('table_alerts');
+    //console.log(document.getElementById('table_alerts'));
+    
+/*
+    $(document).ready(function() {
+	    console.log("REAADDDDDYYYYYYYYYYYY\n");
+    	
+	$('#table_alerts').dataTable({
+        	"aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
+        	"iDisplayLength": 25
+    	});
+    });
+*/
+	console.log("PAGINAS CARGADAS");
+
+    var datatables = document.getElementById('table_alerts');
     if (datatables) {
-        //console.log("TABLA CARGADA REAL !!");
-        //var m = new simpleDatatables.DataTable(datatables); //Funciona
-     	/*
-	$('#table_alerts').DataTable( {
-  		"lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ]
-	});
-	*/
-	
-	
-	new simpleDatatables.DataTable(datatables, {
-    	"lengthMenu": [ 10, 15, 20, 25],
-	"pageLength": 10
+	 new simpleDatatables.DataTable(datatables, {
+    	"lengthMenu": [[10, 20, 30, 40, 50], [20, 40, 60, 80, 100]],
+	//"aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
+	//"pageLength": 10
 	});
 	
-
-	 /*   
-	 $('#table_alerts').dataTable({
-	    "iDisplayLength": 5,
-   	    "aLengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
-    	});*/
-
 	console.log("PAGINAS CARGADAS");
     }
-
-    //console.log("CONTENT--> ",content);
+    
 }
 
 
@@ -177,11 +174,18 @@ function viewEventAlert(data, div) {
                 if (key.split("fields_").pop() === "_raw") {
 		     var p=obj[key].replaceAll("<","&lt;");
 		     p.replaceAll(">","&gt;");
-		     raw += '<td colspan="7"><b>Raw</b>:\t<br><div>' + p + '</div></td>';
+		     raw += '<td colspan="7"><b style="color:#B77E42;"> - Raw</b>\t<br><div>' + p + '</div></td>';
 		} else {
-                    //limpiamos "fields_" de los eventos para que se vea mejor
-    		     content += '<b>'+key.split("fields_").pop() + '</b>:\t' + obj[key] + '<br>';
-                }
+                     //limpiamos "fields_" de los eventos para que se vea mejor
+		     var etiqueta= key.split("fields_").pop();
+		     //Remplazamos todos los _ por " "	
+		     etiqueta=etiqueta.replaceAll("_"," ");
+		     //Ponemos letra mayúscula solo a la primera letra
+		     //etiqueta=etiqueta.toUpperCase()
+		     etiqueta= etiqueta.charAt(0).toUpperCase() + etiqueta.slice(1);
+    		     //content += '<p><b>'+ etiqueta + '</b>:\t' + obj[key] + '<br></p>';
+                     content += '<p style="display:inline-block;color:#B77E42"> - '+ etiqueta + '&nbsp;</p><p style="display:inline-block;">' + obj[key] + '</p><br>';
+		}
             }
 	   }
         }
@@ -430,11 +434,49 @@ function cleanAll() {
     console.log(selected_alerts);
 }
 
+
+function showClients(clients){
+    console.log("maciaaa");
+    const json = JSON.parse(clients);
+    var content='';
+    console.log("MACIA 2");
+    for (var i = 0; i < json.length; i++){
+  	var obj = json[i];
+  	for (var key in obj){
+    		var value = obj[key];
+		console.log("valor "+ value);
+		content+='<a class="dropdown-item" href="#">'+value+'</a>';
+  	}
+    }    
+
+    //var div=document.getElementByid('dropdownCliente');
+    //div.innerHTML += content;
+    document.getElementById('dropdownCliente').innerHTML += content;
+}
+
+//clients === index
+function loadClients(){
+ var clients = jQuery.ajax({
+        type: 'POST',
+        url: './Back-End/reciver.php',
+        //dataType:"json",
+        data: {
+            dat: "getAllClients"
+        },
+        success: function (data) {
+	    showClients(data);
+        },
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
+        }
+    });
+}
+
 //ocultarTodosDivsYMostrar1: 
 //  param: divToShow    --> id= "divToShow"
 //Ocultamos todos los divs y solo mostramos el idDivs que entra por parametro
 function ocultarTodosDivsYMostrar1(divToShow) {
-    console.log("ENSEÑAR --> " + divToShow);
     for (var i = 0; i < divs.length; i++) {
         if (divs[i] === divToShow) {
             //mostramos este divs
@@ -442,8 +484,8 @@ function ocultarTodosDivsYMostrar1(divToShow) {
             document.getElementById(divToShow).style.display = "block";
             // console.log("Activado")
             if (divs[i] == "ALERTAS") { //Cargamos todas las alertas
-                console.log("ANTES DE CONNECTAR SERVIDOR: ");
-                loadAlerts();
+		loadAlerts();
+		loadClients();
             }
         } else {
             //ocultamos el divs

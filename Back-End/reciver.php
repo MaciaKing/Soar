@@ -47,6 +47,8 @@ if($recogida=="getAlerts"){
  	getAlertsByUrgency($urgen);
 }elseif($recogida=="getAlertsByOwner"){
 	getAlertsByOwner($owner);	
+}elseif($recogida=="getAllClients"){
+	getAllClients();
 }else{
 	//echo "No coincide m11 ".$recogida." m22";
 	echo gettype($recogida);
