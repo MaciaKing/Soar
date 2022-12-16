@@ -175,15 +175,17 @@ function viewEventAlert(data, div) {
 	   if (obj[key]!=null){
             if (obj[key].length != 1) {
                 if (key.split("fields_").pop() === "_raw") {
-                    raw += '<td colspan="7"><b>' + key.split("fields_").pop() + '</b>:\t' + obj[key] + '</td>';
-                } else {
+		     var p=obj[key].replaceAll("<","&lt;");
+		     p.replaceAll(">","&gt;");
+		     raw += '<td colspan="7"><b>Raw</b>:\t<br><div>' + p + '</div></td>';
+		} else {
                     //limpiamos "fields_" de los eventos para que se vea mejor
-    		content += '<b>'+key.split("fields_").pop() + '</b>:\t' + obj[key] + '<br>';
+    		     content += '<b>'+key.split("fields_").pop() + '</b>:\t' + obj[key] + '<br>';
                 }
             }
 	   }
         }
-	content+=raw;    
+	content+=raw;  
         content += '</th>';
     }
 

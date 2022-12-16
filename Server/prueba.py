@@ -7,6 +7,7 @@ import time
 from enum import Enum
 #Encrypt
 import os
+import re
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
@@ -17,7 +18,7 @@ from cryptography.hazmat.backends import default_backend
 
 #events = {'incident_id':'', 'title':'', 'fields{}._raw':'','fields{}.EventCode':'','fields{}._time':'','fields{}.action':'','fields{}.app':'','fields{}.cat':'','fields{}.catdesc':'','fields{}.category':'','fields{}.conn_count':'','fields{}.date':'','fields{}.dest_ip':'','fields{}.dest_port':'','fields{}.devname':'','fields{}.diff_deviation':'','fields{}.eventtype':'','fields{}.host':'','fields{}.index':'','fields{}.level':'','fields{}.msg':'','fields{}.severity':'','fields{}.signature':'','fields{}.source':'','fields{}.source_ip':'','fields{}.src_ip':'','fields{}.src_user':'','fields{}.srcintf':'','fields{}.subtype':'','fields{}.ta_windows_action':'','fields{}.time':'','fields{}.type':'','fields{}.urgency':'','fields{}.url':'','fields{}.user':'','host':'','index':'','tag':''}
 
-events = {'incident_id':'', 'fields{}._raw':'','fields{}.EventCode':'','fields{}._time':'','fields{}.action':'','fields{}.app':'','fields{}.cat':'','fields{}.catdesc':'','fields{}.category':'','fields{}.conn_count':'','fields{}.date':'','fields{}.dest_ip':'','fields{}.dest_port':'','fields{}.devname':'','fields{}.diff_deviation':'','fields{}.eventtype':'','fields{}.host':'','fields{}.index':'','fields{}.level':'','fields{}.msg':'','fields{}.severity':'','fields{}.signature':'','fields{}.source':'','fields{}.source_ip':'','fields{}.src_ip':'','fields{}.src_user':'','fields{}.srcintf':'','fields{}.subtype':'','fields{}.ta_windows_action':'','fields{}.time':'', 'fields{}.srcip':'', 'fields{}.vlan_dst':'', 'fields{}.vlan_src':'', 'fields{}.dstip':'', 'fields{}.index':'' , 'fields{}.score':'' ,'fields{}.type':'','fields{}.url':'','fields{}.user':''}
+events = {'fields{}._raw':'',  'incident_id':'', 'fields{}.EventCode':'','fields{}._time':'','fields{}.action':'','fields{}.app':'','fields{}.cat':'','fields{}.catdesc':'','fields{}.category':'','fields{}.conn_count':'','fields{}.date':'','fields{}.dest_ip':'','fields{}.dest_port':'','fields{}.devname':'','fields{}.diff_deviation':'','fields{}.eventtype':'','fields{}.host':'','fields{}.index':'','fields{}.level':'','fields{}.msg':'','fields{}.severity':'','fields{}.signature':'','fields{}.source':'','fields{}.source_ip':'','fields{}.src_ip':'','fields{}.src_user':'','fields{}.srcintf':'','fields{}.subtype':'','fields{}.ta_windows_action':'','fields{}.time':'', 'fields{}.srcip':'', 'fields{}.vlan_dst':'', 'fields{}.vlan_src':'', 'fields{}.dstip':'', 'fields{}.index':'' , 'fields{}.score':'' ,'fields{}.type':'','fields{}.url':'','fields{}.user':''}
 
 #fields{}.srcip, fields{}.vlan_dst, fields{}.vlan_src, fields{}.dstip, fields{}.index, fields{}.score 
 #Definir status = new 
@@ -116,7 +117,7 @@ def madeCurl(query):
     #spl = 'search index=alerts_omniaccess earliest=-1h latest=now status=*'
     spl = query
     splunk_search_kwargs = {"exec_mode": "blocking",
-                        "earliest_time": "-3m",
+                        "earliest_time": "-72h",
                         "latest_time": "now",
                         "enable_lookups": "true"}
    
@@ -150,82 +151,54 @@ def getInserts(jsonToDatabase, add_insert, table_name, parser, isAlert=True):
     '''
     Transalate a JSON to a SQL Insert, and leave insert in add_insert array    
     '''   
-    '''
-    insert="INSERT INTO "+ table_name +" (" + ','.join(parser)+") values ("
-    if idAlert==1: #Es una alerta
+    raw=re.compile(r"fields\{\}\._raw")
 
-        insert=transformIndex(insert)
-        print("INSERT 111-> ",insert)
-    else: #Es un evento
-        insert=transform(insert)
-        print("INSERT 222-> ",insert)
-    
-    first_value_insert=True
-    last_key = list(parser)[-1]
-    final_parser=removeLastKey(parser,last_key)
-    #print("FINAL PARSER --> ", final_parser)
-    #for key in parser.keys():
-    for key in final_parser.keys(): 
-        #alerts[key]=jsonToDatabase[key]
-        #print(" Value --> ",str(jsonToDatabase[key]), "Type ", type(jsonToDatabase[key]))
-        try:
-            #print(" Value --> ",str(jsonToDatabase[key]), "Type ", type(jsonToDatabase[key]))
-            if first_value_insert:
-                insert+="'"+str(jsonToDatabase[key])+"'"
-                first_value_insert=False
-            else:
-                if type(jsonToDatabase[key]) == list:
-                    insert+=", ARRAY "+str(jsonToDatabase[key])
-                elif jsonToDatabase[key][0] == '<': # xml format
-                    insert += ", '" +str(jsonToDatabase[key]).replace("'","")+"'"
-                    None
-                else:
-                    insert+=", '"+str(jsonToDatabase[key])+"'"
-        except:
-            insert+= ",' '" #This var is not found on javascript
-    
-    if idAlert==1: #Estamos insertando una alerta i definimos el usuario por defecto Unassigned id=1  
-        insert+=",1)"
-    else: #Estamos insertando un evento i es necesario ponerle el idAlert como ultimo elemento
-        insert+=","+str(idAlert)+")" # Sin comillas porque realmente es un numero 
-    #print(insert+"\n")
-    add_insert.append(insert)
-    '''
     insert="INSERT INTO "+ table_name +" (" + ','.join(parser)+") values ("
     auxDicc=parser.copy()
     if isAlert==True:
         last_key = list(auxDicc)[-1]
         # remove the last key using .pop() method
         removed_tuple = auxDicc.pop(last_key)
-        #insert=transform(insert)
         insert=transformIndex(insert)
-        #print("ALERT ->", insert)
-        #insert=transformIndex(insert)
     else:
-        #insert=transformIndex(insert)
         insert=transform(insert)
-        #print("EVENT ->",insert)
-        #insert=transform(insert)
-    first_value_insert=True
-    #for key in parser.keys():
-    for key in auxDicc.keys():
-        #alerts[key]=jsonToDatabase[key]
-        #print(" Value --> ",str(jsonToDatabase[key]), "Type ", type(jsonToDatabase[key]))
-        try:
+    
+    if not isAlert:
+        raw=jsonToDatabase['fields{}._raw'].replace("'","''")
+        insert += "'"+raw+"'"
+        for key in list(auxDicc.keys())[1:]:
+            try:
             #print(" Value --> ",str(jsonToDatabase[key]), "Type ", type(jsonToDatabase[key]))
-            if first_value_insert:
-                insert+="'"+str(jsonToDatabase[key])+"'"
-                first_value_insert=False
-            else:
+            #if first_value_insert:
+            #    insert+="'"+str(jsonToDatabase[key])+"'"
+            #    first_value_insert=False
+            #else:
                 if type(jsonToDatabase[key]) == list:
                     insert+=", ARRAY "+str(jsonToDatabase[key])
-                elif jsonToDatabase[key][0] == '<': # xml format
-                    insert += ", '" +str(jsonToDatabase[key]).replace("'","")+"'"
-                    None
+                #    raw=jsonToDatabase['fields{}._raw'].replace("'","''")
+                #    insert += ", '" +raw+"'"
                 else:
                     insert+=", '"+str(jsonToDatabase[key])+"'"
-        except:
-            insert+= ",' '" #This var is not found on javascript
+            except:
+                insert+= ",' '" #This var is not found on javascript
+    else:
+        firstValue=True
+        for key in auxDicc.keys():
+            try:
+                if firstValue:
+                     if type(jsonToDatabase[key]) == list:
+                        insert+="ARRAY "+str(jsonToDatabase[key])
+                     else:
+                        insert+="'"+ str(jsonToDatabase[key])+"'"
+                     firstValue=False
+                else:
+                     if type(jsonToDatabase[key]) == list:
+                        insert+=", ARRAY "+str(jsonToDatabase[key])
+                     else:
+                        insert+=", '"+str(jsonToDatabase[key])+"'"
+            except:
+                insert+= ",' '" #This var is not found on javascript
+    
     if isAlert==True:
         insert+=",1)"
     else:
@@ -328,7 +301,7 @@ def deamon():
             #idAlert = makeQuery("select max(idalert) from alerta")
             #print("ID ALERT --> ",idAlert, " type --> ", type(idAlert))
             for result in results_query:
-                #print("\n"+str(result)+"\n")
+                # print("\n"+str(result)+"\n")
                 #print("\n\n")
                 s = Switcher()
                 table_name, parser = s.sw_alert()
@@ -340,15 +313,15 @@ def deamon():
             final_insert_alerts=joinAllInserts(all_insert_alerts)
             final_insert_events=joinAllInserts(all_insert_events, isEvent=True)
             #print("\n\nfinal_insert_alerts: ",final_insert_alerts)
-            print("\n\nfinal_insert_events: ",final_insert_events)
+            #print("\n\nfinal_insert_events: ",final_insert_events)
             #Primero se hace el Insert de alerts y luego el de events ya que como esta montada la BD
             #se necesita primero que las alertas existan
             if final_insert_alerts!=-1:
                 makeInsertDatabase([final_insert_alerts])
-                None
+              #  None
             if final_insert_events!=-1:
                 makeInsertDatabase([final_insert_events])
-                None
+              #  None
             time.sleep(120)
             #Restore Alerts
             all_insert_alerts=[]
