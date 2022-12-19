@@ -199,8 +199,11 @@ function viewEventAlert(data, div) {
 }
 
 
-function filterByStatus(status_) {
-    console.log("status: -->" + status_);
+function filterByStatus() {
+    var status_ = document.getElementById("FilterStatus").value;
+    status_ = status_.toLowerCase();
+
+   console.log("status:  MACIAAA-->" + status_);
     var alertas = jQuery.ajax({
         //type: "POST",
         type: 'POST',
@@ -221,8 +224,13 @@ function filterByStatus(status_) {
     });
 }
 
-function filterByOwner(owner) {
-    console.log("status: -->" + owner);
+
+function filterByOwner(/*owner*/) {
+    //console.log("status: -->" + owner);
+   var owner = document.getElementById("FilterOwner").value;
+   
+   //status_ = status_.toLowerCase();
+	
     var alertas = jQuery.ajax({
         //type: "POST",
         type: 'POST',
@@ -244,8 +252,12 @@ function filterByOwner(owner) {
 }
 
 
-function filterByUrgency(urgency) {
-    console.log("urgency: -->" + urgency);
+function filterByUrgency(/*urgency*/) {
+    //console.log("urgency: -->" + urgency);
+    //console.log(" ");
+    var urgency=document.getElementById("FilterUrgency").value;
+    urgency= urgency.toLowerCase();
+    console.log("\nURGENCY MACIA --> ", urgency)
     var alertas = jQuery.ajax({
         //type: "POST",
         type: 'POST',
@@ -435,7 +447,9 @@ function cleanAll() {
 }
 
 
-function filterByClient(index) {
+function filterByClient() {
+  //maciiiii
+    var index = document.getElementById("FilterIndex").value;
     var events = jQuery.ajax({
         type: 'POST',
         url: './Back-End/reciver.php',
@@ -454,7 +468,55 @@ function filterByClient(index) {
 }
 
 
+function loadUsers(){
+  var users = jQuery.ajax({
+        type: 'POST',
+        url: './Back-End/reciver.php',
+        //dataType:"json",
+        data: {
+            dat: "getAllUsr"
+        },
+        success: function (data) {
+            showUsers(JSON.parse(data));
+        },
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
+        }
+    });
+}
 
+
+function showUsers(users){
+    console.log("MACIAAAAAAAAAAA 99999999999");
+    var content='';  
+    for (var i = 0; i < users.length; i++){
+        var obj = users[i];
+        for (var key in obj){
+                var value = obj[key];
+                console.log("valor "+ value);
+                content+='<option>'+value+'</option>';
+        }
+    }
+    document.getElementById('FilterOwner').innerHTML = content;
+}
+
+
+function showClients(clients){
+    const json = JSON.parse(clients);
+    var content='<option>All</option>';
+    for (var i = 0; i < json.length; i++){
+        var obj = json[i];
+        for (var key in obj){
+                var value = obj[key];
+                console.log("valor "+ value);
+                content+='<option>'+value+'</option>';
+        }
+    }
+    document.getElementById('FilterIndex').innerHTML = content;
+}
+
+/*
 function showClients(clients){
     //console.log("maciaaa");
     const json = JSON.parse(clients);
@@ -473,7 +535,7 @@ function showClients(clients){
     //div.innerHTML += content;
     document.getElementById('dropdownCliente').innerHTML += content;
 }
-
+*/
 
 //clients === index
 function loadClients(){
@@ -507,6 +569,7 @@ function ocultarTodosDivsYMostrar1(divToShow) {
             if (divs[i] == "ALERTAS") { //Cargamos todas las alertas
 		loadAlerts();
 		loadClients();
+		loadUsers();
             }
         } else {
             //ocultamos el divs

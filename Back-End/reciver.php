@@ -31,7 +31,6 @@ if(!empty($_POST['index'])){
 }
 
 
-//getAlertsByOwner($owner)
 
 $res="";
 
@@ -52,11 +51,12 @@ if($recogida=="getAlerts"){
 	getAllClients();
 }elseif($recogida=='getAlertsByClient'){
 	getAlertsByIndex($index);
+}elseif($recogida=='getAllUsr'){
+	getAllUsr();
 }else{
 	//echo "No coincide m11 ".$recogida." m22";
 	echo gettype($recogida);
 }
-//getAlertsByUrgency
 echo $res;
 
 
