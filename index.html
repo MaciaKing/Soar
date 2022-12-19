@@ -764,12 +764,12 @@
 
                 <!-- ALERTAS -->
                 <div id="ALERTAS" style="display: none;">
-		    <h1 class="mt-4">  Alertas</h1>
+                    <h1 class="mt-4"> Alertas</h1>
                     <!-- MACIA PRUEBAS -->
                     <div class="row">
                         <div class="col-xl-6">
                             <!--<div class="card mb-4"> -->
-			    <div class="card mb-4">
+                            <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
                                     Filtros
@@ -799,59 +799,39 @@
                                             </div>
                                         </div>
 
-					<!--
-					<div class="col">
-						<div class="form-group"> 
-   							 <label for="exampleFormControlSelect1">Example select</label> 
-    							 <select class="form-control" id="exampleFormControlSelect1">
-     								 <option>1</option>
-      								 <option>2</option>
-      							 	 <option>3</option>
-      						        	 <option>4</option>
-     						         	 <option>5</option>
-   							 </select>
- 						  </div>
-
-					<div>-->
-
                                         <div class="col">
                                             <button type="button" class="btn btn-dark dropdown-toggle"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Status
                                             </button>
-                                            <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" onclick="filterByStatus('*')" >All</a>
-                                                <a class="dropdown-item" onclick="filterByStatus('Reject')"
-                                                    >Reject</a>
-                                                <a class="dropdown-item" onclick="filterByStatus('Pending')"
-                                                    >Pending</a>
-                                                <a class="dropdown-item" onclick="filterByStatus('False Positive')"
-                                                    >False
+                                            <div class="dropdown-menu dropdown-menu-dark"
+                                                aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" onclick="filterByStatus('*')">All</a>
+                                                <a class="dropdown-item" onclick="filterByStatus('Reject')">Reject</a>
+                                                <a class="dropdown-item" onclick="filterByStatus('Pending')">Pending</a>
+                                                <a class="dropdown-item"
+                                                    onclick="filterByStatus('False Positive')">False
                                                     Positive</a>
-                                                <a class="dropdown-item" onclick="filterByStatus('Ongoing')"
-                                                    >Ongoing</a>
-                                                <a class="dropdown-item" onclick="filterByStatus('Close')"
-                                                    >Close</a>
-                                                <a class="dropdown-item" onclick="filterByStatus('To be review')"
-									 >To be
+                                                <a class="dropdown-item" onclick="filterByStatus('Ongoing')">Ongoing</a>
+                                                <a class="dropdown-item" onclick="filterByStatus('Close')">Close</a>
+                                                <a class="dropdown-item" onclick="filterByStatus('To be review')">To be
                                                     review</a>
-                                                <a class="dropdown-item" onclick="filterByStatus('new')"
-                                                    >New</a>
+                                                <a class="dropdown-item" onclick="filterByStatus('new')">New</a>
                                             </div>
                                         </div>
-					
-					<div class="col">
+
+                                        <div class="col">
                                             <button type="button" class="btn btn-dark dropdown-toggle"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Owner
                                             </button>
-                                            <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" onclick="filterByOwner('Macia Salva')"
-                                                    >Macia Salva</a>
-                                                <a class="dropdown-item" onclick="filterByOwner('Adrian Bustamante')"
-                                                    >Adrian Castillo</a>
-                                                <a class="dropdown-item" onclick="filterByOwner('Arnau Bartres')"
-                                                    >
+                                            <div class="dropdown-menu dropdown-menu-dark"
+                                                aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" onclick="filterByOwner('Macia Salva')">Macia
+                                                    Salva</a>
+                                                <a class="dropdown-item"
+                                                    onclick="filterByOwner('Adrian Bustamante')">Adrian Castillo</a>
+                                                <a class="dropdown-item" onclick="filterByOwner('Arnau Bartres')">
                                                     Arnau Bartres</a>
                                             </div>
                                         </div>
@@ -863,6 +843,9 @@
                                             <input id="startDate" class="form-control" type="time">
                                         </div>
 
+                                    </div>
+                                    <div class="row">
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -905,9 +888,9 @@
 
 
                     <!--<div class="container-fluid px-4">-->
-		    <!-- Si posam class bé se veu diferent-->
+                    <!-- Si posam class bé se veu diferent-->
                     <!--<div id="maciaAlertas" class="container">-->
-		    <div id="maciaAlertas">
+                    <div id="maciaAlertas">
                         <!--
 			    <div class="card mb-4">
                             <div class="card-header">
@@ -921,79 +904,79 @@
                             </div>
                         </div>
 			-->
-                   <!-- </div> -->
+                        <!-- </div> -->
 
-                </div>
-                <!-- FIN ALERTAS -->
+                    </div>
+                    <!-- FIN ALERTAS -->
 
-                <!-- GESTIONADOR ALERTAS  -->
-                <!-- Modal Se puede editar -->
-                <div class="modal fade" id="EditAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                <button type="button" class="close" onclick="endEdit()" data-dismiss="modal"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- CAMBIAR -->
-                                <div class="row g-2">
-                                    <div class="col-md">
-                                        <div class="form-floating">
-                                            <select id="selectOwner" class="form-select" id="floatingSelectGrid"
-                                                aria-label="Floating label select example">
-                                                <option selected>Unassigned</option>
-                                                <option value="1">Macia Salva</option>
-                                                <option value="2">Arnau Bartres</option>
-                                                <option value="3">Adrian Bustamante</option>
-                                            </select>
-                                            <label for="floatingSelectGrid">Owner</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <div class="form-floating">
-                                            <select id="selectStatus" class="form-select" id="floatingSelectGrid"
-                                                aria-label="Floating label select example">
-                                                <option selected>Empty</option>
-                                                <option value="1">Reject</option>
-                                                <option value="2">Pending</option>
-                                                <option value="3">False Positive</option>
-                                                <option value="4">Ongoing</option>
-                                                <option value="5">Close</option>
-                                                <option value="6">To be review</option>
-                                            </select>
-                                            <label for="floatingSelectGrid">Status</label>
-                                        </div>
-                                    </div>
-                                    <br>
-
+                    <!-- GESTIONADOR ALERTAS  -->
+                    <!-- Modal Se puede editar -->
+                    <div class="modal fade" id="EditAlert" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="close" onclick="endEdit()" data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                                <div class="row g-2">
+                                <div class="modal-body">
+                                    <!-- CAMBIAR -->
                                     <div class="row g-2">
                                         <div class="col-md">
                                             <div class="form-floating">
-                                                <input id="selectComment" type="email" class="form-control"
-                                                    id="floatingInputGrid" placeholder="name@example.com" value="">
-                                                <label for="floatingInputGrid">Comment</label>
+                                                <select id="selectOwner" class="form-select" id="floatingSelectGrid"
+                                                    aria-label="Floating label select example">
+                                                    <option selected>Unassigned</option>
+                                                    <option value="1">Macia Salva</option>
+                                                    <option value="2">Arnau Bartres</option>
+                                                    <option value="3">Adrian Bustamante</option>
+                                                </select>
+                                                <label for="floatingSelectGrid">Owner</label>
                                             </div>
                                         </div>
+                                        <div class="col-md">
+                                            <div class="form-floating">
+                                                <select id="selectStatus" class="form-select" id="floatingSelectGrid"
+                                                    aria-label="Floating label select example">
+                                                    <option selected>Empty</option>
+                                                    <option value="1">Reject</option>
+                                                    <option value="2">Pending</option>
+                                                    <option value="3">False Positive</option>
+                                                    <option value="4">Ongoing</option>
+                                                    <option value="5">Close</option>
+                                                    <option value="6">To be review</option>
+                                                </select>
+                                                <label for="floatingSelectGrid">Status</label>
+                                            </div>
+                                        </div>
+                                        <br>
+
                                     </div>
-                                    <!-- FIN CAMBIAR -->
-                                </div>
-                                <div class="modal-footer">
-                                    <button id="closeEdit" type="button" class="btn btn-secondary" data-dismiss="modal"
-                                        onclick="endEdit()">Close</button>
-                                    <button type="button" class="btn btn-primary" onclick="getChanges()">Save
-                                        changes</button>
+                                    <div class="row g-2">
+                                        <div class="row g-2">
+                                            <div class="col-md">
+                                                <div class="form-floating">
+                                                    <input id="selectComment" type="email" class="form-control"
+                                                        id="floatingInputGrid" placeholder="name@example.com" value="">
+                                                    <label for="floatingInputGrid">Comment</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- FIN CAMBIAR -->
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="closeEdit" type="button" class="btn btn-secondary"
+                                            data-dismiss="modal" onclick="endEdit()">Close</button>
+                                        <button type="button" class="btn btn-primary" onclick="getChanges()">Save
+                                            changes</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- FIN GESTIONADOR ALERTAS  -->
+                        <!-- FIN GESTIONADOR ALERTAS  -->
 
             </main>
             <footer class="py-4 bg-light mt-auto">
