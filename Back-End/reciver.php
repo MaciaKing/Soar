@@ -10,8 +10,6 @@ if(!empty($_POST['incident_id'])){
 	$inci=$_POST['incident_id'];
 }
 
-
-
 if(!empty($_POST['owner'])){
         $owner=$_POST['owner'];
 }
@@ -28,6 +26,9 @@ if(!empty($_POST['urgency'])){
         $urgen=$_POST['urgency'];
 }
 
+if(!empty($_POST['index'])){
+        $index=$_POST['index'];
+}
 
 
 //getAlertsByOwner($owner)
@@ -49,6 +50,8 @@ if($recogida=="getAlerts"){
 	getAlertsByOwner($owner);	
 }elseif($recogida=="getAllClients"){
 	getAllClients();
+}elseif($recogida=='getAlertsByClient'){
+	getAlertsByIndex($index);
 }else{
 	//echo "No coincide m11 ".$recogida." m22";
 	echo gettype($recogida);

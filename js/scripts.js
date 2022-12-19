@@ -435,8 +435,28 @@ function cleanAll() {
 }
 
 
+function filterByClient(index) {
+    var events = jQuery.ajax({
+        type: 'POST',
+        url: './Back-End/reciver.php',
+        //dataType:"json",
+        data: {
+            dat: "getAlertsByClient", index:index
+        },
+        success: function (data) {
+            showAlerts(JSON.parse(data));
+	},
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
+        }
+    });
+}
+
+
+
 function showClients(clients){
-    console.log("maciaaa");
+    //console.log("maciaaa");
     const json = JSON.parse(clients);
     var content='';
     console.log("MACIA 2");
@@ -445,7 +465,7 @@ function showClients(clients){
   	for (var key in obj){
     		var value = obj[key];
 		console.log("valor "+ value);
-		content+='<a class="dropdown-item" href="#">'+value+'</a>';
+		content+='<a class="dropdown-item" onclick="filterByClient(\''+value+'\')">'+value+'</a>';
   	}
     }    
 
@@ -453,6 +473,7 @@ function showClients(clients){
     //div.innerHTML += content;
     document.getElementById('dropdownCliente').innerHTML += content;
 }
+
 
 //clients === index
 function loadClients(){
