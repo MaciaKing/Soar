@@ -451,15 +451,23 @@ function filterByAllFilters(){
   var index = document.getElementById("FilterIndex").value;
   var urgency = document.getElementById("FilterUrgency").value;
   var status_ = document.getElementById("FilterStatus").value;
-  var owner = document.getElementById("FilterOwner").value;  
-  console.log("Index :",index, " urgency :",urgency, " status :",status_, " owner :",owner );  
+  var owner = document.getElementById("FilterOwner").value;
+  
+  var data1 = document.getElementById("data1").value;
+  var data2 = document.getElementById("data2").value;
+  var time1 = document.getElementById("time1").value;
+  var time2 = document.getElementById("time2").value;
+  //console.log("Index :",index, " urgency :",urgency, " status :",status_, " owner :",owner );  
+  console.log("data1 --> ", data1,"\ndata2 --> ",data2, "\ntime1 --> ", time1, "\ntime2 --> ", time2);
+
   var query = jQuery.ajax({
         type: 'POST',
         url: './Back-End/reciver.php',
         //dataType:"json",
         data: {
 
-		dat: "getAlertsByAllFilters", index:index, urgency:urgency, status_:status_, owner:owner
+		dat: "getAlertsByAllFilters", index:index, urgency:urgency, status_:status_, owner:owner,
+		time1:time1, time2:time2, data1:data1, data2:data2
         },
         success: function (data) {
 	    console.log(data);	
@@ -474,7 +482,6 @@ function filterByAllFilters(){
 
 
 function filterByClient() {
-  //maciiiii
     var index = document.getElementById("FilterIndex").value;
     var events = jQuery.ajax({
         type: 'POST',
@@ -587,6 +594,11 @@ function resetFilters(){
   document.getElementById("FilterIndex").value='All';
   document.getElementById("FilterStatus").value='All';
   document.getElementById("FilterOwner").value='All';
+  
+  document.getElementById("data1").value=null;
+  document.getElementById("data2").value=null;
+  document.getElementById("time1").value=null;
+  document.getElementById("time2").value=null;
   loadAlerts(); 
 }
 

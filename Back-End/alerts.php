@@ -103,20 +103,32 @@ function getAllAlerts(){
   $db->close();
 }
 
-function getAllAlertsByAllFilters($index, $urency, $status, $owner){
+function getAllAlertsByAllFilters($index, $urgen, $status_, $owner, $data1, $time1, $data2, $time2){
   $db = new DBClass();
   $db->openConnection();
   
   $query= "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event JOIN alerta ON event.incident_id=alerta.incident_id";  
+
+//SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name
+//FROM event
+//JOIN alerta ON event.incident_id=alerta.incident_id AND alert_time BETWEEN '2022-12-15' AND '2022-12-16'  AND fields_index='oa_omniaccess' AND event.incident_id=alerta.incident_id
+//JOIN usr ON alerta.idUser=usr.idUser AND usr.name='Macia Salva'
+//ORDER BY alerta.alert_time DESC;
+  if(is_null($data1)==1 and is_null($data2) ==1 and is_null($time1)==1 and is_null($time2)==1 ){
   
+  }else{
+  	$query .= " AND alerta.alert_time BETWEEN '$data1 $time1' AND '$data2 $time2'";
+  }
+  
+  //echo "index --> $index \n\n";
   if( strcmp($index, 'All') !==0 ){ //Equal
   	$query .= " AND fields_index='$index'";	
   }
-  if( strcmp($urency, 'All') !==0 ){ //Equal
-        $query .= " AND UPPER(urgency)=UPPER('$urency')";
+  if( strcmp($urgen, 'All') !==0 ){ //Equal
+        $query .= " AND UPPER(urgency)=UPPER('$urgen')";
   }
-  if( strcmp($status, 'All') !==0){
-         $query .= " AND status='$status'";
+  if( strcmp($status_, 'All') !==0){
+         $query .= " AND status='$status_'";
   }
 
   $query .= " AND event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser";
@@ -127,7 +139,7 @@ function getAllAlertsByAllFilters($index, $urency, $status, $owner){
 
   $query .=" ORDER BY alerta.alert_time DESC";
 
-  //echo "QQQQQ $query\n";
+  //echo "QQQQQ $query\n\n\n";
 
   $res=$db->query($query);
   $allRes=pg_fetch_all($res);

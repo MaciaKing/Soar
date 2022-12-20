@@ -28,9 +28,23 @@ if(!empty($_POST['index'])){
         $index=$_POST['index'];
 }
 
+if(!empty($_POST['time1'])){
+        $time1=$_POST['time1'];
+}
+
+if(!empty($_POST['time2'])){
+        $time2=$_POST['time2'];
+}
+
+if(!empty($_POST['data1'])){
+        $data1=$_POST['data1'];
+}
+
+if(!empty($_POST['data2'])){
+        $data2=$_POST['data2'];
+}
 
 
-//$res="";
 
 if($recogida=="getAlerts"){
 	getAllAlerts();
@@ -51,13 +65,14 @@ if($recogida=="getAlerts"){
 	getAlertsByIndex($index);
 }elseif($recogida=='getAllUsr'){
 	getAllUsr();
-}elseif($recogida=='getAlertsByAllFilters'){
-	getAllAlertsByAllFilters($index, $urgen, $status_, $owner);
+}elseif($recogida=='getAlertsByAllFilters'){ 
+	getAllAlertsByAllFilters($index, $urgen, $status_, $owner, $data1, $time1, $data2, $time2 );
 }else{
-	//echo "No coincide m11 ".$recogida." m22";
 	echo gettype($recogida);
 }
-//echo $res;
+
+
+
 
 
 ?>
