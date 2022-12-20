@@ -159,7 +159,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Charts
                         </a>
-                        <a class="nav-link" onclick="ocultarTodosDivsYMostrar1('ALERTAS')">
+                        <a id="AlertsButton" class="nav-link" onclick="ocultarTodosDivsYMostrar1('ALERTAS')">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Alerts
                         </a>
@@ -775,6 +775,7 @@
                                     Filtros
                                 </div>
                                 <div class="card-body">
+					<!-- Botones antiguos  --> <!--
                                     <div class="row">
                                         <div class="col">
                                             <div class="btn-group">
@@ -786,7 +787,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="col">
                                             <button type="button" class="btn btn-dark dropdown-toggle"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -843,21 +843,37 @@
                                             <input id="startDate" class="form-control" type="time">
                                         </div>
 
-                                    </div>
+                                    </div>	-->
+				    <div class="row">
+			   	    	 <div class="col">
+						<input id="startDate" text="maciaa" class="form-control" type="date">
+				    	 </div>
+					 <div class="col">
+                                            <input id="startDate" class="form-control" type="time">
+                                         </div>
+					 <div class="col">
+                                                <input id="startDate" text="maciaa" class="form-control" type="date">
+                                         </div>
+                                         <div class="col">
+                                            <input id="startDate" class="form-control" type="time">
+                                         </div>
 
-                                    <div class="row">
+				    </div>
+                                    <div class="row" style="margin:10px;">
 					<div class="col">    
     						<div class="input-group has-validation">
       							<span class="input-group-text" id="inputGroupPrepend">Cliente</span>
-   							<select id="FilterIndex" onclick="filterByClient()" class="form-control">
-							</select>
+   						 <!-- ALERTAS --><!--	<select id="FilterIndex" onclick="filterByClient()" class="form-control"> -->
+							<select id="FilterIndex" onclick="filterByAllFilters()" class="form-control">
+						 	</select>
 						</div>	
 					</div>
 					<div class="col">
 					   	<div class="input-group has-validation">
                                                         <span class="input-group-text" id="inputGroupPrepend">Urgency</span>
-                                                        <select id="FilterUrgency" onclick="filterByUrgency()" class="form-control">
-								<option>All</option>
+                                                       <!-- <select id="FilterUrgency" onclick="filterByUrgency()" class="form-control"> -->
+						        <select id="FilterUrgency" onclick="filterByAllFilters()" class="form-control"> 
+								<option id="AllUrgency">All</option>
 								<option>High</option>
                                                                 <option>Medium</option>
                                                                 <option>Low</option>
@@ -868,8 +884,9 @@
 					<div class="col">
                                                 <div class="input-group has-validation">
                                                         <span class="input-group-text" id="inputGroupPrepend">Status</span>
-                                                        <select id="FilterStatus" onclick="filterByStatus()" class="form-control">
-                                                                <option>All</option>
+                                                       <!-- <select id="FilterStatus" onclick="filterByStatus()" class="form-control">  -->
+						         <select id="FilterStatus" onclick="filterByAllFilters()" class="form-control">
+                                                                <option id="AllStatus">All</option>
 	 	                                                <option>Reject</option>
                 		                                <option>Pending</option>
                                 		                <option>False Positive</option>
@@ -884,17 +901,22 @@
 					 <div class="col">
                                                 <div class="input-group has-validation">
                                                         <span class="input-group-text" id="inputGroupPrepend">Owner</span>
-                                                        <select id="FilterOwner" onclick="filterByOwner()" class="form-control">
+                                                       <!-- <select id="FilterOwner" onclick="filterByOwner()" class="form-control"> -->
+						        <select id="FilterOwner" onclick="filterByAllFilters()" class="form-control">
                                                        
 							</select>
                                                 </div>
                                         </div>
-
 					
 				    </div>
 
 
-                                </div>
+                                </div> 
+				<div class="row"> 
+				<div class="col" style="margin:10px;">
+					<center> <button type="button" onclick="resetFilters();" class="btn btn-warning">Reset Filters</button> </center>
+                                        </div>
+				</div>
                             </div>
                         </div>
                         <div class="col-xl-6">
@@ -976,7 +998,8 @@
                                             <div class="form-floating">
                                                 <select id="selectOwner" class="form-select" id="floatingSelectGrid"
                                                     aria-label="Floating label select example">
-                                                    <option selected>Unassigned</option>
+						    <option selected>All</option>
+						    <option>Unassigned</option>
                                                     <option value="1">Macia Salva</option>
                                                     <option value="2">Arnau Bartres</option>
                                                     <option value="3">Adrian Bustamante</option>

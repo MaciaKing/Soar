@@ -3,8 +3,6 @@ include 'alerts.php';
 
 
 $recogida=$_POST['dat']; //function
-//$incident_id=$_POST['incident_id'];
-//echo "rec";
 
 if(!empty($_POST['incident_id'])){
 	$inci=$_POST['incident_id'];
@@ -32,7 +30,7 @@ if(!empty($_POST['index'])){
 
 
 
-$res="";
+//$res="";
 
 if($recogida=="getAlerts"){
 	getAllAlerts();
@@ -53,11 +51,13 @@ if($recogida=="getAlerts"){
 	getAlertsByIndex($index);
 }elseif($recogida=='getAllUsr'){
 	getAllUsr();
+}elseif($recogida=='getAlertsByAllFilters'){
+	getAllAlertsByAllFilters($index, $urgen, $status_, $owner);
 }else{
 	//echo "No coincide m11 ".$recogida." m22";
 	echo gettype($recogida);
 }
-echo $res;
+//echo $res;
 
 
 ?>

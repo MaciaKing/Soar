@@ -103,6 +103,40 @@ function getAllAlerts(){
   $db->close();
 }
 
+function getAllAlertsByAllFilters($index, $urency, $status, $owner){
+  $db = new DBClass();
+  $db->openConnection();
+  
+  $query= "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event JOIN alerta ON event.incident_id=alerta.incident_id";  
+  
+  if( strcmp($index, 'All') !==0 ){ //Equal
+  	$query .= " AND fields_index='$index'";	
+  }
+  if( strcmp($urency, 'All') !==0 ){ //Equal
+        $query .= " AND UPPER(urgency)=UPPER('$urency')";
+  }
+  if( strcmp($status, 'All') !==0){
+         $query .= " AND status='$status'";
+  }
+
+  $query .= " AND event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser";
+
+  if( strcmp($owner, 'All') !==0){
+  	$query .= " AND usr.name='$owner'";
+  }
+
+  $query .=" ORDER BY alerta.alert_time DESC";
+
+  //echo "QQQQQ $query\n";
+
+  $res=$db->query($query);
+  $allRes=pg_fetch_all($res);
+  echo json_encode($allRes);
+
+  $db->freeResult($res);
+  $db->close();
+}
+
 
 function getAlertsByIndex($index){
   $db = new DBClass();

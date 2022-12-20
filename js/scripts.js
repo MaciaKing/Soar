@@ -447,6 +447,32 @@ function cleanAll() {
 }
 
 
+function filterByAllFilters(){
+  var index = document.getElementById("FilterIndex").value;
+  var urgency = document.getElementById("FilterUrgency").value;
+  var status_ = document.getElementById("FilterStatus").value;
+  var owner = document.getElementById("FilterOwner").value;  
+  console.log("Index :",index, " urgency :",urgency, " status :",status_, " owner :",owner );  
+  var query = jQuery.ajax({
+        type: 'POST',
+        url: './Back-End/reciver.php',
+        //dataType:"json",
+        data: {
+
+		dat: "getAlertsByAllFilters", index:index, urgency:urgency, status_:status_, owner:owner
+        },
+        success: function (data) {
+	    console.log(data);	
+            showAlerts(JSON.parse(data));
+        },
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
+        }
+    });
+}
+
+
 function filterByClient() {
   //maciiiii
     var index = document.getElementById("FilterIndex").value;
@@ -488,8 +514,7 @@ function loadUsers(){
 
 
 function showUsers(users){
-    console.log("MACIAAAAAAAAAAA 99999999999");
-    var content='';  
+    var content='<option selected>All</option>';
     for (var i = 0; i < users.length; i++){
         var obj = users[i];
         for (var key in obj){
@@ -504,7 +529,7 @@ function showUsers(users){
 
 function showClients(clients){
     const json = JSON.parse(clients);
-    var content='<option>All</option>';
+    var content='<option selected>All</option>';
     for (var i = 0; i < json.length; i++){
         var obj = json[i];
         for (var key in obj){
@@ -514,6 +539,7 @@ function showClients(clients){
         }
     }
     document.getElementById('FilterIndex').innerHTML = content;
+    console.log("content --> ", content);
 }
 
 /*
@@ -556,6 +582,15 @@ function loadClients(){
     });
 }
 
+function resetFilters(){
+  document.getElementById("FilterUrgency").value='All';
+  document.getElementById("FilterIndex").value='All';
+  document.getElementById("FilterStatus").value='All';
+  document.getElementById("FilterOwner").value='All';
+  loadAlerts(); 
+}
+
+
 //ocultarTodosDivsYMostrar1: 
 //  param: divToShow    --> id= "divToShow"
 //Ocultamos todos los divs y solo mostramos el idDivs que entra por parametro
@@ -565,8 +600,9 @@ function ocultarTodosDivsYMostrar1(divToShow) {
             //mostramos este divs
             console.log("Mostramos div: ", divToShow);
             document.getElementById(divToShow).style.display = "block";
-            // console.log("Activado")
             if (divs[i] == "ALERTAS") { //Cargamos todas las alertas
+		//loadClients();
+                //loadUsers();
 		loadAlerts();
 		loadClients();
 		loadUsers();
