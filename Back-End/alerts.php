@@ -93,8 +93,8 @@ class DBClass extends DatabaseSettings{
 function getAllAlerts(){	
   $db = new DBClass();
   $db->openConnection();
-
-  $query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC"; 
+  //Distinct pq eventos puede tener más de un incicdent_id y se pueden ver alertas duplicadas 
+  $query = "SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC"; 
   $res=$db->query($query); 
   $allRes=pg_fetch_all($res);
   echo json_encode($allRes);
@@ -107,7 +107,7 @@ function getAllAlertsByAllFilters($index, $urgen, $status_, $owner, $data1, $tim
   $db = new DBClass();
   $db->openConnection();
   
-  $query= "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event JOIN alerta ON event.incident_id=alerta.incident_id";  
+  $query= "SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event JOIN alerta ON event.incident_id=alerta.incident_id";  
 
 //SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name
 //FROM event
@@ -128,7 +128,7 @@ function getAllAlertsByAllFilters($index, $urgen, $status_, $owner, $data1, $tim
         $query .= " AND UPPER(urgency)=UPPER('$urgen')";
   }
   if( strcmp($status_, 'All') !==0){
-         $query .= " AND status='$status_'";
+         $query .= " AND UPPER(status)=UPPER('$status_')";
   }
 
   $query .= " AND event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser";
@@ -153,7 +153,7 @@ function getAllAlertsByAllFilters($index, $urgen, $status_, $owner, $data1, $tim
 function getAlertsByIndex($index){
   $db = new DBClass();
   $db->openConnection();
-  $query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.fields_index='$index' AND event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC";
+  $query = "SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.fields_index='$index' AND event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC";
   $res=$db->query($query);
   $allRes=pg_fetch_all($res);
   echo json_encode($allRes);
@@ -167,9 +167,9 @@ function getAllAlertsByStatus($sta){
   $db = new DBClass();
   $db->openConnection();
   if($sta == '*'){
-     $query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC";
+     $query = "SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC";
   }else{
-  	$query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event JOIN alerta ON  UPPER(alerta.status)=UPPER('$sta') AND event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC";
+  	$query = "SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event JOIN alerta ON  UPPER(alerta.status)=UPPER('$sta') AND event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC";
   }
   //echo $query;
   $res=$db->query($query);
@@ -184,7 +184,7 @@ function getAllAlertsByStatus($sta){
 function getAlertsByUrgency($urgen){
   $db = new DBClass();
   $db->openConnection();
-  $query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event JOIN alerta ON  UPPER(alerta.urgency)=UPPER('$urgen') AND event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC";
+  $query = "SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event JOIN alerta ON  UPPER(alerta.urgency)=UPPER('$urgen') AND event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC";
   //echo $query;
   $res=$db->query($query);
   $allRes=pg_fetch_all($res);
@@ -199,7 +199,7 @@ function getAlertsByOwner($owner){
   $db = new DBClass();
   $db->openConnection();
   
-  $query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM usr JOIN alerta ON UPPER(usr.name)=UPPER('$owner') AND usr.iduser=alerta.iduser JOIN event ON alerta.incident_id=event.incident_id ORDER BY alerta.alert_time DESC ";
+  $query = "SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM usr JOIN alerta ON UPPER(usr.name)=UPPER('$owner') AND usr.iduser=alerta.iduser JOIN event ON alerta.incident_id=event.incident_id ORDER BY alerta.alert_time DESC ";
   
   $res=$db->query($query);
   $allRes=pg_fetch_all($res);
@@ -214,7 +214,7 @@ function getAlertsByClient($index){
   $db = new DBClass();
   $db->openConnection();
   
-  $query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM usr JOIN alerta ON UPPER(usr.name)=UPPER('$owner') AND usr.iduser=alerta.iduser JOIN event ON alerta.incident_id=event.incident_id ORDER BY alerta.alert_time DESC ";
+  $query = "SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM usr JOIN alerta ON UPPER(usr.name)=UPPER('$owner') AND usr.iduser=alerta.iduser JOIN event ON alerta.incident_id=event.incident_id ORDER BY alerta.alert_time DESC ";
   
   $res=$db->query($query);
   $allRes=pg_fetch_all($res);

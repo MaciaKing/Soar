@@ -184,7 +184,7 @@ function viewEventAlert(data, div) {
 		     //etiqueta=etiqueta.toUpperCase()
 		     etiqueta= etiqueta.charAt(0).toUpperCase() + etiqueta.slice(1);
     		     //content += '<p><b>'+ etiqueta + '</b>:\t' + obj[key] + '<br></p>';
-                     content += '<p style="display:inline-block;color:#B77E42"> - '+ etiqueta + '&nbsp;</p><p style="display:inline-block;">' + obj[key] + '</p><br>';
+                     content += '<li> <span style="color:#B77E42">'+ etiqueta + '</span> : ' + obj[key] + '</li>';
 		}
             }
 	   }

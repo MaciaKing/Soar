@@ -155,7 +155,7 @@
                             </nav>
                         </div>
                         <div class="sb-sidenav-menu-heading">VIEWS</div>
-                        <a class="nav-link" href="charts.html">
+                        <a class="nav-link" href="#">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Charts
                         </a>
@@ -767,7 +767,7 @@
                     <h1 class="mt-4"> Alertas</h1>
                     <!-- MACIA PRUEBAS -->
                     <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-xl-9">
                             <!--<div class="card mb-4"> -->
                             <div class="card mb-4">
                                 <div class="card-header">
@@ -864,7 +864,7 @@
     						<div class="input-group has-validation">
       							<span class="input-group-text" id="inputGroupPrepend">Cliente</span>
    						 <!-- ALERTAS --><!--	<select id="FilterIndex" onclick="filterByClient()" class="form-control"> -->
-							<select id="FilterIndex" onclick="filterByAllFilters()" class="form-control">
+							<select id="FilterIndex" onclick="" class="form-control">
 						 	</select>
 						</div>	
 					</div>
@@ -872,7 +872,7 @@
 					   	<div class="input-group has-validation">
                                                         <span class="input-group-text" id="inputGroupPrepend">Urgency</span>
                                                        <!-- <select id="FilterUrgency" onclick="filterByUrgency()" class="form-control"> -->
-						        <select id="FilterUrgency" onclick="filterByAllFilters()" class="form-control"> 
+						        <select id="FilterUrgency" onclick="" class="form-control"> 
 								<option id="AllUrgency">All</option>
 								<option>High</option>
                                                                 <option>Medium</option>
@@ -885,7 +885,7 @@
                                                 <div class="input-group has-validation">
                                                         <span class="input-group-text" id="inputGroupPrepend">Status</span>
                                                        <!-- <select id="FilterStatus" onclick="filterByStatus()" class="form-control">  -->
-						         <select id="FilterStatus" onclick="filterByAllFilters()" class="form-control">
+						         <select id="FilterStatus" onclick="" class="form-control">
                                                                 <option id="AllStatus">All</option>
 	 	                                                <option>Reject</option>
                 		                                <option>Pending</option>
@@ -913,13 +913,18 @@
 
                                 </div> 
 				<div class="row"> 
-				<div class="col" style="margin:10px;">
-					<center> <button type="button" onclick="resetFilters();" class="btn btn-warning">Reset Filters</button> </center>
+					<div class="col" style="margin:10px;">
+						<center> <button type="button" onclick="resetFilters();" class="btn btn-warning">Reset Filters</button> </center>
+                                        </div>
+				
+					<div class="col" style="margin:10px;">
+                                        	<center> <button type="button" id="MakeSearch" onclick="filterByAllFilters()" class="btn btn-warning">Make Search</button> </center>
                                         </div>
 				</div>
+
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-9">
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
@@ -948,6 +953,11 @@
                                             <button type="button" class="btn btn-success" style='width:120px'
                                                 onclick="cleanAll()">Clean All</button>
                                         </div>
+					<div class="col">
+                                            <button type="button" class="btn btn-success" style='width:150px'
+                                                onclick="">Create Incident</button>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
