@@ -28,48 +28,21 @@ window.addEventListener('DOMContentLoaded', event => {
 
 
 function showAlerts(alerts_to_show) {
-    /*
-    <tbody>
-    
-                                        <tr id="row1">
-                                            <td>
-                                                <div>
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="flexCheckIndeterminate" onclick="selectAlert(this,'row1')">
-                                                    <button type="button" class="btn btn-primary"
-                                                        onclick="showHideRow('hidden_row1')"><i class="far fa-eye"
-                                                            width="10" height="10"></i></button>
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        onclick="quickEdit(this)" data-target="#EditAlert">
-                                                        <i class="fas fa-edit" width="10" height="10"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                            <td>Sales Assistant</td>
-                                            <td>New York</td>
-                                            <td>46</td>
-                                        <tr id="hidden_row1" class="hidden_row" style="display: none;">
-                                            <td colspan=4>
-                                                INFORMACION DE LA ALERTA !!!!!!!!!!!!!
-                                            </td>
-                                        </tr>
-                                        </tr>
-     
-    */
     var div = document.getElementById("maciaAlertas");
     div.innerHTML = '' //Para que siempre se actualize y no queden restos de la tabla anterior
     
     var content = '<div class="card mb-4"><div class="card-header"><i class="fas fa-table me-1"></i>Alerts</div><div id="alertas" class="card-body"><table id="table_alerts" class="table table-striped table-dark">'; // Creamos la targeta con las alertas
-    
+   
+    //añadimos los botones
+    content += '<div class=\"row\" style=\"margin: 1em;\"><div class=\"col\"><button type=\"button\" id=\"EditSelected\" class=\"btn btn-success\" data-toggle=\"modal\" style=\'width:120px\' onclick=\"EditSelected(this)\">Edit Selected</button></div><div class=\"col\"><button type=\"button\" class=\"btn btn-success\" style=\'width:120px\' data-toggle=\"modal\" onclick=\"EditAll(this)\">Edit All</button></div><div class=\"col\"><button type=\"button\" class=\"btn btn-success\" style=\'width:120px\' onclick=\"selectAll()\">Select All</button></div><div class=\"col\"><button type=\"button\" class=\"btn btn-success\" style=\'width:120px\' onclick=\"cleanAll()\">Clean All</button></div><div class=\"col\"><button type=\"button\" class=\"btn btn-success\" style=\'width:150px\' onclick=\"\">Create Incident</button></div></div>';
+
     content += '<thead><tr><th scope=\"col\">Actions</th> <th scope=\"col\">Time</th><th scope=\"col\">Title</th><th scope=\"col\">Status</th><th scope=\"col\">Urgency</th><th scope=\"col\">Action</th><th scope=\"col\">Index</th><th scope=\"col\">Comment</th><th scope=\"col\">Owner</th></tr></thead>';
 
     //Afegim les alertes
     console.log(typeof (alerts_to_show));
-    //console.log("ALERTS --> ", typeof(alerts), alerts);
 
     content += '<tbody>';
     for (var i = 0; i < alerts_to_show.length; i++) {
-        //document.write("<br><br>array index: " + i);
         console.log("i = ", i);
         var obj = alerts_to_show[i];
         console.log(obj);
@@ -80,17 +53,8 @@ function showAlerts(alerts_to_show) {
             if (aux == 0) {//idAlert	
                 aux_id = value;
                 content += '<tr id=\"' + value + '\"><td style="min-width:150px;"><div><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckIndeterminate\" onclick=\"selectAlert(this,\'' + value + '\')\" ><button type=\"button\" class=\"btn btn-primary\" style=\"margin-left:5px;\"  onclick=\"showHideRow(\'hidden_row_' + value + '\',\'' + value + '\')\" ><i class=\"far fa-eye\" width=\"10\" height=\"10\"></i></button><button type=\"button\" class=\"btn btn-primary\" style=\"margin-left:5px;\"  data-toggle=\"modal\" onclick=\"quickEdit(this)\"  data-target=\"#EditAlert\"><i class=\"fas fa-edit\" width=\"10\" height=\"10\"></i></button> </div></td>';
-                //content+='<div class="btn-group btn-group-toggle" data-toggle="buttons"><label class="btn btn-secondary active"><input type="radio" name="options" id="option1" autocomplete="off" checked> Active</label><label class="btn btn-secondary"><input type="radio" name="options" id="option2" autocomplete="off"> Radio</label><label class="btn btn-secondary"><input type="radio" name="options" id="option3" autocomplete="off"> Radio</label></div>'; 
                 aux = aux + 1;
-                //}else if(aux==1){//time
-                //  var date = new Date(0);
-                //  date.setUTCSeconds(value);
-                //  final_data= date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-                //  content+='<td><p>'+ final_data +'</p></td>';
-                //  aux=aux+1;		
             } else {
-                //document.write("<br> - " + key + ": " + value);
-                //console.log(key," --> ", value)
                 content += '<td><p>' + value + '</p></td>';
             }
         }
@@ -101,18 +65,7 @@ function showAlerts(alerts_to_show) {
     content += '</table></div></div>';
     div.innerHTML += content;
     //console.log(document.getElementById('table_alerts'));
-    
-/*
-    $(document).ready(function() {
-	    console.log("REAADDDDDYYYYYYYYYYYY\n");
-    	
-	$('#table_alerts').dataTable({
-        	"aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
-        	"iDisplayLength": 25
-    	});
-    });
-*/
-	console.log("PAGINAS CARGADAS");
+    console.log("PAGINAS CARGADAS");
 
     var datatables = document.getElementById('table_alerts');
     if (datatables) {

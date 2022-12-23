@@ -766,84 +766,20 @@
                 <div id="ALERTAS" style="display: none;">
                     <h1 class="mt-4"> Alertas</h1>
                     <!-- MACIA PRUEBAS -->
+		    <center>
+
+
+
                     <div class="row">
-                        <div class="col-xl-9">
+		      <div class="col-md-6">
+			<!--<div class="col">-->
                             <!--<div class="card mb-4"> -->
-                            <div class="card mb-4">
+                            <div class="card text-white bg-secondary mb-3">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
                                     Filtros
                                 </div>
                                 <div class="card-body">
-					<!-- Botones antiguos  --> <!--
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-dark dropdown-toggle"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Cliente
-                                                </button>
-                                                <div id="dropdownCliente" class="dropdown-menu dropdown-menu-dark">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <button type="button" class="btn btn-dark dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Urgency
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-dark">
-                                                <a class="dropdown-item" onclick="filterByUrgency('high')">High</a>
-                                                <a class="dropdown-item" onclick="filterByUrgency('medium')">Medium</a>
-                                                <a class="dropdown-item" onclick="filterByUrgency('low')">Low</a>
-                                            </div>
-                                        </div>
-
-                                        <div class="col">
-                                            <button type="button" class="btn btn-dark dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Status
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-dark"
-                                                aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" onclick="filterByStatus('*')">All</a>
-                                                <a class="dropdown-item" onclick="filterByStatus('Reject')">Reject</a>
-                                                <a class="dropdown-item" onclick="filterByStatus('Pending')">Pending</a>
-                                                <a class="dropdown-item"
-                                                    onclick="filterByStatus('False Positive')">False
-                                                    Positive</a>
-                                                <a class="dropdown-item" onclick="filterByStatus('Ongoing')">Ongoing</a>
-                                                <a class="dropdown-item" onclick="filterByStatus('Close')">Close</a>
-                                                <a class="dropdown-item" onclick="filterByStatus('To be review')">To be
-                                                    review</a>
-                                                <a class="dropdown-item" onclick="filterByStatus('new')">New</a>
-                                            </div>
-                                        </div>
-
-                                        <div class="col">
-                                            <button type="button" class="btn btn-dark dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Owner
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-dark"
-                                                aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" onclick="filterByOwner('Macia Salva')">Macia
-                                                    Salva</a>
-                                                <a class="dropdown-item"
-                                                    onclick="filterByOwner('Adrian Bustamante')">Adrian Castillo</a>
-                                                <a class="dropdown-item" onclick="filterByOwner('Arnau Bartres')">
-                                                    Arnau Bartres</a>
-                                            </div>
-                                        </div>
-
-                                        <div class="col">
-                                            <input id="startDate" class="form-control" type="date">
-                                        </div>
-                                        <div class="col">
-                                            <input id="startDate" class="form-control" type="time">
-                                        </div>
-
-                                    </div>	-->
 				    <div class="row">
 			   	    	 <div class="col">
 						<input id="data1" text="maciaa" class="form-control" type="date">
@@ -922,68 +858,41 @@
                                         </div>
 				</div>
 
-                            </div>
-                        </div>
-                        <div class="col-xl-9">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-table me-1"></i>
-                                    Acciones
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <button type="button" id="EditSelected" class="btn btn-success"
-                                                data-toggle="modal" style='width:120px'
-                                                onclick="EditSelected(this)">Edit
-                                                Selected</button>
-                                        </div>
-                                        <div class="col">
-                                            <button type="button" class="btn btn-success" style='width:120px'
-                                                data-toggle="modal" onclick="EditAll(this)">Edit
-                                                All</button>
-                                        </div>
-                                        <div class="col">
-                                            <button type="button" class="btn btn-success" style='width:120px'
-                                                onclick="selectAll()">Select
-                                                All</button>
-                                        </div>
+                            </div>			    
+                       
 
-                                        <div class="col">
-                                            <button type="button" class="btn btn-success" style='width:120px'
-                                                onclick="cleanAll()">Clean All</button>
-                                        </div>
-					<div class="col">
-                                            <button type="button" class="btn btn-success" style='width:150px'
-                                                onclick="">Create Incident</button>
-                                        </div>
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- MACIA FIN PRUEBAS -->
+<div class="col">
+	<div class="card text-white bg-secondary mb-3">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Filtros
+    </div>
+    <div class="card-body">
+        <div class="row" style="margin: 1em;">
+            <div class="col"><button type="button" id="EditSelected" class="btn btn-success" data-toggle="modal"
+                    style=\'width:120px\' onclick="EditSelected(this)">Edit Selected</button></div>
+            <div class="col"><button type="button" class="btn btn-success" style=\'width:120px\' data-toggle="modal"
+                    onclick="EditAll(this)">Edit All</button></div>
+            <div class="col"><button type="button" class="btn btn-success" style=\'width:120px\'
+                    onclick="selectAll()">Select All</button></div>
+            <div class="col"><button type="button" class="btn btn-success" style=\'width:120px\'
+                    onclick="cleanAll()">Clean
+                    All</button></div>
+            <div class="col"><button type="button" class="btn btn-success" style=\'width:150px\' onclick="">Create
+                    Incident</button></div>
+        </div>
 
+    </div>
+</div>
+</div>
+			    </div>
+			</center>
 
                     <!--<div class="container-fluid px-4">-->
                     <!-- Si posam class bé se veu diferent-->
                     <!--<div id="maciaAlertas" class="container">-->
                     <div id="maciaAlertas">
-                        <!--
-			    <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                DataTable Example
-                            </div>
-                            <div id="alertas" class="card-body">
-                                <table id="table_alerts" class="table table-striped table-dark">
-				</table>
-                                </table>
-                            </div>
-                        </div>
-			-->
-                        <!-- </div> -->
 
                     </div>
                     <!-- FIN ALERTAS -->
