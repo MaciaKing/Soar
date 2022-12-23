@@ -1,0 +1,61 @@
+/*\c soardatabase;
+REASSIGN OWNED BY soar TO postgres;
+DROP OWNED BY soar;
+DROP USER soar;
+*/
+
+DROP DATABASE SoarDatabase;
+CREATE DATABASE SoarDatabase;
+\c soardatabase;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO soar;
+/* grant usage on all sequences in schema public to <myuser> */
+
+
+CREATE TABLE event (
+	incident_id text,
+	title text,
+	status text,
+	fields__raw text,
+	fields_EventCode text,
+	fields__time text,
+	fields_action text,
+	fields_app text,
+	fields_cat text,
+	fields_catdesc text,
+	fields_category text,
+ 	fields_conn_count text,
+	fields_date text,
+	fields_dest_ip text,
+	fields_dest_port text,
+	fields_devname text,
+	fields_diff_deviation text,
+	fields_eventtype text,
+	fields_host text,
+	fields_index text,
+	fields_level text,
+	fields_msg text,
+	fields_severity text,
+	fields_signature text,
+	fields_source text,
+	fields_source_ip text,
+	fields_src_ip text,
+	fields_src_user text,
+	fields_srcintf text,
+	fields_subtype text,
+	fields_ta_windows_action text,
+	fields_time text,
+	fields_type text,
+	fields_urgency text,
+	fields_url text,
+	fields_user text,
+	host text,
+	index text,
+	tag text
+);
+
+
+CREATE TABLE alerta(
+	idAlert SERIAL PRIMARY KEY,
+ 	name VARCHAR(30)
+);
+

@@ -1,0 +1,5 @@
+
+REASSIGN OWNED BY soar TO postgres;
+DROP OWNED BY soar;
+DROP USER soar;
+DROP DATABASE prueba;
