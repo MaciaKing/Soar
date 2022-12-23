@@ -766,206 +766,216 @@
                 <div id="ALERTAS" style="display: none;">
                     <h1 class="mt-4"> Alertas</h1>
                     <!-- MACIA PRUEBAS -->
-		    <center>
+                    <center>
 
 
-
-                    <div class="row">
-		      <div class="col-md-6">
-			<!--<div class="col">-->
-                            <!--<div class="card mb-4"> -->
-                            <div class="card text-white bg-secondary mb-3">
-                                <div class="card-header">
-                                    <i class="fas fa-table me-1"></i>
-                                    Filtros
-                                </div>
-                                <div class="card-body">
-				    <div class="row">
-			   	    	 <div class="col">
-						<input id="data1" text="maciaa" class="form-control" type="date">
-				    	 </div>
-					 <div class="col">
-                                            <input id="time1" class="form-control" type="time">
-                                         </div>
-					 <div class="col">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!--<div class="col">-->
+                                <!--<div class="card mb-4"> -->
+                                <div class="card text-white bg-secondary mb-3">
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        Filtros
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input id="data1" text="maciaa" class="form-control" type="date">
+                                            </div>
+                                            <div class="col">
+                                                <input id="time1" class="form-control" type="time">
+                                            </div>
+                                            <div class="col">
                                                 <input id="data2" text="maciaa" class="form-control" type="date">
-                                         </div>
-                                         <div class="col">
-                                            <input id="time2" class="form-control" type="time">
-                                         </div>
+                                            </div>
+                                            <div class="col">
+                                                <input id="time2" class="form-control" type="time">
+                                            </div>
 
-				    </div>
-                                    <div class="row" style="margin:10px;">
-					<div class="col">    
-    						<div class="input-group has-validation">
-      							<span class="input-group-text" id="inputGroupPrepend">Cliente</span>
-   						 <!-- ALERTAS --><!--	<select id="FilterIndex" onclick="filterByClient()" class="form-control"> -->
-							<select id="FilterIndex" onclick="" class="form-control">
-						 	</select>
-						</div>	
-					</div>
-					<div class="col">
-					   	<div class="input-group has-validation">
-                                                        <span class="input-group-text" id="inputGroupPrepend">Urgency</span>
-                                                       <!-- <select id="FilterUrgency" onclick="filterByUrgency()" class="form-control"> -->
-						        <select id="FilterUrgency" onclick="" class="form-control"> 
-								<option id="AllUrgency">All</option>
-								<option>High</option>
-                                                                <option>Medium</option>
-                                                                <option>Low</option>
-                                                        </select>
-                                                </div>
-					</div>
-
-					<div class="col">
+                                        </div>
+                                        <div class="row" style="margin:10px;">
+                                            <div class="col">
                                                 <div class="input-group has-validation">
-                                                        <span class="input-group-text" id="inputGroupPrepend">Status</span>
-                                                       <!-- <select id="FilterStatus" onclick="filterByStatus()" class="form-control">  -->
-						         <select id="FilterStatus" onclick="" class="form-control">
-                                                                <option id="AllStatus">All</option>
-	 	                                                <option>Reject</option>
-                		                                <option>Pending</option>
-                                		                <option>False Positive</option>
-                                               			<option>Ongoing</option>
-                                                		<option>Close</option>
-                                              			<option>To be review</option>
-                                                		<option>New</option>
-							</select>
+                                                    <span class="input-group-text" id="inputGroupPrepend">Cliente</span>
+                                                    <!-- ALERTAS --><!--	<select id="FilterIndex" onclick="filterByClient()" class="form-control"> -->
+                                                    <select id="FilterIndex" onclick="" class="form-control">
+                                                    </select>
                                                 </div>
-                                        </div>
-					
-					 <div class="col">
+                                            </div>
+                                            <div class="col">
                                                 <div class="input-group has-validation">
-                                                        <span class="input-group-text" id="inputGroupPrepend">Owner</span>
-                                                       <!-- <select id="FilterOwner" onclick="filterByOwner()" class="form-control"> -->
-						        <select id="FilterOwner" onclick="filterByAllFilters()" class="form-control">
-                                                       
-							</select>
+                                                    <span class="input-group-text" id="inputGroupPrepend">Urgency</span>
+                                                    <!-- <select id="FilterUrgency" onclick="filterByUrgency()" class="form-control"> -->
+                                                    <select id="FilterUrgency" onclick="" class="form-control">
+                                                        <option id="AllUrgency">All</option>
+                                                        <option>High</option>
+                                                        <option>Medium</option>
+                                                        <option>Low</option>
+                                                    </select>
                                                 </div>
+                                            </div>
+
+                                            <div class="col">
+                                                <div class="input-group has-validation">
+                                                    <span class="input-group-text" id="inputGroupPrepend">Status</span>
+                                                    <!-- <select id="FilterStatus" onclick="filterByStatus()" class="form-control">  -->
+                                                    <select id="FilterStatus" onclick="" class="form-control">
+                                                        <option id="AllStatus">All</option>
+                                                        <option>Reject</option>
+                                                        <option>Pending</option>
+                                                        <option>False Positive</option>
+                                                        <option>Ongoing</option>
+                                                        <option>Close</option>
+                                                        <option>To be review</option>
+                                                        <option>New</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col">
+                                                <div class="input-group has-validation">
+                                                    <span class="input-group-text" id="inputGroupPrepend">Owner</span>
+                                                    <!-- <select id="FilterOwner" onclick="filterByOwner()" class="form-control"> -->
+                                                    <select id="FilterOwner" onclick="filterByAllFilters()"
+                                                        class="form-control">
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                         </div>
-					
-				    </div>
 
 
-                                </div> 
-				<div class="row"> 
-					<div class="col" style="margin:10px;">
-						<center> <button type="button" onclick="resetFilters();" class="btn btn-warning">Reset Filters</button> </center>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col" style="margin:10px;">
+                                            <center> <button type="button" onclick="resetFilters();"
+                                                    class="btn btn-warning">Reset Filters</button> </center>
                                         </div>
-				
-					<div class="col" style="margin:10px;">
-                                        	<center> <button type="button" id="MakeSearch" onclick="filterByAllFilters()" class="btn btn-warning">Make Search</button> </center>
+
+                                        <div class="col" style="margin:10px;">
+                                            <center> <button type="button" id="MakeSearch"
+                                                    onclick="filterByAllFilters()" class="btn btn-warning">Make
+                                                    Search</button> </center>
                                         </div>
-				</div>
+                                    </div>
 
-                            </div>			    
-                       
-
-
-<div class="col">
-	<div class="card text-white bg-secondary mb-3">
-    <div class="card-header">
-        <i class="fas fa-table me-1"></i>
-        Filtros
-    </div>
-    <div class="card-body">
-        <div class="row" style="margin: 1em;">
-            <div class="col"><button type="button" id="EditSelected" class="btn btn-success" data-toggle="modal"
-                    style=\'width:120px\' onclick="EditSelected(this)">Edit Selected</button></div>
-            <div class="col"><button type="button" class="btn btn-success" style=\'width:120px\' data-toggle="modal"
-                    onclick="EditAll(this)">Edit All</button></div>
-            <div class="col"><button type="button" class="btn btn-success" style=\'width:120px\'
-                    onclick="selectAll()">Select All</button></div>
-            <div class="col"><button type="button" class="btn btn-success" style=\'width:120px\'
-                    onclick="cleanAll()">Clean
-                    All</button></div>
-            <div class="col"><button type="button" class="btn btn-success" style=\'width:150px\' onclick="">Create
-                    Incident</button></div>
-        </div>
-
-    </div>
-</div>
-</div>
-			    </div>
-			</center>
-
-                    <!--<div class="container-fluid px-4">-->
-                    <!-- Si posam class bé se veu diferent-->
-                    <!--<div id="maciaAlertas" class="container">-->
-                    <div id="maciaAlertas">
-
-                    </div>
-                    <!-- FIN ALERTAS -->
-
-                    <!-- GESTIONADOR ALERTAS  -->
-                    <!-- Modal Se puede editar -->
-                    <div class="modal fade" id="EditAlert" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" class="close" onclick="endEdit()" data-dismiss="modal"
-                                        aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
                                 </div>
-                                <div class="modal-body">
-                                    <!-- CAMBIAR -->
-                                    <div class="row g-2">
-                                        <div class="col-md">
-                                            <div class="form-floating">
-                                                <select id="selectOwner" class="form-select" id="floatingSelectGrid"
-                                                    aria-label="Floating label select example">
-						    <option selected>All</option>
-						    <option>Unassigned</option>
-                                                    <option value="1">Macia Salva</option>
-                                                    <option value="2">Arnau Bartres</option>
-                                                    <option value="3">Adrian Bustamante</option>
-                                                </select>
-                                                <label for="floatingSelectGrid">Owner</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md">
-                                            <div class="form-floating">
-                                                <select id="selectStatus" class="form-select" id="floatingSelectGrid"
-                                                    aria-label="Floating label select example">
-                                                    <option selected>Empty</option>
-                                                    <option value="1">Reject</option>
-                                                    <option value="2">Pending</option>
-                                                    <option value="3">False Positive</option>
-                                                    <option value="4">Ongoing</option>
-                                                    <option value="5">Close</option>
-                                                    <option value="6">To be review</option>
-                                                </select>
-                                                <label for="floatingSelectGrid">Status</label>
-                                            </div>
-                                        </div>
-                                        <br>
+                            </div>
 
+
+
+                            <div class="col-md-6">
+                                <div class="card text-white bg-secondary mb-3">
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        Filtros
                                     </div>
-                                    <div class="row g-2">
-                                        <div class="row g-2">
-                                            <div class="col-md">
-                                                <div class="form-floating">
-                                                    <input id="selectComment" type="email" class="form-control"
-                                                        id="floatingInputGrid" placeholder="name@example.com" value="">
-                                                    <label for="floatingInputGrid">Comment</label>
-                                                </div>
+                                    <div class="card-body">
+                                        <div class="row" style="margin: 1em;">
+                                            <div class="col"><button type="button" id="EditSelected"
+                                                    class="btn btn-success" data-toggle="modal" style=\'width:120px\'
+                                                    onclick="EditSelected(this)">Edit
+                                                    Selected</button></div>
+                                            <div class="col"><button type="button" class="btn btn-success"
+                                                    style=\'width:120px\' data-toggle="modal"
+                                                    onclick="EditAll(this)">Edit All</button></div>
+                                            <div class="col"><button type="button" class="btn btn-success"
+                                                    style=\'width:120px\' onclick="selectAll()">Select All</button>
                                             </div>
+                                            <div class="col"><button type="button" class="btn btn-success"
+                                                    style=\'width:120px\' onclick="cleanAll()">Clean
+                                                    All</button></div>
+                                            <div class="col"><button type="button" class="btn btn-success"
+                                                    style=\'width:150px\' onclick="">Create
+                                                    Incident</button></div>
                                         </div>
-                                        <!-- FIN CAMBIAR -->
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button id="closeEdit" type="button" class="btn btn-secondary"
-                                            data-dismiss="modal" onclick="endEdit()">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="getChanges()">Save
-                                            changes</button>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- FIN GESTIONADOR ALERTAS  -->
+                </div>
+                </center>
+
+                <!--<div class="container-fluid px-4">-->
+                <!-- Si posam class bé se veu diferent-->
+                <!--<div id="maciaAlertas" class="container">-->
+                <div id="maciaAlertas">
+
+                </div>
+                <!-- FIN ALERTAS -->
+
+                <!-- GESTIONADOR ALERTAS  -->
+                <!-- Modal Se puede editar -->
+                <div class="modal fade" id="EditAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="close" onclick="endEdit()" data-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- CAMBIAR -->
+                                <div class="row g-2">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <select id="selectOwner" class="form-select" id="floatingSelectGrid"
+                                                aria-label="Floating label select example">
+                                                <option selected>All</option>
+                                                <option>Unassigned</option>
+                                                <option value="1">Macia Salva</option>
+                                                <option value="2">Arnau Bartres</option>
+                                                <option value="3">Adrian Bustamante</option>
+                                            </select>
+                                            <label for="floatingSelectGrid">Owner</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <select id="selectStatus" class="form-select" id="floatingSelectGrid"
+                                                aria-label="Floating label select example">
+                                                <option selected>Empty</option>
+                                                <option value="1">Reject</option>
+                                                <option value="2">Pending</option>
+                                                <option value="3">False Positive</option>
+                                                <option value="4">Ongoing</option>
+                                                <option value="5">Close</option>
+                                                <option value="6">To be review</option>
+                                            </select>
+                                            <label for="floatingSelectGrid">Status</label>
+                                        </div>
+                                    </div>
+                                    <br>
+
+                                </div>
+                                <div class="row g-2">
+                                    <div class="row g-2">
+                                        <div class="col-md">
+                                            <div class="form-floating">
+                                                <input id="selectComment" type="email" class="form-control"
+                                                    id="floatingInputGrid" placeholder="name@example.com" value="">
+                                                <label for="floatingInputGrid">Comment</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- FIN CAMBIAR -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="closeEdit" type="button" class="btn btn-secondary" data-dismiss="modal"
+                                        onclick="endEdit()">Close</button>
+                                    <button type="button" class="btn btn-primary" onclick="getChanges()">Save
+                                        changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FIN GESTIONADOR ALERTAS  -->
 
             </main>
             <footer class="py-4 bg-light mt-auto">
