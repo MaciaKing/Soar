@@ -32,7 +32,8 @@ INSERT INTO alerta(incident_id, alert, status, index_, host, comment_, tag, idUs
 CREATE TABLE event (
 	--idEvent SERIAL PRIMARY KEY,
         incident_id text,
-        fields__raw text,
+        --fields__raw text,
+	fields__raw text PRIMARY KEY,
         fields_EventCode text,
         fields__time text,
         fields_action text,

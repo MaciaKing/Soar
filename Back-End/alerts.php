@@ -109,11 +109,6 @@ function getAllAlertsByAllFilters($index, $urgen, $status_, $owner, $data1, $tim
   
   $query= "SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event JOIN alerta ON event.incident_id=alerta.incident_id";  
 
-//SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name
-//FROM event
-//JOIN alerta ON event.incident_id=alerta.incident_id AND alert_time BETWEEN '2022-12-15' AND '2022-12-16'  AND fields_index='oa_omniaccess' AND event.incident_id=alerta.incident_id
-//JOIN usr ON alerta.idUser=usr.idUser AND usr.name='Macia Salva'
-//ORDER BY alerta.alert_time DESC;
   if(is_null($data1)==1 and is_null($data2) ==1 and is_null($time1)==1 and is_null($time2)==1 ){
   
   }else{

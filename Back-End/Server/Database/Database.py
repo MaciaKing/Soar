@@ -44,6 +44,51 @@ class Database():
         cur = self.connection.cursor()
         self.connection.commit()
         cur.close()
+    
+
+    def transformIndex(self, line):
+        return line.replace("index","index_")
+
+
+    def transform(self, line):
+        return line.replace("{}.", "_")
+
+
+    def get_all_inserts_from_json(self, jsonToDatabase, add_insert, table_name, parser, isAlert=True):
+        '''
+        Translate a JSON to a SQL insert
+        '''
+        #print("\n\nJSON DATABASE",jsonToDatabase)
+        insert="INSERT INTO "+ table_name +" (" + ','.join(parser)+") values ("
+        auxDicc=parser.copy()
+        if isAlert==True:
+            last_key = list(auxDicc)[-1]
+            # remove the last key using .pop() method
+            removed_tuple = auxDicc.pop(last_key)
+            insert = self.transformIndex(insert)
+        else:
+            insert = self.transform(insert)
+        first_value_insert=True
+        for key in auxDicc.keys():
+            try:
+                if first_value_insert:
+                    insert+="'"+str(jsonToDatabase[key])+"'"
+                    first_value_insert=False
+                else:
+                    if type(jsonToDatabase[key]) == list:
+                        insert+=", ARRAY "+str(jsonToDatabase[key])
+                    elif jsonToDatabase[key][0] == '<': # xml format
+                        insert += ", '" +str(jsonToDatabase[key]).replace("'","")+"'"
+                    else:
+                        insert+=", '"+str(jsonToDatabase[key])+"'"
+            except:
+                insert+= ",' '" #This var is not found on javascript
+        if isAlert==True:
+            insert+=",1)"
+        else:
+            insert+=")"
+        #print(insert)
+        add_insert.append(insert)
 
 
     def join_all_inserts(self, all_inserts : list, on_conflict_insert=""):
@@ -64,14 +109,12 @@ class Database():
             return -1
 
         if len(all_inserts)==1:
-            return all_inserts[0]
+            return all_inserts[0] + " "+ on_conflict_insert
         
-
         final_insert=""
         first_value=True
         for i in all_inserts:
             aux=i.upper().split("VALUES (")
-            #print(aux,"\n")
             if first_value:
                 final_insert+=aux[0]+" VALUES (" #This is INSERT INTO <table> values
                 final_insert+=aux[1]
@@ -82,7 +125,7 @@ class Database():
         #if final_insert == "":
         #    return -1
         #else:
-            final_insert += on_conflict_insert
+        final_insert += " "+ on_conflict_insert
         return final_insert
 
 
@@ -106,11 +149,17 @@ print(res,'\n')
 
 ##make_insert_database(self, insert)
 # make_insert_database(insert)
-
+'''
 database = Database()
 
 insert = ["INSERT INTO usr(name) VALUES ('test1'), ('test2')", "INSERT INTO usr(name) VALUES ('test4'), ('test3')"]
 res=database.make_insert_database(insert)
+'''
 
-
-
+# make_query(self, query)
+'''
+database = Database()
+query = 'select * from usr'
+res = database.make_query(query)
+print(res)
+'''

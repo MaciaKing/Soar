@@ -10,6 +10,9 @@ class SplunkAPI:
         self.USARNAME_API = 'oasoc.api'
         self.PASSW_API = 'YItt@$cA6KSWc!'
         self.PORT_API= 8089
+        self.splunk_object=client.connect(host=self.HOST_API, port=self.PORT_API,
+            username=self.USARNAME_API, password=self.PASSW_API)
+
 
     def make_query(self, query):
         '''
@@ -21,15 +24,15 @@ class SplunkAPI:
         '''
         spl = query
         splunk_search_kwargs = {"exec_mode": "blocking",
-                        "earliest_time": "-10h",
+                        "earliest_time": "-92h",
                         "latest_time": "now",
                         "enable_lookups": "true"}
 
-        splunk_object=client.connect(host=self.HOST_API, port=self.PORT_API,
-                   username=self.USARNAME_API, password=self.PASSW_API)
+        #splunk_object=client.connect(host=self.HOST_API, port=self.PORT_API,
+        #           username=self.USARNAME_API, password=self.PASSW_API)
 
 
-        splunk_search_job = splunk_object.jobs.create(spl, **splunk_search_kwargs)
+        splunk_search_job = self.splunk_object.jobs.create(spl, **splunk_search_kwargs)
         search_results_json = []
         get_offset = 0
         max_get = 1
@@ -44,11 +47,11 @@ class SplunkAPI:
     def update_alert():
         None
 
-
+'''
 print("hola")
 splunk = SplunkAPI()
 result  = splunk.make_query(["search index=\"alerts_omniaccess\" AND action=\"create\" status=* NOT alert IN (\"OA - HTTP/HTTPS Beaconing\")| table alert_time, incident_id, alert, status, urgency| join incident_id[| search index=\"alerts_omniaccess\" AND sourcetype=\"alert_data_results\"| fields incident_id _time fields{}.* ] | rename column as Field, \"row 1\" as value"])
 
 print(result)
-
+'''
 

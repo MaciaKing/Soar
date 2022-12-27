@@ -2,13 +2,6 @@
 class DatabaseSettings{
 	var $settings;
 	function getSettings(){
-		/*
-		USER_DB="soar"
-		PASSW_DB= "soar"
-		HOST_DB="localhost"
-		NAME_DB="soardatabase"
- 		*/
-
 		// Database variables
 		// Host name
 		$settings['dbhost'] = '';
