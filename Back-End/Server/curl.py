@@ -40,7 +40,7 @@ def deamon():
 
     all_inserts_alerts = []
     all_inserts_events = []
-
+    '''
     while True:
         for query in querys_for_splunk:
             query_result_from_splunk = splunk.make_query(query)    
@@ -62,6 +62,26 @@ def deamon():
             all_inserts_alerts = []
             all_inserts_events = []
             time.sleep(120)
+    '''
+
+    for query in querys_for_splunk:
+        query_result_from_splunk = splunk.make_query(query)
+        for result in query_result_from_splunk:
+            s = Switcher()
+            table_name, parser = s.sw_alert()
+            database.get_all_inserts_from_json(result, all_inserts_alerts, table_name, parser, isAlert=True)
+            s = Switcher()
+            table_name, parser = s.sw_event()
+            database.get_all_inserts_from_json(result, all_inserts_events, table_name, parser, isAlert=False)
+
+        final_insert_alert = database.join_all_inserts(all_inserts_alerts, on_conflict_insert="ON CONFLICT (incident_id) DO NOTHING")
+        final_insert_event = database.join_all_inserts(all_inserts_events, on_conflict_insert="ON CONFLICT (fields__raw) DO NOTHING")
+        print("FINAL INSERT ALERTA \n", final_insert_alert, "\n\n\n", "FINAL INSERT EVENTS \n", final_insert_event)
+
+        database.make_insert_database([final_insert_alert,final_insert_event]) # Make finals inserts to database
+        # Reset vars
+        all_inserts_alerts = []
+        all_inserts_events = []
 
 
 querys_for_splunk = ["search index=\"alerts_omniaccess\" AND action=\"create\" status=new NOT alert IN (\"OA - HTTP/HTTPS Beaconing\")| table alert_time, incident_id, alert, status, urgency| join incident_id[| search index=\"alerts_omniaccess\" AND sourcetype=\"alert_data_results\"| fields incident_id _time fields{}.* ] | rename column as Field, \"row 1\" as value"]
