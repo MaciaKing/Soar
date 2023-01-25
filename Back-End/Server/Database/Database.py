@@ -59,7 +59,7 @@ class Database():
         Translate a JSON to a SQL insert
         '''
         #print("\n\nJSON DATABASE",jsonToDatabase)
-        insert="INSERT INTO "+ table_name +" (" + ','.join(parser)+") values ("
+        insert="INSERT INTO "+ table_name +" (" + ','.join(parser)+") VALUES ("
         auxDicc=parser.copy()
         if isAlert==True:
             last_key = list(auxDicc)[-1]
@@ -114,7 +114,8 @@ class Database():
         final_insert=""
         first_value=True
         for i in all_inserts:
-            aux=i.upper().split("VALUES (")
+            #aux=i.upper().split("VALUES (")
+            aux=i.split("VALUES (")
             if first_value:
                 final_insert+=aux[0]+" VALUES (" #This is INSERT INTO <table> values
                 final_insert+=aux[1]

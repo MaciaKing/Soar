@@ -4,6 +4,10 @@ include 'alerts.php';
 
 $recogida=$_POST['dat']; //function
 
+if(!empty($_POST['day'])){
+        $day=$_POST['day'];
+}
+
 if(!empty($_POST['incident_id'])){
 	$inci=$_POST['incident_id'];
 }
@@ -67,6 +71,9 @@ if($recogida=="getAlerts"){
 	getAllUsr();
 }elseif($recogida=='getAlertsByAllFilters'){ 
 	getAllAlertsByAllFilters($index, $urgen, $status_, $owner, $data1, $time1, $data2, $time2 );
+}elseif($recogida =='getAlertsByOneDayRange'){
+	getAlertsInRange($day);
+	//echo $day;
 }else{
 	echo gettype($recogida);
 }

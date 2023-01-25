@@ -76,6 +76,17 @@ CREATE TABLE event (
 );
 
 
+CREATE TABLE incident (
+	id_incident SERIAL PRIMARY KEY,
+	time_creation_incident timestamp,
+	comment_explication text,
+	impact text, --low, informational, medium, hugh, critical
+	urgency text, --low, informational, medium, hugh, critical
+	priority text, --low, informational, medium, hugh, critical
+	user_creator integer,
+	FOREIGN KEY(user_creator) REFERENCES usr(idUser)	
+); 
+
 -- Declaram functions i triggers
 --CREATE OR REPLACE FUNCTION setNewAlert()
   --RETURNS trigger AS

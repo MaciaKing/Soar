@@ -1,0 +1,299 @@
+hola
+<class 'splunklib.binding.ResponseReader'>
+<?xml version='1.0' encoding='UTF-8'?>
+ 
+<results preview='0'>
+<meta>
+<fieldOrder>
+<field>_bkt</field>
+<field>_cd</field>
+<field>_indextime</field>
+<field>_kv</field>
+<field>_raw</field>
+<field>_serial</field>
+<field>_si</field>
+<field>_sourcetype</field>
+<field>_subsecond</field>
+<field>_time</field>
+<field>action</field>
+<field>app</field>
+<field>host</field>
+<field>incident_id</field>
+<field>index</field>
+<field>linecount</field>
+<field>source</field>
+<field>sourcetype</field>
+<field>splunk_server</field>
+<field>status</field>
+<field>tag::action</field>
+<field>tag::app</field>
+</fieldOrder>
+</meta>
+	<result offset='0'>
+		<field k='_bkt'>
+			<value><text>alerts_omniaccess~121~FBAD8AA3-9453-4DC9-B3AF-BD9A47AD5A2C</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>121:330674</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1672653453</text></value>
+		</field>
+		<field k='_kv'>
+			<value><text>1</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>time=2023-01-02T09:57:32+0000 severity=INFO origin=&quot;incident_posture&quot; event_id=&quot;42242f7f3bd4a6a6e6e37cf4b2b65367&quot; user=&quot;macia.salva&quot; action=&quot;comment&quot; incident_id=&quot;730eef6b-f20f-462b-b12a-68a63b022d45&quot; comment=&quot;Macia Test&quot;</v></field>
+		<field k='_serial'>
+			<value><text>0</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>cybersplunkindex01</text></value>
+			<value><text>alerts_omniaccess</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>incident_change</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2023-01-02T09:57:32.000+00:00</text></value>
+		</field>
+		<field k='action'>
+			<value><text>comment</text></value>
+		</field>
+		<field k='host'>
+			<value><text>cybersplunkhead01</text></value>
+		</field>
+		<field k='incident_id'>
+			<value><text>730eef6b-f20f-462b-b12a-68a63b022d45</text></value>
+		</field>
+		<field k='index'>
+			<value><text>alerts_omniaccess</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value><text>incident_settings.py</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value><text>incident_change</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>cybersplunkindex01</text></value>
+		</field>
+	</result>
+	<result offset='1'>
+		<field k='_bkt'>
+			<value><text>alerts_omniaccess~121~FBAD8AA3-9453-4DC9-B3AF-BD9A47AD5A2C</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>121:330665</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1672653356</text></value>
+		</field>
+		<field k='_kv'>
+			<value><text>1</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>time=2023-01-02T09:55:55+0000 severity=INFO origin=&quot;incident_posture&quot; event_id=&quot;51d7ea8ec87bab45cb6c71e9c9191c9f&quot; user=&quot;macia.salva&quot; action=&quot;comment&quot; incident_id=&quot;730eef6b-f20f-462b-b12a-68a63b022d45&quot; comment=&quot;Assigning for review&quot;</v></field>
+		<field k='_serial'>
+			<value><text>1</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>cybersplunkindex01</text></value>
+			<value><text>alerts_omniaccess</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>incident_change</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2023-01-02T09:55:55.000+00:00</text></value>
+		</field>
+		<field k='action'>
+			<value><text>comment</text></value>
+		</field>
+		<field k='host'>
+			<value><text>cybersplunkhead01</text></value>
+		</field>
+		<field k='incident_id'>
+			<value><text>730eef6b-f20f-462b-b12a-68a63b022d45</text></value>
+		</field>
+		<field k='index'>
+			<value><text>alerts_omniaccess</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value><text>incident_settings.py</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value><text>incident_change</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>cybersplunkindex01</text></value>
+		</field>
+	</result>
+	<result offset='2'>
+		<field k='_bkt'>
+			<value><text>alerts_omniaccess~121~FBAD8AA3-9453-4DC9-B3AF-BD9A47AD5A2C</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>121:330656</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1672653356</text></value>
+		</field>
+		<field k='_kv'>
+			<value><text>1</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>time=2023-01-02T09:55:55+0000 severity=INFO origin=&quot;incident_posture&quot; event_id=&quot;51d7ea8ec87bab45cb6c71e9c9191c9f&quot; user=&quot;macia.salva&quot; action=&quot;change&quot; incident_id=&quot;730eef6b-f20f-462b-b12a-68a63b022d45&quot; status=&quot;ongoing&quot; previous_status=&quot;new&quot;</v></field>
+		<field k='_serial'>
+			<value><text>2</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>cybersplunkindex01</text></value>
+			<value><text>alerts_omniaccess</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>incident_change</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2023-01-02T09:55:55.000+00:00</text></value>
+		</field>
+		<field k='action'>
+			<value><text>change</text></value>
+		</field>
+		<field k='host'>
+			<value><text>cybersplunkhead01</text></value>
+		</field>
+		<field k='incident_id'>
+			<value><text>730eef6b-f20f-462b-b12a-68a63b022d45</text></value>
+		</field>
+		<field k='index'>
+			<value><text>alerts_omniaccess</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value><text>incident_settings.py</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value><text>incident_change</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>cybersplunkindex01</text></value>
+		</field>
+		<field k='status'>
+			<value><text>ongoing</text></value>
+		</field>
+	</result>
+	<result offset='3'>
+		<field k='_bkt'>
+			<value><text>alerts_omniaccess~121~FBAD8AA3-9453-4DC9-B3AF-BD9A47AD5A2C</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>121:330646</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1672653356</text></value>
+		</field>
+		<field k='_kv'>
+			<value><text>1</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>time=2023-01-02T09:55:55+0000 severity=INFO origin=&quot;incident_posture&quot; event_id=&quot;51d7ea8ec87bab45cb6c71e9c9191c9f&quot; user=&quot;macia.salva&quot; action=&quot;change&quot; incident_id=&quot;730eef6b-f20f-462b-b12a-68a63b022d45&quot; owner=&quot;macia.salva&quot; previous_owner=&quot;unassigned&quot;</v></field>
+		<field k='_serial'>
+			<value><text>3</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>cybersplunkindex01</text></value>
+			<value><text>alerts_omniaccess</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>incident_change</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2023-01-02T09:55:55.000+00:00</text></value>
+		</field>
+		<field k='action'>
+			<value><text>change</text></value>
+		</field>
+		<field k='host'>
+			<value><text>cybersplunkhead01</text></value>
+		</field>
+		<field k='incident_id'>
+			<value><text>730eef6b-f20f-462b-b12a-68a63b022d45</text></value>
+		</field>
+		<field k='index'>
+			<value><text>alerts_omniaccess</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value><text>incident_settings.py</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value><text>incident_change</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>cybersplunkindex01</text></value>
+		</field>
+	</result>
+	<result offset='4'>
+		<field k='_bkt'>
+			<value><text>alerts_omniaccess~121~FBAD8AA3-9453-4DC9-B3AF-BD9A47AD5A2C</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>121:329924</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1672651804</text></value>
+		</field>
+		<field k='_kv'>
+			<value><text>1</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>time=2023-01-02T09:30:03+0000 event_id=&quot;40981b11d415fdc0c9de81fe6afbb685&quot; severity=INFO origin=&quot;alert_handler&quot; user=&quot;splunk-system-user&quot; action=&quot;create&quot; alert=&quot;OA - User account locked out&quot; incident_id=&quot;730eef6b-f20f-462b-b12a-68a63b022d45&quot; job_id=&quot;scheduler__nobody__rules__RMD5a4768a5c76882c68_at_1672651800_17205&quot; result_id=&quot;0&quot; owner=&quot;unassigned&quot; status=&quot;new&quot; urgency=&quot;medium&quot; ttl=&quot;1314000&quot; alert_time=&quot;2023-01-02T10:30:03.619+01:00&quot;</v></field>
+		<field k='_serial'>
+			<value><text>4</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>cybersplunkindex01</text></value>
+			<value><text>alerts_omniaccess</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>incident_change</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2023-01-02T09:30:03.000+00:00</text></value>
+		</field>
+		<field k='action'>
+			<value><text>create</text></value>
+		</field>
+		<field k='host'>
+			<value><text>cybersplunkhead01</text></value>
+		</field>
+		<field k='incident_id'>
+			<value><text>730eef6b-f20f-462b-b12a-68a63b022d45</text></value>
+		</field>
+		<field k='index'>
+			<value><text>alerts_omniaccess</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value><text>alert_handler.py</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value><text>incident_change</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>cybersplunkindex01</text></value>
+		</field>
+		<field k='status'>
+			<value><text>new</text></value>
+		</field>
+	</result>
+</results>
+

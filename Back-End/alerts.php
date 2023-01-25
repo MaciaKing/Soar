@@ -87,12 +87,48 @@ class DBClass extends DatabaseSettings{
 	}
 }
 
+//Filtrado básico de rango de tiempo, 24h, 48h, etc..
+function getAlertsInRange($range){
+  //echo gettype($range);	
+  $db = new DBClass();
+  $db->openConnection();
+
+/*
+ Primera Opció
+SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event 
+JOIN alerta ON event.incident_id=alerta.incident_id AND CAST(alerta.alert_time AS DATE) BETWEEN NOW() - INTERVAL '24 HOURS' AND NOW() 
+JOIN usr ON alerta.idUser=usr.idUser 
+ORDER BY alerta.alert_time DESC;
+
+ Segona Opció
+SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event 
+JOIN alerta ON event.incident_id=alerta.incident_id AND CAST(alerta.alert_time AS DATE) BETWEEN NOW() - INTERVAL '1 DAY' AND NOW() 
+JOIN usr ON alerta.idUser=usr.idUser 
+ORDER BY alerta.alert_time DESC;
+ * */
+ 
+  //$query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id AND CAST(alerta.alert_time AS DATE) BETWEEN NOW() - INTERVAL \'.$range. DAY\' AND NOW() JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC";
+
+  $query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id AND CAST(alerta.alert_time AS DATE) BETWEEN NOW() - INTERVAL '{$range} DAY' AND NOW() JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC;";
+
+  //echo "MACIA".$query;
+
+  $res=$db->query($query);
+  $allRes=pg_fetch_all($res);
+  echo json_encode($allRes);
+  $db->freeResult($res);
+  $db->close();
+
+}
 
 
 //All selects
 function getAllAlerts(){	
   $db = new DBClass();
   $db->openConnection();
+
+  //"SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id and alerta.alert >= NOW() - '1 day'::INTERVAL JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC " 
+
   //Distinct pq eventos puede tener más de un incicdent_id y se pueden ver alertas duplicadas 
   $query = "SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC"; 
   $res=$db->query($query); 
@@ -102,6 +138,7 @@ function getAllAlerts(){
   $db->freeResult($res);
   $db->close();
 }
+
 
 function getAllAlertsByAllFilters($index, $urgen, $status_, $owner, $data1, $time1, $data2, $time2){
   $db = new DBClass();
@@ -287,6 +324,11 @@ function getEvents($incident_id){
 }
 
 
+function get_title_alerts($incident_id){
+//select alerta.alert from alerta;
+//SELECT * FROM alerta WHERE alert = ANY(ARRAY['asdfas123','asdftg324']);
+
+}
 
 //All Updates
 function update_alerta($incident_id, $comment, $status, $owner){
