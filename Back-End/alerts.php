@@ -87,20 +87,30 @@ class DBClass extends DatabaseSettings{
 	}
 }
 
+//_______________________________________________________________________________________________________________________
+//All this functions must be on the reciver side. This file is only for database class and functions.
+//SI QUIERES REDUCIR EL TIEMPO DE ESPERA, TIENES QUE REDUCIR EL TIEMPO DE ENVIO DE LAS CONSULTAS, PARA HACER ESO SIEMPRE INTENTA FILTRAR POR DIAS.
+//_______________________________________________________________________________________________________________________
+
 function get_alerts_by_all_filters(){
 }
 
-//SI QUIERES REDUCIR EL TIEMPO DE ESPERA, TIENES QUE REDUCIR EL TIEMPO DE ENVIO DE LAS CONSULTAS, PARA HACER ESO SIEMPRE INTENTA FILTRAR POR DIAS.
+/**
+ * Get the alerts by simple filter.
+ * 
+ * The query is ordered by alert_time.
+ * 
+ * @param $SimpleFilter indicates the range of time to filter the alerts. Is in days. Is a number(Integer).
+ */
 function get_alerts_by_simple_filter($SimpleFilter){
   $db = new DBClass();
   $db->openConnection();
 
   $query="SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event;
-  JOIN alerta ON event.incident_id=alerta.incident_id AND CAST(alerta.alert_time AS DATE) >= (current_date - INTERVAL '800 DAYS');
+  JOIN alerta ON event.incident_id=alerta.incident_id AND CAST(alerta.alert_time AS DATE) >= (current_date - INTERVAL '$SimpleFilter DAYS');
   JOIN usr ON alerta.idUser=usr.idUser; 
   ORDER BY alerta.alert_time DESC;";
   
-  //echo "DATABASE-".$query;
   $res=$db->query($query);
   $allRes=pg_fetch_all($res);
   echo json_encode($allRes);
@@ -132,8 +142,6 @@ ORDER BY alerta.alert_time DESC;
 
   $query = "SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name  FROM event JOIN alerta ON event.incident_id=alerta.incident_id AND CAST(alerta.alert_time AS DATE) BETWEEN NOW() - INTERVAL '{$range} DAY' AND NOW() JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC;";
 
-  //echo "MACIA".$query;
-
   $res=$db->query($query);
   $allRes=pg_fetch_all($res);
   echo json_encode($allRes);
@@ -143,7 +151,12 @@ ORDER BY alerta.alert_time DESC;
 }
 
 
-//All selects
+
+/** 
+ * Get all alerts.
+ * 
+ * The query is ordered by alert_time.
+ */
 function getAllAlerts(){	
   $db = new DBClass();
   $db->openConnection();
@@ -160,7 +173,19 @@ function getAllAlerts(){
   $db->close();
 }
 
-
+/**
+ * Get all alerts by any filter.
+ * 
+ * The query is ordered by alert_time.
+ * 
+ * @param $index indicates the index to filter the alerts. Is a string.
+ * @param $urgen indicates the urgency to filter the alerts. Is a string.
+ * @param $status_ indicates the status to filter the alerts. Is a string.
+ * @param $owner indicates the owner to filter the alerts. Is a string.
+ * @param $data1 indicates the first date to filter the alerts. Is a string.
+ * @param $time1 indicates the first time to filter the alerts. Is a string.
+ * @param $data2 indicates the second date to filter the alerts. Is a string.
+ */
 function getAllAlertsByAllFilters($index, $urgen, $status_, $owner, $data1, $time1, $data2, $time2){
   $db = new DBClass();
   $db->openConnection();
@@ -175,13 +200,13 @@ function getAllAlertsByAllFilters($index, $urgen, $status_, $owner, $data1, $tim
   
   //echo "index --> $index \n\n";
   if( strcmp($index, 'All') !==0 ){ //Equal
-  	$query .= " AND fields_index='$index'";	
+    $query .= " AND fields_index='$index'";	
   }
   if( strcmp($urgen, 'All') !==0 ){ //Equal
-        $query .= " AND UPPER(urgency)=UPPER('$urgen')";
+    $query .= " AND UPPER(urgency)=UPPER('$urgen')";
   }
   if( strcmp($status_, 'All') !==0){
-         $query .= " AND UPPER(status)=UPPER('$status_')";
+    $query .= " AND UPPER(status)=UPPER('$status_')";
   }
 
   $query .= " AND event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser";
@@ -192,8 +217,6 @@ function getAllAlertsByAllFilters($index, $urgen, $status_, $owner, $data1, $tim
 
   $query .=" ORDER BY alerta.alert_time DESC";
 
-  //echo "QQQQQ $query\n\n\n";
-
   $res=$db->query($query);
   $allRes=pg_fetch_all($res);
   echo json_encode($allRes);
@@ -203,6 +226,13 @@ function getAllAlertsByAllFilters($index, $urgen, $status_, $owner, $data1, $tim
 }
 
 
+/** 
+ * Get alerts by index.
+ * 
+ * The query is ordered by alert_time.
+ * 
+ * @param $index indicates the index to filter the alerts. Is a string.
+ */
 function getAlertsByIndex($index){
   $db = new DBClass();
   $db->openConnection();
@@ -216,6 +246,13 @@ function getAlertsByIndex($index){
 }
 
 
+/** 
+ * Get alerts by status.
+ * 
+ * The query is ordered by alert_time.
+ * 
+ * @param $sta indicates the status to filter the alerts. Is a string.
+ */
 function getAllAlertsByStatus($sta){
   $db = new DBClass();
   $db->openConnection();
@@ -224,7 +261,6 @@ function getAllAlertsByStatus($sta){
   }else{
   	$query = "SELECT DISTINCT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event JOIN alerta ON  UPPER(alerta.status)=UPPER('$sta') AND event.incident_id=alerta.incident_id JOIN usr ON alerta.idUser=usr.idUser ORDER BY alerta.alert_time DESC";
   }
-  //echo $query;
   $res=$db->query($query);
   $allRes=pg_fetch_all($res);
   echo json_encode($allRes);
@@ -233,7 +269,13 @@ function getAllAlertsByStatus($sta){
   $db->close();
 }
 
-
+/** 
+ * Get alerts by urgency.
+ * 
+ * The query is ordered by alert_time.
+ * 
+ * @param $urgen indicates the urgency to filter the alerts. Is a string.
+ */
 function getAlertsByUrgency($urgen){
   $db = new DBClass();
   $db->openConnection();
@@ -248,6 +290,13 @@ function getAlertsByUrgency($urgen){
 }
 
 
+/* 
+ * Get alerts by owner.
+ * 
+ * The query is ordered by alert_time.
+ * 
+ * @param $owner indicates the owner to filter the alerts. Is a string.
+ */
 function getAlertsByOwner($owner){
   $db = new DBClass();
   $db->openConnection();
@@ -262,7 +311,13 @@ function getAlertsByOwner($owner){
   $db->close();
 }
 
-
+/* 
+ * Get alerts by client.
+ * 
+ * The query is ordered by alert_time.
+ * 
+ * @param $index indicates the index to filter the alerts. Is a string.
+ */	
 function getAlertsByClient($index){
   $db = new DBClass();
   $db->openConnection();
@@ -278,6 +333,13 @@ function getAlertsByClient($index){
 }
 
 
+/** 
+ * Get all clients.
+ * 
+ * Client is equivalent to fields_index.
+ * 
+ * @param $action indicates the action to filter the alerts. Is a string.
+ */
 function getAllClients(){
   $db = new DBClass();
   $db->openConnection();
@@ -291,6 +353,9 @@ function getAllClients(){
 }
 
 
+/**
+ * Get all status.
+ */
 function getAllStatus(){
   $db = new DBClass();
   $db->openConnection();
@@ -303,6 +368,10 @@ function getAllStatus(){
   $db->close();
 }
 
+
+/**
+ * Get all users.
+ */
 function getAllUsr(){
   $db = new DBClass();
   $db->openConnection();
@@ -315,7 +384,14 @@ function getAllUsr(){
   $db->close();
 }
 
-
+/** 
+ * Get al events from an incident.
+ * 
+ * This query must be with LIMIT 1 because the query is used to get the first event of an incident.
+ * Is only add LIMIT 1 to the query.
+ * 
+ * @param type $incident_id
+ */
 function getEvents($incident_id){
   $db = new DBClass();
   $db->openConnection();
@@ -327,11 +403,11 @@ function getEvents($incident_id){
   while ($row = pg_fetch_row($res)) {
 	  if ($aux===0){
 		  $fields .= $row[0];
-	  	  $aux=1;
+	  	$aux=1;
 	  } else{
 	  	$fields .= ",".$row[0];
-	}	  
-   }
+	  }	  
+  }
   $db->freeResult($res);
 
   $query = "SELECT $fields  FROM event WHERE incident_id='$incident_id' LIMIT 1";
@@ -348,21 +424,27 @@ function getEvents($incident_id){
 function get_title_alerts($incident_id){
 //select alerta.alert from alerta;
 //SELECT * FROM alerta WHERE alert = ANY(ARRAY['asdfas123','asdftg324']);
-
 }
 
-//All Updates
+
+/**
+ * Update alerta table
+ * 
+ * Update alerta table with the new values.
+ * 
+ * @param $incident_id array of incident_id
+ * @param $comment new comment for the alert
+ * @param $status new status for the alert
+ * @param $owner new owner for the alert
+ **/
 function update_alerta($incident_id, $comment, $status, $owner){
   $db = new DBClass();
   $db->openConnection();
   foreach ($incident_id as $value) {
-	$q = "UPDATE alerta SET status='$status', comment_='$comment', iduser=(SELECT iduser FROM usr WHERE name='$owner')  WHERE incident_id='$value'";
-	echo "\n".$q;
-	$db->query($q);
+	  $q = "UPDATE alerta SET status='$status', comment_='$comment', iduser=(SELECT iduser FROM usr WHERE name='$owner')  WHERE incident_id='$value'";
+	  $db->query($q);
   }
-
-  //echo "  \n\nUPDATE";
-
+  $db->close();
 }
 
 
