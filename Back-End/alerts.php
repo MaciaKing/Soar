@@ -16,6 +16,10 @@ class DBClass extends DatabaseSettings{
 	
 	// Connects to the database
 	function openConnection(){
+    /*
+    All these lines is for get the settings from the DBSettings.php file.
+    */
+    
 		// Load settings from parent class
 	//	$settings = DatabaseSettings::getSettings();
 		

@@ -1,9 +1,10 @@
 <?php
 include 'alerts.php';
 
+// this param is used to know what function to call
+$recogida=$_POST['dat']; 
 
-$recogida=$_POST['dat']; //function
-
+// All this params are used to filter the alerts.
 if(!empty($_POST['day'])){
         $day=$_POST['day'];
 }
@@ -49,10 +50,19 @@ if(!empty($_POST['data2'])){
 }
 
 
-// Esto tendria q cambiar a  
-// 1. Solo una query con todas los filtros.
-// 2. Una query por solo filtro de un dia (Como splunk).
 
+//_______________________________________________________________________________________
+// This must change to
+// 1. Only one query with all filters.
+// 2. One query for all the filters.
+// 3. Updates the alerts 
+// 4. All necesary querys like get users, get clients, etc.
+//
+// The idea is that all functions that are on reciver, must be inside the class alerts.
+//_______________________________________________________________________________________
+
+
+// Depending on the param, the function is called.
 if($recogida=="getAlerts"){
 	getAllAlerts();
 }elseif($recogida=="getEvents"){
@@ -76,7 +86,6 @@ if($recogida=="getAlerts"){
 	getAllAlertsByAllFilters($index, $urgen, $status_, $owner, $data1, $time1, $data2, $time2 );
 }elseif($recogida =='getAlertsByOneDayRange'){
 	getAlertsInRange($day);
-	//echo $day;
 }else{
 	echo gettype($recogida);
 }
