@@ -49,6 +49,9 @@ if(!empty($_POST['data2'])){
 }
 
 
+// Esto tendria q cambiar a  
+// 1. Solo una query con todas los filtros.
+// 2. Una query por solo filtro de un dia (Como splunk).
 
 if($recogida=="getAlerts"){
 	getAllAlerts();
