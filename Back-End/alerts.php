@@ -87,6 +87,27 @@ class DBClass extends DatabaseSettings{
 	}
 }
 
+function get_alerts_by_all_filters(){
+}
+
+//SI QUIERES REDUCIR EL TIEMPO DE ESPERA, TIENES QUE REDUCIR EL TIEMPO DE ENVIO DE LAS CONSULTAS, PARA HACER ESO SIEMPRE INTENTA FILTRAR POR DIAS.
+function get_alerts_by_simple_filter($SimpleFilter){
+  $db = new DBClass();
+  $db->openConnection();
+
+  $query="SELECT alerta.incident_id, alerta.alert_time, alerta.alert, status, alerta.urgency, fields_action, fields_index, alerta.comment_, usr.name FROM event;
+  JOIN alerta ON event.incident_id=alerta.incident_id AND CAST(alerta.alert_time AS DATE) >= (current_date - INTERVAL '800 DAYS');
+  JOIN usr ON alerta.idUser=usr.idUser; 
+  ORDER BY alerta.alert_time DESC;";
+  
+  //echo "DATABASE-".$query;
+  $res=$db->query($query);
+  $allRes=pg_fetch_all($res);
+  echo json_encode($allRes);
+  $db->freeResult($res);
+  $db->close();
+}
+
 //Filtrado básico de rango de tiempo, 24h, 48h, etc..
 function getAlertsInRange($range){
   //echo gettype($range);	
@@ -340,7 +361,7 @@ function update_alerta($incident_id, $comment, $status, $owner){
 	$db->query($q);
   }
 
-  echo "  \n\nUPDATE";
+  //echo "  \n\nUPDATE";
 
 }
 

@@ -3000,6 +3000,24 @@ textarea.form-control-lg {
   transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
 }
 
+.btn-dark, .btn-dark:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #29b342 !important;
+    color: #2b2b2b !important;
+}
+
+.sb-nav-link-icon{
+    color: #29b342 !important;
+}
+
+.bg-custom1 {
+    background-color: #2b2b2b !important;
+    color: #29b342 !important;
+}
+
+.card-header {
+    color: #29b342 !important;
+}
+
 .form-floating>.form-control:not(:-ms-input-placeholder)~label,
 .form-floating>.dataTable-input:not(:-ms-input-placeholder)~label {
   opacity: 0.65;

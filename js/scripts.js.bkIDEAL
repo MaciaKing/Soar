@@ -29,6 +29,34 @@ window.addEventListener('DOMContentLoaded', event => {
             loadAlertsFilteredByTime($("#FilterByTime").val());
         }
     });
+
+    //When detect a change on any filter button. Preferiblebemnte de esta manera 
+    /*
+    $("#FilterStatus", "#FilterUrgency").change(function () {
+        filterByAllFilters();        
+    });
+    */
+
+    //When detect a change on any filter button
+    $("#FilterOwner").change(function () {
+        filterByAllFilters();        
+    });
+
+    $("#FilterStatus").change(function () {
+        filterByAllFilters();        
+    });
+
+    $("#FilterUrgency").change(function () {    
+        filterByAllFilters();
+    });
+
+    $("#FilterIndex").change(function () {
+        filterByAllFilters();        
+    });
+    $("#FilterByTime").change(function () { 
+        filterByAllFilters();
+    });
+
 });
 
 
@@ -36,7 +64,6 @@ function load_alerts_first_time() {
     //var filter_time = $("#FilterByTime").val();
     loadAlertsFilteredByTime($("#FilterByTime").val());
 }
-
 
 
 function showAlerts(alerts_to_show) {
@@ -49,7 +76,14 @@ function showAlerts(alerts_to_show) {
     div.innerHTML = '' //Para que siempre se actualize y no queden restos de la tabla anterior
 
     var content = '<div class="card mb-4"><div class="card-header"><i class="fas fa-table me-1"></i>Alerts</div><div id="alertas" class="card-body"><table id="table_alerts" class="table table-striped table-dark">'; // Creamos la targeta con las alertas
+
+    //añadimos los botones
+    //content += '<div class=\"row\" style=\"margin: 1em;\"><div class=\"col\"><button type=\"button\" id=\"EditSelected\" class=\"btn btn-success\" data-toggle=\"modal\" style=\'width:120px\' onclick=\"EditSelected(this)\">Edit Selected</button></div><div class=\"col\"><button type=\"button\" class=\"btn btn-success\" style=\'width:120px\' data-toggle=\"modal\" onclick=\"EditAll(this)\">Edit All</button></div><div class=\"col\"><button type=\"button\" class=\"btn btn-success\" style=\'width:120px\' onclick=\"selectAll()\">Select All</button></div><div class=\"col\"><button type=\"button\" class=\"btn btn-success\" style=\'width:120px\' onclick=\"cleanAll()\">Clean All</button></div><div class=\"col\"><button type=\"button\" class=\"btn btn-success\" style=\'width:150px\' onclick=\"\">Create Incident</button></div></div>';
+
     content += '<thead><tr><th scope=\"col\">Actions</th> <th scope=\"col\">Time</th><th scope=\"col\">Title</th><th scope=\"col\">Status</th><th scope=\"col\">Urgency</th><th scope=\"col\">Action</th><th scope=\"col\">Index</th><th scope=\"col\">Comment</th><th scope=\"col\">Owner</th></tr></thead>';
+
+    //Afegim les alertes
+    //console.log(typeof (alerts_to_show));
 
     content += '<tbody>';
     for (var i = 0; i < alerts_to_show.length; i++) {
@@ -67,6 +101,9 @@ function showAlerts(alerts_to_show) {
                 aux = aux + 1; //Para crear un child 
             }
         }
+        //content+='<tr id=\"hidden_row_'+aux_id+'\" class=\"hidden_row\" style=\"display: none;\"> <td colspan=4> INFORMACION DE LA ALERTA !!!!!!!!!!!!!</td></tr></tr>';
+        //content += '<tr id=\"hidden_row_' + aux_id + '\" class=\"hidden_row\" style=\"display: none;\"> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr></tr>';
+        //content += '<tr id=\"hidden_row_' + aux_id + '\" class=\"hidden_row\" > <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr></tr>';
     }
     content += '</tbody>';
     content += '</table></div></div>';
@@ -82,32 +119,35 @@ function showAlerts(alerts_to_show) {
 }
 
 
-/**
- * This function is used to show the events that have caused the alert
- * 
- * This function creates a mini table with the event. This table is insert on
- * the father row (This is Alert row). Also there is string treatment to make
- * it look better in the table.
- * 
- * @param {JSON} data  This is the data that we want to show, this is the event.
- * @param {html element} div  This is the div where we want to show the data.
- */
+
 function viewEventAlert(data, div) {
     var content = '';
     content = '<tr><table><tbody><tr>';
+    //content = '<tr><table><th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></th><tbody><tr>';
+    //content = '<tr><table><tbody><tr></tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><tr>';
+    //console.log("dades a mostrar " + typeof (data));
+    //console.log("dataaa :\n"+ data); 
     var events = JSON.parse(data);
+    //console.log(typeof (events));
+    //console.log("eventssss :\n"+ events);
     var raw = '';
     for (var i = 0; i < events.length; i++) {
+        //console.log("i=", i, " events.length=", events.length)
         var obj = events[i];
+        //console.log(obj);
+        //content += '<th colspan="4">';
         content += '<td colspan="3">';
         for (var key in obj) {
+            //console.log();
             if (obj[key] != null) {
                 if (obj[key].length != 1) {
                     if (key.split("fields_").pop() === "_raw") {
-                        var p = obj[key].replaceAll("<", "&lt;"); //
+                        var p = obj[key].replaceAll("<", "&lt;");
                         p.replaceAll(">", "&gt;");
                         raw += '<td colspan="5"><b style="color:#B77E42;"> - Raw</b>\t<br><div>' + p + '</div></td>';
+                        //raw += '<td><b style="color:#B77E42;"> - Raw</b>\t<br><div>' + p + '</div></td>';
                     } else {
+                        //limpiamos "fields_" de los eventos para que se vea mejor
                         var etiqueta = key.split("fields_").pop();
                         //Remplazamos todos los _ por " "	
                         etiqueta = etiqueta.replaceAll("_", " ");
@@ -119,10 +159,13 @@ function viewEventAlert(data, div) {
             }
         }
         content += '</td>' + raw;
+        //content += '</th>';
         content += '</td>';
     }
+
     content += '</tr></tbody></table></tr>';
-    //console.log(content);
+
+    console.log(content);
     var table = $('#table_alerts').DataTable();
     var row = table.row('#' + div);
     row.child(content).show();
@@ -130,16 +173,13 @@ function viewEventAlert(data, div) {
 
 
 
-/**
- * Show and hide an event of an alert
+/*
+ * Si el evento se está mostrando, hay que ocultar ese row.
+ *
+ * Si el evento no se está mostrando, hay que hacer una query 
+ * a la base de datos para mostrar el evento.
  * 
- * This function is used to show and hide the event of an alert. If the event is
- * shown, it will be hidden. If the event is hidden, it will be shown.
- * All incident_id are unique, so we can use it to identify the row.
- * 
- * @param {string} incident_id is the id of the alert.
- * @returns NADA
- *  */
+ * */
 function showHideRow(incident_id) {
     var table = $('#table_alerts').DataTable();
     var row = table.row('#' + incident_id);
@@ -151,19 +191,6 @@ function showHideRow(incident_id) {
 }
 
 
-/**
- * Select an alert for edit.
- * 
- * This function is used to select an alert for edit. When an alert is selected
- * this id is stored on the array selected_alerts. This array is used to know
- * which alerts are selected.
- * It is important to know that the user can press different buttons, and can
- * select the same alert several times. So, we have to check if the alert is
- * already selected. If it is, we don't have to select it again.
- * 
- * @param {string} id_alert is the id of the alert.
- * @returns NONE
- * */
 function selectNewAlert(id_alert) {
     var isSelected = false;
     //Comprovar que no haya estado seleccionada antes
@@ -178,42 +205,28 @@ function selectNewAlert(id_alert) {
     }
 }
 
-/**
- * When we are editing an alert, we must have the changes.
- * 
- * The user make all changes to the GUI, and then we send this new info 
- * to the server using the updateAlert function.
- * 
- * @param {} NONE
- * @returns {} NONE
- */
+
 function getChanges() {
     //select status
     var status_ = document.getElementById("selectStatus");
     var status_value = status_.value;
     var status_selected = status_.options[status_.selectedIndex].text;
+
     //select owner
     var owner = document.getElementById("selectOwner");
     var owner_value = owner.value;
     var owner_selected = owner.options[owner.selectedIndex].text;
+
     //select comment
     var comment = document.getElementById("selectComment").value;
 
     updateAlert(selected_alerts, owner_selected, comment, status_selected);
+
     endEdit();
 }
 
 
-
-/**
- * Reset the seleceted alerts.
- * 
- * When we finish editing, we have to reset the selected alerts. 
- * Alse we unselectec the alerts in the GUI.
- * 
- * @param {type} NONE
- * @returns {} NONE
- */
+//Reset all alerts
 function endEdit() {
     //Deseleccionamos de manera visual todas las alertas
     alerts = document.getElementsByClassName("form-check-input");
@@ -225,52 +238,39 @@ function endEdit() {
 }
 
 
-/**
- * Edit faster a single alert on the GUI.  
- * 
- * Unselect all alerts and select the alert that we want to edit.
- * 
- * @param {html element} el with this element, we can get the id of the alert.
- * */
 function quickEdit(el) {
-    cleanAll(); //Unselect all alerts
+    //Desseleccionamos más alertas si habian alguna ya seleccionada
+    cleanAll();
+
     selectNewAlert(el.parentElement.parentElement.parentElement.id);
+    console.log(selected_alerts);
 }
 
-/**
- * This function is used to edit all alerts that are selected.
- * 
- * @param {type} button
- * */
 function EditAll(button) {
     selectAll(); //Select all alerts
     EditSelected(button);  //Edit all alerts
 }
 
-
-/**
- * Select all alerts that are shown on the screen.
- * */
+//selectAll:
+//Select all alerts that is show on the screen
 function selectAll() {
+    //console.log("Select All");
     alerts = document.getElementsByClassName("form-check-input");
     for (var i = 0; i < alerts.length; i++) {
         alerts[i].checked = true;
         selectNewAlert(alerts[i].parentElement.parentElement.parentElement.id)
     }
+    console.log(selected_alerts);
 }
 
-
-
-/**
- * This function is used to select or unselect an alert.
- * 
- * When an alert is selected, this id is stored on the array selected_alerts.
- * Also, if the alert is unselected, we have to remove it from the array.
- * 
- * @param {*} val indicate if the alert was selected or not.
- * @param {*} idAlert identify the alert.
- */
+//selectAlert:
+//param: - val. Indica si la alerta estaba seleccionada o no.
+//       - idAlert. Nombre identificatico de esta alerta.
+//Cada vez que el usuario clicke el boton de seleccionado, se guardará esta row.
+//Si esta ya estaba seleccionada, se deseleccionara y se guardaran los cambios en 
+//select_alerts.
 function selectAlert(val, idAlert) {
+    //console.log("Valor", val.checked);
     if (val.checked) {
         //Añadimos la alerta
         selectNewAlert(idAlert)
@@ -289,66 +289,25 @@ function selectAlert(val, idAlert) {
     }
 }
 
-
-/**
- * Unselect all alerts.
- * 
- * */
+//Deselecionamos todas las alertas.
 function cleanAll() {
     alerts = document.getElementsByClassName("form-check-input");
     for (var i = 0; i < alerts.length; i++) {
         alerts[i].checked = false;
     }
+
     selected_alerts = []; // Borramos todas las alertas seleccionadas.
     console.log(selected_alerts);
 }
 
-/**
- * Filter the alerts by all filters.
- * 
- * Get all the values of the filters and send them to the server. The server
- * will return the alerts that match with the filters, and we show this alerts.
- * */
-function filterByAllFilters() {
-    var index = document.getElementById("FilterIndex").value;
-    var urgency = document.getElementById("FilterUrgency").value;
-    var status_ = document.getElementById("FilterStatus").value;
-    var owner = document.getElementById("FilterOwner").value;
 
-    var data1 = document.getElementById("data1").value;
-    var data2 = document.getElementById("data2").value;
-    var time1 = document.getElementById("time1").value;
-    var time2 = document.getElementById("time2").value;
-
-    var query = jQuery.ajax({
-        type: 'POST',
-        url: './Back-End/reciver.php',
-        data: {
-
-            dat: "getAlertsByAllFilters", index: index, urgency: urgency, status_: status_, owner: owner,
-            time1: time1, time2: time2, data1: data1, data2: data2
-        },
-        success: function (data) {
-            showAlerts(JSON.parse(data));
-        },
-        error: function (xhr, status, error) {
-            var err = eval("(" + xhr.responseText + ")");
-            alert(err.Message);
-        }
-    });
-}
-
-/**
- * Show all users on the GUI.
- * 
- * @param {Array} users 
- */
 function showUsers(users) {
     var content = '<option selected>All</option>';
     for (var i = 0; i < users.length; i++) {
         var obj = users[i];
         for (var key in obj) {
             var value = obj[key];
+            //console.log("valor "+ value);
             content += '<option>' + value + '</option>';
         }
     }
@@ -356,11 +315,6 @@ function showUsers(users) {
 }
 
 
-/**
- * Show all clients on the GUI.
- * 
- * @param {Array} clients All name clients.
- * */
 function showClients(clients) {
     const json = JSON.parse(clients);
     var content = '<option selected>All</option>';
@@ -376,11 +330,7 @@ function showClients(clients) {
 }
 
 
-/**
- * Reset all filters.
- * 
- * Put all filters to default value.
- */
+
 function resetFilters() {
     document.getElementById("FilterUrgency").value = 'All';
     document.getElementById("FilterIndex").value = 'All';
@@ -395,54 +345,43 @@ function resetFilters() {
 }
 
 
-
-/**
- * Hide all divs and show only one div.
- * 
- * This function is used to show only one div at the same time. This is used
- * to show the divs of the menu. (Web App).
- * 
- * @param {HTML element} divToShow 
- */
+//ocultarTodosDivsYMostrar1: 
+//  param: divToShow    --> id= "divToShow"
+//Ocultamos todos los divs y solo mostramos el idDivs que entra por parametro
 function ocultarTodosDivsYMostrar1(divToShow) {
     for (var i = 0; i < divs.length; i++) {
         if (divs[i] === divToShow) {
+            //mostramos este divs
+            //console.log("Mostramos div: ", divToShow);
             document.getElementById(divToShow).style.display = "block";
-            if (divs[i] == "ALERTAS") { 
-                // Load all alerts.
+            if (divs[i] == "ALERTAS") { //Cargamos todas las alertas
+                //loadAlerts(); //MACIA
+                //load_alerts_first_time();
                 loadClients();
                 loadUsers();
-                load_alerts_first_time();
+                //load_alerts_first_time(); // AQUI
+                console.log("First Filter -->", $("#FilterByTime").val());
+                loadAlertsFilteredByTime( $("#FilterByTime").val());
             }
         } else {
-            // Hide all divs.
+            //ocultamos el divs
+            //console.log("Ocultamos div: " + divs[i]);
             document.getElementById(divs[i]).style.display = "none";
         }
     }
 }
 
-
-/**
- * Show user, what alerts are editing.
- */
+//Show user, what alerts are editing
 function show_user_what_alerts_are_editing() {
+    console.log("Maciaaaaaa !!", selected_alerts.length);
     //Show alerts selectets
-    var content = "<label>You are editing <span style='color:red;'>"+selected_alerts.length+"</span> alerts </label>";
-    //Show title alerts.
-    //Para obtener todo el titulos de las alertas seleccionadas, lo puedes hacer con una array y guardas los titulos
-    // o con una petición Ajax al servidor
+    var content = "<label>You are editing <span style='color:red;'>" + selected_alerts.length + "</span> alerts </label>";
+
     //server_connection.load_All_Titles();
     $("#info_editing").html(content);
 }
 
 
-/**
- * Edit selected alerts.
- * 
- * If there are alerts selected, we can edit them. If not, we can't edit any alert.
- * 
- * @param {*} button Click on this button.
- */
 function EditSelected(button) {
     if (selected_alerts.length != 0) {
         //Se pueden editar alertas
@@ -450,20 +389,16 @@ function EditSelected(button) {
         show_user_what_alerts_are_editing();
     } else {
         //No se puede editar ninguna alerta ya que no hay ninguna seleccionada
+        console.log("Error no se puede editar, no hay alertas seleccionadas!");
         alert("No hay alertas seleccionadas");
     }
 }
 
-// Todas las peticiones AJAX preferiblemente en otro fichero, y luego utilizar TypeScript o Babel para juntar estos ficheros
 // All this functions must be on server_connection.js
-/**
- * Is used to load all title alerts.
- * 
- * Is not supported on the backend yet.
- * 
- * @param {*} alerts_id id of the alerts.
- */
+//NEW FILE -----------------------------------------------------
 function load_All_Titles(alerts_id) {
+    console.log("HOLAAAAAA DESDE OTRO FICHERO");
+    //exit();
     jQuery.ajax({
         type: 'POST',
         url: './Back-End/reciver.php',
@@ -503,25 +438,6 @@ function loadClients() {
 }
 
 
-
-function loadUsers() {
-    var users = jQuery.ajax({
-        type: 'POST',
-        url: './Back-End/reciver.php',
-        //dataType:"json",
-        data: {
-            dat: "getAllUsr"
-        },
-        success: function (data) {
-            showUsers(JSON.parse(data));
-        },
-        error: function (xhr, status, error) {
-            var err = eval("(" + xhr.responseText + ")");
-            alert(err.Message);
-        }
-    });
-}
-
 function filterByClient() {
     var index = document.getElementById("FilterIndex").value;
     var events = jQuery.ajax({
@@ -541,6 +457,59 @@ function filterByClient() {
     });
 }
 
+function loadUsers() {
+    var users = jQuery.ajax({
+        type: 'POST',
+        url: './Back-End/reciver.php',
+        //dataType:"json",
+        data: {
+            dat: "getAllUsr"
+        },
+        success: function (data) {
+            showUsers(JSON.parse(data));
+        },
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
+        }
+    });
+}
+
+function filterByAllFilters() {
+    var index = document.getElementById("FilterIndex").value;
+    var urgency = document.getElementById("FilterUrgency").value;
+    var status_ = document.getElementById("FilterStatus").value;
+    var owner = document.getElementById("FilterOwner").value;
+
+    var filter_time = document.getElementById("FilterByTime").value;
+    console.log("***********filter_time --> ", filter_time);
+
+    var data1 = document.getElementById("data1").value;
+    var data2 = document.getElementById("data2").value;
+    var time1 = document.getElementById("time1").value;
+    var time2 = document.getElementById("time2").value;
+    //console.log("Index :",index, " urgency :",urgency, " status :",status_, " owner :",owner );  
+    //console.log("data1 --> ", data1,"\ndata2 --> ",data2, "\ntime1 --> ", time1, "\ntime2 --> ", time2);
+
+    var query = jQuery.ajax({
+        type: 'POST',
+        url: './Back-End/reciver.php',
+        //dataType:"json",
+        data: {
+
+            dat: "getAlertsByAllFilters", index: index, urgency: urgency, status_: status_, owner: owner,
+            time1: time1, time2: time2, data1: data1, data2: data2, filter_time: filter_time
+        },
+        success: function (data) {
+            //console.log(data);	
+            showAlerts(JSON.parse(data));
+        },
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
+        }
+    });
+}
 
 function updateAlert(alerts_, owner, comment, status_) {
     console.log("alerts_ --> ", alerts_)
@@ -566,6 +535,43 @@ function updateAlert(alerts_, owner, comment, status_) {
         }
     });
     //console.log("update returns-->",update);
+}
+
+function filterByUrgency() {
+    var urgency = document.getElementById("FilterUrgency").value;
+    urgency = urgency.toLowerCase();
+    var alertas = jQuery.ajax({
+        type: 'POST',
+        url: './Back-End/reciver.php',
+        data: {
+            dat: "getAlertsByUrgency", urgency: urgency
+        },
+        success: function (data) {
+            showAlerts(JSON.parse(data));
+        },
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
+        }
+    });
+}
+
+
+function loadEvent(incident) {
+    var events = jQuery.ajax({
+        type: 'POST',
+        url: './Back-End/reciver.php',
+        data: {
+            dat: "getEvents", incident_id: incident
+        },
+        success: function (data) {
+            viewEventAlert(data, (incident));
+        },
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
+        }
+    });
 }
 
 function filterByStatus() {
@@ -608,44 +614,6 @@ function filterByOwner() {
 }
 
 
-function filterByUrgency() {
-    var urgency = document.getElementById("FilterUrgency").value;
-    urgency = urgency.toLowerCase();
-    var alertas = jQuery.ajax({
-        type: 'POST',
-        url: './Back-End/reciver.php',
-        data: {
-            dat: "getAlertsByUrgency", urgency: urgency
-        },
-        success: function (data) {
-            showAlerts(JSON.parse(data));
-        },
-        error: function (xhr, status, error) {
-            var err = eval("(" + xhr.responseText + ")");
-            alert(err.Message);
-        }
-    });
-}
-
-
-function loadEvent(incident) {
-    var events = jQuery.ajax({
-        type: 'POST',
-        url: './Back-End/reciver.php',
-        data: {
-            dat: "getEvents", incident_id: incident
-        },
-        success: function (data) {
-            viewEventAlert(data, (incident));
-        },
-        error: function (xhr, status, error) {
-            var err = eval("(" + xhr.responseText + ")");
-            alert(err.Message);
-        }
-    });
-}
-
-
 function loadAlerts() {
     //var alertas=null;	
     var alertas = jQuery.ajax({
@@ -678,8 +646,8 @@ function loadAlertsFilteredByTime(dayRange) {
             dat: "getAlertsByOneDayRange", day: dayRange
         },
         success: function (data) {
-            console.log("JAVASCRIPT --> ", data);
-            showAlerts(data);
+            console.log("RECIVED--> ", data);
+            //showAlerts(data);
         },
         error: function (xhr, status, error) {
             var err = eval("(" + xhr.responseText + ")");
